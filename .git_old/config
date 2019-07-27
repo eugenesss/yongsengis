@@ -1,0 +1,14 @@
+[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = false
+	logallrefupdates = true
+[remote "origin"]
+	url = https://github.com/eugenesss/ysis.git
+	fetch = +refs/heads/*:refs/remotes/origin/*
+[branch "dev_branch"]
+	remote = origin
+	merge = refs/heads/dev_branch
+[branch "master"]
+	remote = origin
+	merge = refs/heads/master
