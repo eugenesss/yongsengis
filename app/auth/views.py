@@ -4,7 +4,7 @@ from flask_login import login_required, login_user, logout_user
 from . import auth
 from .. import db, http_auth
 from ..models import Employee
-from flask_jwt_extended import create_access_token
+from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
 
 
 @auth.route('/register', methods=['GET', 'POST'])
@@ -85,3 +85,10 @@ def logout():
 def get_auth_token():
     token = g.employee.generate_auth_token()
     return jsonify({'token': token.decode('ascii')})
+
+
+@auth.route('/currentuser', methods=['GET'])
+@jwt_required
+def get_current_user():
+    current_user = get_jwt_identity()
+    return make_response(jsonify(logged_in_as=current_user)), 200
