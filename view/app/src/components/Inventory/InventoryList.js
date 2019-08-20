@@ -4,6 +4,8 @@ import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
 import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
 
+import AccessComponent from "Components/AccessComponent";
+
 // style
 import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
 
@@ -87,28 +89,30 @@ const InventoryList = ({
         customBodyRender: (value, tableMeta) => {
           return (
             <React.Fragment>
-              <Tooltip id="tooltip-icon" title="Edit">
-                <IconButton
-                  className="text-primary mr-2"
-                  aria-label="Edit"
-                  onClick={() => {
-                    handleEdit(value);
-                  }}
-                >
-                  <i className="zmdi zmdi-edit" />
-                </IconButton>
-              </Tooltip>
-              <Tooltip id="tooltip-icon" title="Delete">
-                <IconButton
-                  className="text-danger mr-2"
-                  aria-label="Delete"
-                  onClick={() => {
-                    handleDelete(value, tableMeta.rowData[1]);
-                  }}
-                >
-                  <i className="zmdi zmdi-delete" />
-                </IconButton>
-              </Tooltip>
+              <AccessComponent>
+                <Tooltip id="tooltip-icon" title="Edit">
+                  <IconButton
+                    className="text-primary mr-2"
+                    aria-label="Edit"
+                    onClick={() => {
+                      handleEdit(value);
+                    }}
+                  >
+                    <i className="zmdi zmdi-edit" />
+                  </IconButton>
+                </Tooltip>
+                <Tooltip id="tooltip-icon" title="Delete">
+                  <IconButton
+                    className="text-danger mr-2"
+                    aria-label="Delete"
+                    onClick={() => {
+                      handleDelete(value, tableMeta.rowData[1]);
+                    }}
+                  >
+                    <i className="zmdi zmdi-delete" />
+                  </IconButton>
+                </Tooltip>
+              </AccessComponent>
             </React.Fragment>
           );
         }

@@ -37,7 +37,6 @@ import api from "Api";
 //=========================
 const getAllInventoryReq = async () => {
   const result = await api.get("/show_items");
-  console.log(result);
   return result.data;
 };
 const getAMKInventory = async () => {
@@ -54,13 +53,10 @@ const getAICInventory = async () => {
 };
 const postInventoryReq = async data => {
   const result = await api.post("/save_item", data);
-  console.log("===== post");
-  console.log(result);
   return result.data;
 };
 const startEditInvReq = async id => {
   const result = await api.get(`update_item/${id}`);
-  console.log(result);
   return result.data;
 };
 const editInvReq = async item => {

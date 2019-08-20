@@ -8,7 +8,9 @@ import {
   LOGIN_USER_FAILURE,
   LOGOUT_USER,
   LOGOUT_USER_SUCCESS,
-  LOGOUT_USER_FAILURE
+  LOGOUT_USER_FAILURE,
+  GET_CURRENT_USER_SUCCESS,
+  GET_CURRENT_USER_FAILURE
 } from "Types";
 
 /**
@@ -16,7 +18,8 @@ import {
  */
 const INIT_STATE = {
   user: localStorage.getItem("ysis_user"),
-  loading: false
+  loading: false,
+  currentUser: null
 };
 
 export default (state = INIT_STATE, action) => {
@@ -48,6 +51,14 @@ export default (state = INIT_STATE, action) => {
       console.log(action.payload);
       return { ...state };
 
+    //======================
+    // Get Current User
+    //======================
+    case GET_CURRENT_USER_SUCCESS:
+      return { ...state, currentUser: action.payload };
+    case GET_CURRENT_USER_FAILURE:
+      NotificationManager.error("Error in retrieving logged in user");
+      return { ...state };
     default:
       return { ...state };
   }

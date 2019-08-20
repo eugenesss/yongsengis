@@ -13,6 +13,7 @@ import Button from "@material-ui/core/Button";
 
 // Actions
 import { handleInvFormChange, getWarehouse, getCategories } from "Actions";
+import AccessComponent from "Components/AccessComponent";
 
 class InventoryForm extends Component {
   constructor(props) {
@@ -70,7 +71,6 @@ class InventoryForm extends Component {
       this.state.item.material != "" &&
       this.state.item.cid != "" &&
       this.state.item.code != "";
-    console.log(disabled);
     return disabled;
   }
 
@@ -167,38 +167,40 @@ class InventoryForm extends Component {
             description={description}
           />
         </FormTable>
-        <div className="row justify-content-end mt-30">
-          <div className="col-md-4">
-            <div className="d-flex justify-content-end">
-              <Button
-                className="text-white mr-15"
-                color="default"
-                onClick={() => this.onCancel()}
-                variant="contained"
-              >
-                Cancel
-              </Button>
-              {this.props.handleSaveNew && (
+        <AccessComponent>
+          <div className="row justify-content-end mt-30">
+            <div className="col-md-4">
+              <div className="d-flex justify-content-end">
                 <Button
-                  disabled={this.isDisabled()}
-                  onClick={() => this.onSaveNew()}
-                  className="bg-success text-white mr-15"
+                  className="text-white mr-15"
+                  color="default"
+                  onClick={() => this.onCancel()}
                   variant="contained"
                 >
-                  Save and new
+                  Cancel
                 </Button>
-              )}
-              <Button
-                disabled={!this.isDisabled()}
-                onClick={() => this.onSubmit()}
-                className="bg-success text-white"
-                variant="contained"
-              >
-                Submit
-              </Button>
+                {this.props.handleSaveNew && (
+                  <Button
+                    disabled={this.isDisabled()}
+                    onClick={() => this.onSaveNew()}
+                    className="bg-success text-white mr-15"
+                    variant="contained"
+                  >
+                    Save and new
+                  </Button>
+                )}
+                <Button
+                  disabled={!this.isDisabled()}
+                  onClick={() => this.onSubmit()}
+                  className="bg-success text-white"
+                  variant="contained"
+                >
+                  Submit
+                </Button>
+              </div>
             </div>
           </div>
-        </div>
+        </AccessComponent>
       </React.Fragment>
     );
   }

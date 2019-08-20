@@ -1,7 +1,5 @@
-/**
- * Horizontal App
- */
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import { Route, withRouter, Redirect } from "react-router-dom";
 
 // horizontal layout
@@ -9,8 +7,12 @@ import RctHorizontalLayout from "Components/RctHorizontalLayout";
 
 // router service
 import routerService from "../services/_routerService";
+import { getCurrentUser } from "Actions";
 
 class RctHorizontalApp extends Component {
+  componentDidMount() {
+    this.props.getCurrentUser();
+  }
   render() {
     const { match, location } = this.props;
     if (location.pathname === "/app") {
@@ -31,4 +33,9 @@ class RctHorizontalApp extends Component {
   }
 }
 
-export default withRouter(RctHorizontalApp);
+export default withRouter(
+  connect(
+    null,
+    { getCurrentUser }
+  )(RctHorizontalApp)
+);

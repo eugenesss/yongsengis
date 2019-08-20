@@ -4,7 +4,10 @@ import {
   LOGIN_USER_FAILURE,
   LOGOUT_USER,
   LOGOUT_USER_SUCCESS,
-  LOGOUT_USER_FAILURE
+  LOGOUT_USER_FAILURE,
+  GET_CURRENT_USER,
+  GET_CURRENT_USER_SUCCESS,
+  GET_CURRENT_USER_FAILURE
 } from "Types";
 
 /**
@@ -35,5 +38,21 @@ export const logoutSuccess = () => ({
 });
 export const logoutFailure = error => ({
   type: LOGOUT_USER_FAILURE,
+  payload: error
+});
+
+/**
+ * Get Current User
+ */
+
+export const getCurrentUser = () => ({
+  type: GET_CURRENT_USER
+});
+export const getCurrentUserSuccess = data => ({
+  type: GET_CURRENT_USER_SUCCESS,
+  payload: data
+});
+export const getCurrentUserFailure = error => ({
+  type: GET_CURRENT_USER_FAILURE,
   payload: error
 });
