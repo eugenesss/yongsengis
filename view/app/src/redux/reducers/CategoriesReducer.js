@@ -18,7 +18,6 @@ export default (state = INIT_STATE, action) => {
       return { ...state, categories: action.payload, loading: false };
     case GET_CATEGORIES_FAILURE:
       NotificationManager.error("Error in getting categories");
-      console.log(action.payload);
       return { ...state, loading: false };
     default:
       return { ...state };
