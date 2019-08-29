@@ -2,24 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1e7760d9-ae73-46b6-98d9-cf7c1ee4c171" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/loctite/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/loctite/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/app/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/view/app/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/app/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/view/app/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/app/src/api/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/view/app/src/api/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/app/src/assets/scss/_style.scss" beforeDir="false" afterPath="$PROJECT_DIR$/view/app/src/assets/scss/_style.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/app/src/components/Forms/Inventory/InventoryForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/view/app/src/components/Forms/Inventory/InventoryForm.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/app/src/components/Header/Header.js" beforeDir="false" afterPath="$PROJECT_DIR$/view/app/src/components/Header/Header.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/app/src/components/Header/UserBlock.js" beforeDir="false" afterPath="$PROJECT_DIR$/view/app/src/components/Header/UserBlock.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/app/src/components/Inventory/EditInventoryModal.js" beforeDir="false" afterPath="$PROJECT_DIR$/view/app/src/components/Inventory/EditInventoryModal.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/app/src/components/Inventory/InventoryList.js" beforeDir="false" afterPath="$PROJECT_DIR$/view/app/src/components/Inventory/InventoryList.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/app/src/constants/AppConfig.js" beforeDir="false" afterPath="$PROJECT_DIR$/view/app/src/constants/AppConfig.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/app/src/lib/reactifyCss.js" beforeDir="false" afterPath="$PROJECT_DIR$/view/app/src/lib/reactifyCss.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/app/src/redux/actions/InventoryActions.js" beforeDir="false" afterPath="$PROJECT_DIR$/view/app/src/redux/actions/InventoryActions.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/app/src/redux/reducers/AuthUserReducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/view/app/src/redux/reducers/AuthUserReducer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/app/src/redux/reducers/InventoryReducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/view/app/src/redux/reducers/InventoryReducer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/app/src/redux/sagas/Auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/view/app/src/redux/sagas/Auth.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/app/src/redux/sagas/Inventory.js" beforeDir="false" afterPath="$PROJECT_DIR$/view/app/src/redux/sagas/Inventory.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/app/src/routes/inventory/new/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/view/app/src/routes/inventory/new/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/instance/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/instance/config.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/README" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/alembic.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/env.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/script.py.mako" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/versions/62515a27186a_.py" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -29,29 +20,17 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/inventory/views.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="372">
-              <caret line="151" selection-start-line="151" selection-end-line="151" />
-              <folding>
-                <element signature="e#0#40#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/instance/config.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="45">
-              <caret line="3" selection-start-line="3" selection-end-line="3" />
+            <state relative-caret-position="60">
+              <caret line="4" selection-start-line="4" selection-end-line="4" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/inventory/forms.py">
+        <entry file="file://$PROJECT_DIR$/app/loctite/forms.py">
           <provider selected="true" editor-type-id="text-editor">
             <state>
               <folding>
@@ -62,10 +41,34 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/loctite/views.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-385">
+              <caret line="29" column="53" selection-start-line="29" selection-start-column="53" selection-end-line="29" selection-end-column="53" />
+              <folding>
+                <element signature="e#0#40#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/inventory/views.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="670">
+              <caret line="58" selection-start-line="58" selection-end-line="58" />
+              <folding>
+                <element signature="e#0#40#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="391">
-              <caret line="276" column="16" selection-start-line="276" selection-start-column="16" selection-end-line="276" selection-end-column="16" />
+            <state relative-caret-position="248">
+              <caret line="229" column="58" selection-start-line="229" selection-start-column="58" selection-end-line="229" selection-end-column="58" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
               </folding>
@@ -74,18 +77,9 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/view/app/src/api/index.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="75">
-              <caret line="15" column="2" selection-start-line="15" selection-start-column="2" selection-end-line="15" selection-end-column="2" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/__init__.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="690">
+            <state relative-caret-position="689">
               <caret line="56" column="46" selection-start-line="56" selection-start-column="46" selection-end-line="56" selection-end-column="46" />
               <folding>
                 <element signature="e#22#45#0" expanded="true" />
@@ -107,7 +101,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/run.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="120">
+            <state relative-caret-position="150">
               <caret line="10" selection-start-line="10" selection-end-line="10" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
@@ -120,7 +114,7 @@
         <entry file="file://$PROJECT_DIR$/requirements.txt">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="60">
-              <caret line="4" column="24" selection-start-line="4" selection-start-column="24" selection-end-line="4" selection-end-column="24" />
+              <caret line="4" column="17" selection-start-line="4" selection-start-column="17" selection-end-line="4" selection-end-column="17" />
             </state>
           </provider>
         </entry>
@@ -152,7 +146,6 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/app/warehouse/__init__.py" />
-        <option value="$PROJECT_DIR$/app/loctite/views.py" />
         <option value="$PROJECT_DIR$/app/BaseModel.py" />
         <option value="$PROJECT_DIR$/app/auth/__init__.py" />
         <option value="$PROJECT_DIR$/app/warehouse/views.py" />
@@ -166,16 +159,17 @@
         <option value="$PROJECT_DIR$/run.py" />
         <option value="$PROJECT_DIR$/wsgi.py" />
         <option value="$PROJECT_DIR$/view/app/src/api/index.js" />
-        <option value="$PROJECT_DIR$/instance/config.py" />
-        <option value="$PROJECT_DIR$/app/models.py" />
         <option value="$PROJECT_DIR$/app/inventory/views.py" />
+        <option value="$PROJECT_DIR$/instance/config.py" />
+        <option value="$PROJECT_DIR$/app/loctite/views.py" />
+        <option value="$PROJECT_DIR$/app/models.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="172" />
-    <option name="y" value="79" />
-    <option name="width" value="1400" />
+    <option name="x" value="387" />
+    <option name="y" value="26" />
+    <option name="width" value="1029" />
     <option name="height" value="892" />
   </component>
   <component name="ProjectView">
@@ -183,45 +177,58 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
-              <item name="ysis" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ysis" type="462c0819:PsiDirectoryNode" />
+              <item name="yongsengis" type="b2602c69:ProjectViewProjectNode" />
+              <item name="yongsengis" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="ysis" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ysis" type="462c0819:PsiDirectoryNode" />
+              <item name="yongsengis" type="b2602c69:ProjectViewProjectNode" />
+              <item name="yongsengis" type="462c0819:PsiDirectoryNode" />
               <item name="app" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="ysis" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ysis" type="462c0819:PsiDirectoryNode" />
+              <item name="yongsengis" type="b2602c69:ProjectViewProjectNode" />
+              <item name="yongsengis" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="admin" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="yongsengis" type="b2602c69:ProjectViewProjectNode" />
+              <item name="yongsengis" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="auth" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="yongsengis" type="b2602c69:ProjectViewProjectNode" />
+              <item name="yongsengis" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="category" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="yongsengis" type="b2602c69:ProjectViewProjectNode" />
+              <item name="yongsengis" type="462c0819:PsiDirectoryNode" />
               <item name="app" type="462c0819:PsiDirectoryNode" />
               <item name="inventory" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="ysis" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ysis" type="462c0819:PsiDirectoryNode" />
+              <item name="yongsengis" type="b2602c69:ProjectViewProjectNode" />
+              <item name="yongsengis" type="462c0819:PsiDirectoryNode" />
               <item name="app" type="462c0819:PsiDirectoryNode" />
               <item name="loctite" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="ysis" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ysis" type="462c0819:PsiDirectoryNode" />
+              <item name="yongsengis" type="b2602c69:ProjectViewProjectNode" />
+              <item name="yongsengis" type="462c0819:PsiDirectoryNode" />
               <item name="instance" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ysis" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ysis" type="462c0819:PsiDirectoryNode" />
-              <item name="migrations" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -254,9 +261,9 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="172" y="79" width="1400" height="892" extended-state="0" />
+    <frame x="387" y="26" width="1029" height="892" extended-state="0" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24945612" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.34126985" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -286,15 +293,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/loctite/forms.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#31#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/admin/__init__.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -311,13 +309,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/templates/auth/register.html">
       <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/loctite/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="459">
-          <caret line="46" column="31" selection-start-line="46" selection-start-column="31" selection-end-line="46" selection-end-column="31" />
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/auth/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -383,8 +374,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/auth/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="433">
-          <caret line="70" column="13" lean-forward="true" selection-start-line="70" selection-start-column="13" selection-end-line="70" selection-end-column="13" />
+        <state relative-caret-position="354">
+          <caret line="91" column="23" selection-start-line="91" selection-start-column="23" selection-end-line="91" selection-end-column="23" />
           <folding>
             <element signature="e#0#110#0" expanded="true" />
           </folding>
@@ -429,11 +420,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/category/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-498">
-          <caret line="14" column="23" selection-start-line="14" selection-start-column="23" selection-end-line="14" selection-end-column="23" />
-          <folding>
-            <element signature="e#0#40#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="45">
+          <caret line="3" column="43" selection-start-line="3" selection-start-column="43" selection-end-line="3" selection-end-column="43" />
         </state>
       </provider>
     </entry>
@@ -464,13 +452,6 @@
     <entry file="file://$PROJECT_DIR$/config.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/instance/config.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="3" selection-start-line="3" selection-end-line="3" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/inventory/forms.py">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -487,16 +468,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="690">
-          <caret line="56" column="46" selection-start-line="56" selection-start-column="46" selection-end-line="56" selection-end-column="46" />
-          <folding>
-            <element signature="e#22#45#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
@@ -505,9 +476,48 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/requirements.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="17" selection-start-line="4" selection-start-column="17" selection-end-line="4" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pos-readme.rtf">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/inventory/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="670">
+          <caret line="58" selection-start-line="58" selection-end-line="58" />
+          <folding>
+            <element signature="e#0#40#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/loctite/forms.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#31#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/loctite/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-385">
+          <caret line="29" column="53" selection-start-line="29" selection-start-column="53" selection-end-line="29" selection-end-column="53" />
+          <folding>
+            <element signature="e#0#40#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/run.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
+        <state relative-caret-position="150">
           <caret line="10" selection-start-line="10" selection-end-line="10" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
@@ -515,32 +525,29 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/requirements.txt">
+    <entry file="file://$PROJECT_DIR$/app/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="24" selection-start-line="4" selection-start-column="24" selection-end-line="4" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pos-readme.rtf">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="276" column="16" selection-start-line="276" selection-start-column="16" selection-end-line="276" selection-end-column="16" />
+        <state relative-caret-position="689">
+          <caret line="56" column="46" selection-start-line="56" selection-start-column="46" selection-end-line="56" selection-end-column="46" />
           <folding>
-            <element signature="e#0#15#0" expanded="true" />
+            <element signature="e#22#45#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/inventory/views.py">
+    <entry file="file://$PROJECT_DIR$/instance/config.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="372">
-          <caret line="151" selection-start-line="151" selection-end-line="151" />
+        <state relative-caret-position="60">
+          <caret line="4" selection-start-line="4" selection-end-line="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="248">
+          <caret line="229" column="58" selection-start-line="229" selection-start-column="58" selection-end-line="229" selection-end-column="58" />
           <folding>
-            <element signature="e#0#40#0" expanded="true" />
+            <element signature="e#0#15#0" expanded="true" />
           </folding>
         </state>
       </provider>

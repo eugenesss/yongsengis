@@ -3,87 +3,94 @@ from . import loctite
 import datetime
 import os
 
+from flask_jwt_extended import jwt_required
 from flask_login import login_required
 
 from app import db
-from ..models import Loctite, Serializer
+from ..models import Loctite, LoctiteSchema
 
 
-@loctite.route('/save_loctite', methods=['GET', 'POST'])
-@login_required
+@loctite.route('/save_loctite', methods=['POST'])
+@jwt_required
 def save_item():
     """
     Add a loctite
     """
     data = request.data
     data_js = json.loads(data)
-    pid = data_js.get('pid')
+    # pid = data_js.get('pid')
     name = data_js.get('name')
     description = data_js.get('description')
-    code = data_js.get('code')
     price = data_js.get('price')
     quantity = data_js.get('quantity')
     batch = data_js.get('batch')
     expiry_date = data_js.get('expiry_date')
     file = data_js.get('file')
-    created_date = data_js.get('created_date')
-    updated_date = data_js.get('updated_date')
-    if request.method == 'POST':
-        item = Loctite(pid, name, description, code, price, quantity, batch, expiry_date, file, created_date, updated_date)
-        db.session.add(item)
-        db.session.commit()
-        return json.dumps(item.serialize()), 200
 
-    if request.method == 'GET':
-        return jsonify('Add a new item'), 200
+    item = Loctite(name=name, description=description, price=price, quantity=quantity, batch=batch, expiry_date=expiry_date, file=file)
+    db.session.add(item)
+    db.session.commit()
+    loctite_schema = LoctiteSchema()
+
+    return loctite_schema.jsonify(Loctite.query.get(item.pid)), 200
 
 
 @loctite.route("/show_loctites")
-@login_required
+@jwt_required
 def show_items():
     """
     Display all loctite
     """
     items = Loctite.query.all()
-    return json.dumps(Loctite.serialize_list(items)), 200
+    loctite_schema = LoctiteSchema(many=True)
+    return loctite_schema.jsonify(items), 200
 
 
 @loctite.route("/update_loctite/<int:pid>", methods=['GET', 'POST'])
-@login_required
+@jwt_required
 def update_items(pid):
     """
     Update loctite
     """
-    data = request.data
-    data_js = json.loads(data)
-    item = Loctite.query.get_or_404(pid)
-    pid = data_js.get('pid')
-    name = data_js.get('name')
-    description = data_js.get('description')
-    code = data_js.get('code')
-    price = data_js.get('price')
-    quantity = data_js.get('quantity')
-    batch = data_js.get('batch')
-    expiry_date = data_js.get('expiry_date')
-    file = data_js.get('file')
+    if request.method == 'POST':
+        # retrieve item from database
+        item = Loctite.query.get_or_404(pid)
 
-    # update changes
-    item.name = name
-    item.description = description
-    item.code = code
-    item.price = price
-    item.quantity = quantity
-    item.batch = batch
-    item.expiry_date = expiry_date
-    item.file = file
-    item.updated_date = datetime.datetime.now()
-    db.session.commit()
+        # retrieve the data from request
+        data = request.data
+        data_js = json.loads(data)
 
-    return json.dumps(item.serialize()), 200
+        # get the individual values
+        name = data_js.get('name')
+        description = data_js.get('description')
+        price = data_js.get('price')
+        quantity = data_js.get('quantity')
+        batch = data_js.get('batch')
+        expiry_date = data_js.get('expiry_date')
+        file = data_js.get('file')
+
+        # update changes
+        item.name = name
+        item.description = description
+        item.price = price
+        item.quantity = quantity
+        item.batch = batch
+        item.expiry_date = expiry_date
+        item.file = file
+        item.updated_date = datetime.datetime.now()
+        db.session.commit()
+
+        # return response
+        loctite_schema = LoctiteSchema()
+        return loctite_schema.jsonify(Loctite.query.get(pid)), 200
+
+    else:
+        loctite_schema = LoctiteSchema()
+        return loctite_schema.jsonify(Loctite.query.get(pid)), 200
 
 
-@loctite.route("/delete_loctite/<int:pid>", methods=['GET', 'POST'])
-@login_required
+@loctite.route("/delete_loctite/<int:pid>", methods=['POST'])
+@jwt_required
 def delete_items(pid):
     """
     Delete loctite
@@ -95,7 +102,7 @@ def delete_items(pid):
 
 
 @loctite.route("/upload_image/<int:pid>", methods=['POST'])
-@login_required
+@jwt_required
 def upload_images(pid):
     """
     Upload images

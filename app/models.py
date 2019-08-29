@@ -157,7 +157,7 @@ class Inventory(db.Model, Serializer):
     rack = db.Column("rack", db.String(50))
     unit_code = db.Column("unit_code", db.String(50))
     file = db.Column("file", db.String(150))
-    created_date = db.Column("created_date", default=datetime.datetime.now())
+    created_date = db.Column("created_date", db.DateTime, default=datetime.datetime.now())
     updated_date = db.Column("updated_date", db.DateTime)
     wid = db.Column('wid', db.Integer, ForeignKey('warehouse.wid'))
     cid = db.Column('cid', db.Integer, ForeignKey('category.cid'))
@@ -220,33 +220,32 @@ class Loctite(db.Model, Serializer):
     """
     __tablename__ = 'loctite'
     pid = db.Column("pid", db.Integer, primary_key=True)
-    name = db.Column("name", db.String(50))
-    description = db.Column("description", db.String(150))
-    code = db.Column("code", db.String(100))
+    name = db.Column("name", db.String(100))
+    description = db.Column("description", db.String(255))
     price = db.Column("price", db.Integer)
     quantity = db.Column("quantity", db.Integer)
     batch = db.Column("batch", db.Integer)
-    expiry_date = db.Column("expiry_date", db.DateTime)
+    expiry_date = db.Column("expiry_date", db.Date)
     file = db.Column("file", db.String(150))
-    created_date = db.Column("created_date", db.DateTime)
+    created_date = db.Column("created_date", db.DateTime, default=datetime.datetime.now())
     updated_date = db.Column("updated_date", db.DateTime)
-    wid = db.Column('wid', db.Integer, ForeignKey('warehouse.wid'))
-    warehouse = relationship("Warehouse", backref=backref("loctite"))
 
-    def __init__(self, pid, name, description, code, price, quantity, batch, expiry_date, file, created_date,
-                 updated_date, wid):
-        self.pid = pid
+    def __init__(self, name, description, price, quantity, batch, expiry_date, file):
         self.name = name
         self.description = description
-        self.code = code
         self.price = price
         self.quantity = quantity
         self.batch = batch
         self.expiry_date = expiry_date
         self.file = file
-        self.created_date = created_date
-        self.updated_date = updated_date
-        self.wid = wid
+
+class LoctiteSchema(Schema):
+    """
+    Loctite Schema
+    """
+    class Meta:
+        # Fields to expose
+        fields = ("pid", "name", "quantity", "description", "price", "batch", "expiry_date", "file")
 
 
 def get_all_items():
@@ -272,7 +271,6 @@ def get_item_by_warehouse(wid):
                             Inventory.perbox, Inventory.location, Inventory.rack, Inventory.unit_code, Category.cid,
                             Category.cat_name).filter(Inventory.wid == wid).filter(Category.cid == Inventory.cid).filter(Inventory.wid == Warehouse.wid).all()
     return items
-
 
 # def get_all_items():
 #     all_items = db.session.query(Warehouse.wid, Warehouse.wh_name, Inventory.name, Inventory.quantity,
