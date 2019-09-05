@@ -5,7 +5,7 @@ const api = axios.create({
   //   process.env.NODE_ENV === "production"
   //     ? "http://178.128.84.254:8000/"
   //     : "http://localhost:5000/",
-  //baseURL: "http://localhost:5000/",
+  // baseURL: "http://localhost:5000/",
   baseURL: "http://178.128.84.254:8000/",
   timeout: 8000
 });

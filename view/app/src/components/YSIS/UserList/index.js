@@ -39,7 +39,7 @@ const columns = [
 
 const options = {
   filterType: "dropdown",
-  responsive: "stacked",
+  responsive: "scroll",
   download: false,
   print: false,
   filter: false,

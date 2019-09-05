@@ -122,7 +122,7 @@ const InventoryList = ({
 
   const options = {
     filterType: "dropdown",
-    responsive: "stacked",
+    responsive: "scroll",
     download: false,
     print: false,
     selectableRows: "none",

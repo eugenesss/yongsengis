@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Helmet } from "react-helmet";
+import { connect } from "react-redux";
 
 //Components
 import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
@@ -7,8 +8,17 @@ import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard
 // form
 import LoctiteForm from "Components/Forms/Loctite/LoctiteForm";
 
+// actions
+import { submitLoctite } from "Actions";
+
 class NewLoctite extends Component {
-  state = {};
+  constructor(props) {
+    super(props);
+    this.handleBack = this.handleBack.bind(this);
+  }
+  handleBack() {
+    this.props.history.goBack();
+  }
 
   render() {
     return (
@@ -21,7 +31,10 @@ class NewLoctite extends Component {
           <div className="row">
             <div className="col-md-3">image upload</div>
             <div className="col-md-9">
-              <LoctiteForm />
+              <LoctiteForm
+                handleSubmit={this.props.submitLoctite}
+                handleCancel={this.handleBack}
+              />
             </div>
           </div>
         </RctCollapsibleCard>
@@ -30,4 +43,7 @@ class NewLoctite extends Component {
   }
 }
 
-export default NewLoctite;
+export default connect(
+  null,
+  { submitLoctite }
+)(NewLoctite);

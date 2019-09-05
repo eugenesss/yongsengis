@@ -46,7 +46,7 @@ export function textTruncate(str, length, ending) {
  * Get Date
  */
 export function getTheDate(date, format) {
-  let formatDate = format ? format : "DD MMM YYYY";
+  let formatDate = format ? format : "ddd, DD MMM YYYY";
   return moment(date).format(formatDate);
 }
 

@@ -3,6 +3,8 @@ import TabsHeader from "Components/YSIS/Tabs/TabsHeader";
 import DetailsRow from "Components/YSIS/Details/DetailsRow";
 import DetailsTable from "Components/YSIS/Details/DetailsTable";
 
+import { getTheDate } from "Helpers/helpers";
+
 const LoctiteDetails = ({ item }) => {
   return (
     <React.Fragment>
@@ -12,14 +14,17 @@ const LoctiteDetails = ({ item }) => {
             <TabsHeader title="Loctite Details" />
             <DetailsTable>
               <DetailsRow label="Name" value={item.name} />
-              <DetailsRow label="Category" value={item.cat_name} />
+              <DetailsRow label="Quantity" value={item.quantity} />
             </DetailsTable>
           </div>
           <div className="col-5">
             <TabsHeader title="Expiry Details" />
             <DetailsTable>
-              <DetailsRow label="Batch No." value={item.code} />
-              <DetailsRow label="Expiry Date" value={item.location} />
+              <DetailsRow label="Batch No." value={item.batch} />
+              <DetailsRow
+                label="Expiry Date"
+                value={getTheDate(item.expiry_date)}
+              />
             </DetailsTable>
           </div>
         </div>
@@ -27,9 +32,6 @@ const LoctiteDetails = ({ item }) => {
           <div className="col-12">
             <TabsHeader title="Description" />
             <div>{item.description}</div>
-            {/* <DetailsTable>
-              <DetailsRow label="Description" value={item.description} />
-            </DetailsTable> */}
           </div>
         </div>
       </div>

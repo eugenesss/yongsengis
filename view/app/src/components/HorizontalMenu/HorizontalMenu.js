@@ -25,7 +25,7 @@ class HorizontalMenu extends Component {
           </li>
           <li className="nav-item">
             <a href="javascript:void(0);" className="nav-link">
-              <i className="zmdi zmdi-store" />
+              <i className="zmdi zmdi-lamp" />
               <span className="menu-title">Inventory</span>
             </a>
             <ul className="list-unstyled sub-menu">
@@ -36,7 +36,7 @@ class HorizontalMenu extends Component {
           </li>
           <li className="nav-item">
             <a href="javascript:void(0);" className="nav-link">
-              <i className="zmdi zmdi-store" />
+              <i className="zmdi zmdi-roller" />
               <span className="menu-title">Loctite</span>
             </a>
             <ul className="list-unstyled sub-menu">

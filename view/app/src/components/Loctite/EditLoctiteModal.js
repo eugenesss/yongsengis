@@ -4,18 +4,25 @@ import { connectModal } from "redux-modal";
 import DialogRoot from "Components/Dialog/DialogRoot";
 
 import RctSectionLoader from "Components/RctSectionLoader/RctSectionLoader";
-import InventoryForm from "Components/Forms/Inventory/InventoryForm";
+import LoctiteForm from "Components/Forms/Loctite/LoctiteForm";
 
-import { startEditLoctite } from "Actions";
+import { startEditLoctite, editLoctite } from "Actions";
 
 class EditLoctiteModal extends Component {
+  constructor(props) {
+    super(props);
+    this.handleEdit = this.handleEdit.bind(this);
+  }
   componentWillMount() {
     this.props.startEditLoctite(this.props.itemToEdit);
   }
-  state = {};
+  handleEdit(item) {
+    this.props.editLoctite(item);
+    this.props.handleHide();
+  }
   render() {
     const { show, handleHide } = this.props;
-    const { modalLoading } = this.props.loctiteForm;
+    const { modalLoading, loctite } = this.props.loctiteForm;
     return (
       <DialogRoot
         show={show}
@@ -23,7 +30,15 @@ class EditLoctiteModal extends Component {
         title="Edit Inventory"
         size="lg"
       >
-        {modalLoading ? <RctSectionLoader /> : <InventoryForm />}
+        {modalLoading ? (
+          <RctSectionLoader />
+        ) : (
+          <LoctiteForm
+            edit={loctite}
+            handleSubmit={this.props.editInventory}
+            handleCancel={handleHide}
+          />
+        )}
       </DialogRoot>
     );
   }
@@ -35,5 +50,5 @@ const mapStateToProps = ({ loctiteState }) => {
 
 export default connect(
   mapStateToProps,
-  { startEditLoctite }
+  { startEditLoctite, editLoctite }
 )(connectModal({ name: "edit_loctite" })(EditLoctiteModal));

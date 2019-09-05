@@ -7,7 +7,6 @@ class AccessComponent extends PureComponent {
   }
   render() {
     const { currentUser, children } = this.props;
-    console.log(currentUser.is_admin);
     if (currentUser.is_admin == true) return children;
     else return null;
   }

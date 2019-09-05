@@ -10,7 +10,7 @@ import EditLoctiteModal from "Components/Loctite/EditLoctiteModal";
 import ViewLoctiteModal from "Components/Loctite/ViewLoctiteModal";
 
 // Actions
-import { getAllLoctite } from "Actions";
+import { getAllLoctite, deleteLoctite } from "Actions";
 
 class ViewAllLoctite extends Component {
   constructor(props) {
@@ -36,8 +36,7 @@ class ViewAllLoctite extends Component {
     });
   }
   delete(id) {
-    console.log("delete loctite");
-    //this.props.deleteInventory(id);
+    this.props.deleteLoctite(id);
   }
 
   render() {
@@ -68,5 +67,5 @@ const mapStateToProps = ({ loctiteState }) => {
 };
 export default connect(
   mapStateToProps,
-  { getAllLoctite, show }
+  { getAllLoctite, show, deleteLoctite }
 )(ViewAllLoctite);

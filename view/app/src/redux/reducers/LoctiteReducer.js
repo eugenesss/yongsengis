@@ -128,6 +128,59 @@ export default (state = INIT_STATE, action) => {
         loctiteForm: { ...state.loctiteForm, modalLoading: false }
       };
 
+    case types.EDIT_LOCTITE:
+      return {
+        ...state,
+        loctiteForm: { ...state.loctiteForm, modalLoading: true }
+      };
+    case types.EDIT_LOCTITE_SUCCESS:
+      NotificationManager.success("Successfully edit item");
+      var list = updateInvList(action.payload);
+      return {
+        ...state,
+        loctiteList: { ...state.loctiteList, tableData: list },
+        loctiteForm: {
+          ...state.loctiteForm,
+          modalLoading: false,
+          item: action.payload
+        }
+      };
+    case types.EDIT_LOCTITE_FAILURE:
+      NotificationManager.error("Error in edit item");
+      console.log(action.payload);
+      return {
+        ...state,
+        loctiteForm: { ...state.loctiteForm, modalLoading: false }
+      };
+    //=========================
+    //  Delete INVENTORY
+    //=========================
+    case types.DELETE_LOCTITE:
+      return {
+        ...state,
+        loctiteList: { ...state.loctiteList, loading: true }
+      };
+    case types.DELETE_LOCTITE_SUCCESS:
+      NotificationManager.success("Item deleted");
+      var deleteLoc = Object.assign([], state.loctiteList.tableData).filter(
+        inv => inv.pid !== action.payload
+      );
+      return {
+        ...state,
+        loctiteList: {
+          ...state.loctiteList,
+          tableData: deleteLoc,
+          loading: false
+        }
+      };
+    case types.DELETE_LOCTITE_FAILURE:
+      NotificationManager.error("Error in deleting item");
+      console.log(action.payload);
+      return {
+        ...state,
+        loctiteList: { ...state.loctiteList, loading: false }
+      };
+
     default:
       return { ...state };
   }

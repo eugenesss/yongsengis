@@ -1,7 +1,7 @@
 import React from "react";
 import TextField from "@material-ui/core/TextField";
 
-const FormTextField = ({ label, value, handleChange, ...others }) => {
+const FormTextField = ({ label, value, handleChange }) => {
   return (
     <TextField
       label={label}
@@ -10,7 +10,6 @@ const FormTextField = ({ label, value, handleChange, ...others }) => {
       fullWidth
       margin="dense"
       variant="filled"
-      {...others}
     />
   );
 };

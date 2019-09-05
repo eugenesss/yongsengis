@@ -16,7 +16,8 @@ const FormBlock = ({
   empty,
   numberInput,
   objProp,
-  objLabel
+  objLabel,
+  ...others
 }) => {
   return (
     <React.Fragment>
@@ -52,6 +53,7 @@ const FormBlock = ({
               value={value}
               handleChange={handleChange}
               target={target}
+              {...others}
             />
           ))}
       </TableCell>

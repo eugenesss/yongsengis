@@ -12,7 +12,7 @@ import TableRow from "@material-ui/core/TableRow";
 import Button from "@material-ui/core/Button";
 
 // Actions
-import { handleInvFormChange, getWarehouse, getCategories } from "Actions";
+import { getWarehouse, getCategories } from "Actions";
 import AccessComponent from "Components/AccessComponent";
 
 class InventoryForm extends Component {
@@ -218,5 +218,5 @@ const mapStateToProps = ({
 
 export default connect(
   mapStateToProps,
-  { handleInvFormChange, getWarehouse, getCategories }
+  { getWarehouse, getCategories }
 )(InventoryForm);

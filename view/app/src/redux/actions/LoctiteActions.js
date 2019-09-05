@@ -68,3 +68,30 @@ export const startEditLoctiteFailure = error => ({
   type: types.START_EDIT_LOCTITE_FAILURE,
   payload: error
 });
+
+export const editLoctite = data => ({
+  type: types.EDIT_LOCTITE,
+  payload: data
+});
+export const editLoctiteSuccess = data => ({
+  type: types.EDIT_LOCTITE_SUCCESS,
+  payload: data
+});
+export const editLoctiteFailure = error => ({
+  type: types.EDIT_LOCTITE_FAILURE,
+  payload: error
+});
+
+// Delete
+export const deleteLoctite = id => ({
+  type: types.DELETE_LOCTITE,
+  payload: id
+});
+export const deleteLoctiteSuccess = id => ({
+  type: types.DELETE_LOCTITE_SUCCESS,
+  payload: id
+});
+export const deleteLoctiteFailure = error => ({
+  type: types.DELETE_LOCTITE_FAILURE,
+  payload: error
+});
