@@ -37,10 +37,10 @@ class LoctiteForm extends Component {
   }
 
   onSubmit() {
-    this.props.handleSubmit(this.state.item, true);
+    this.props.handleSubmit(this.state, true);
   }
   onSaveNew() {
-    this.props.handleSubmit(this.state.item, false);
+    this.props.handleSubmit(this.state, false);
   }
   onCancel() {
     this.props.handleCancel();
@@ -52,7 +52,6 @@ class LoctiteForm extends Component {
   }
 
   render() {
-    console.log(this.state);
     const {
       name,
       quantity,

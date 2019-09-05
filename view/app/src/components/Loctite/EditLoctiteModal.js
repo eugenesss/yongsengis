@@ -35,7 +35,7 @@ class EditLoctiteModal extends Component {
         ) : (
           <LoctiteForm
             edit={loctite}
-            handleSubmit={this.props.editInventory}
+            handleSubmit={this.props.editLoctite}
             handleCancel={handleHide}
           />
         )}

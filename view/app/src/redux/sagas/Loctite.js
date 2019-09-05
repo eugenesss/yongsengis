@@ -1,4 +1,4 @@
-import { all, call, fork, put, takeEvery } from "redux-saga/effects";
+import { all, call, fork, put, takeEvery, delay } from "redux-saga/effects";
 import {
   GET_ALL_LOCTITE,
   VIEW_LOCTITE,
@@ -41,34 +41,34 @@ const loctiteList = [loctite, loctite];
 // REQUESTS
 //=========================
 const getLoctiteReq = async () => {
-  //const result = await api.get("/show_items");
+  //const result = await api.get("/show_loctites");
   const result = loctiteList;
   return result;
 };
 const viewLoctiteReq = async id => {
-  console.log(`fetching ${id}`);
+  // const result = await api.get(`/update_loctite/${id}`)
   const result = loctite;
   return result;
 };
 const startEditLoctiteReq = async id => {
-  console.log(`fetching ${id}`);
+  // const result = await api.get(`/update_loctite/${id}`)
   const result = loctite;
   return result;
 };
 const submitLoctiteFormRequest = async data => {
-  console.log(`posting ${data}`);
+  // const result = await api.post(`/save_loctite`, data)
   const result = loctite;
   return result;
 };
 const editLocReq = async item => {
+  // const result = await api.get(`/update_loctite/${item.id}`, item)
   const result = loctite;
-  //const result = await api.post(`update_item/${item.pid}`, item);
-  return result.data;
+  return result;
 };
 const deleteLocReq = async id => {
-  //const result = await api.post(`/delete_item/${id}`);
+  //const result = await api.post(`/delete_loctite/${id}`);
   const result = {};
-  return result.data;
+  return result;
 };
 
 //=========================

@@ -28,6 +28,13 @@ const INIT_STATE = {
 };
 
 export default (state = INIT_STATE, action) => {
+  function updateInvList(item) {
+    var allInv = Object.assign([], state.loctiteList.tableData).map(inv =>
+      inv.pid == item.pid ? (inv = item) : inv
+    );
+    return allInv;
+  }
+
   switch (action.type) {
     //=========================
     //  API FAILURE
@@ -135,6 +142,8 @@ export default (state = INIT_STATE, action) => {
       };
     case types.EDIT_LOCTITE_SUCCESS:
       NotificationManager.success("Successfully edit item");
+      console.log("reducer");
+      console.log(action.payload);
       var list = updateInvList(action.payload);
       return {
         ...state,

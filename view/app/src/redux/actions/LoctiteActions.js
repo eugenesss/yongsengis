@@ -47,13 +47,6 @@ export const submitLoctiteFailure = error => ({
   type: types.SUBMIT_LOCTITE_FAILURE,
   payload: error
 });
-export const clearLoctiteForm = () => ({
-  type: types.CLEAR_LOCTITE_FORM
-});
-export const handleLoctiteForm = (field, value) => ({
-  type: types.HANDLE_LOCTITE_FORM,
-  payload: { field, value }
-});
 
 // Edit
 export const startEditLoctite = id => ({
