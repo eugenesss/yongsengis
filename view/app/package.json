@@ -3,8 +3,10 @@
   "version": "0.0.1",
   "description": "Inventory Management System for Yong Seng Screws",
   "scripts": {
-    "start": "webpack-dev-server --mode development --inline --progress",
-    "build": "webpack --mode production"
+    "start": "npm run prod",
+    "prod": "webpack-dev-server --env.API_URL=http://178.128.84.254:8000/api --mode development --inline --progress",
+    "dev": "webpack-dev-server --env.API_URL=http://localhost:5000/api --mode development --inline --progress",
+    "build": "webpack --env.API_URL=http://178.128.84.254:8000/api --mode production"
   },
   "keywords": [
     "reactjs"

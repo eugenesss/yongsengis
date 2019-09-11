@@ -1,12 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  // baseURL:
-  //   process.env.NODE_ENV === "production"
-  //     ? "http://178.128.84.254:8000/"
-  //     : "http://localhost:5000/",
-  // baseURL: "http://localhost:5000/",
-  baseURL: "http://178.128.84.254:8000/",
+  baseURL: process.env.API_URL,
   timeout: 8000
 });
 
