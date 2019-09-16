@@ -87,7 +87,11 @@ export default (state = INIT_STATE, action) => {
       NotificationManager.success("Success");
       return {
         ...state,
-        loctiteForm: { ...state.loctiteForm, loading: false }
+        loctiteForm: {
+          ...state.loctiteForm,
+          loctite: action.payload,
+          loading: false
+        }
       };
     case types.SUBMIT_LOCTITE_FAILURE:
       NotificationManager.danger("Error in POST api");
@@ -142,8 +146,6 @@ export default (state = INIT_STATE, action) => {
       };
     case types.EDIT_LOCTITE_SUCCESS:
       NotificationManager.success("Successfully edit item");
-      console.log("reducer");
-      console.log(action.payload);
       var list = updateInvList(action.payload);
       return {
         ...state,

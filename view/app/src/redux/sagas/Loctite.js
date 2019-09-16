@@ -23,52 +23,32 @@ import {
 
 import api from "Api";
 
-const loctite = {
-  pid: 1,
-  name: "LOCTITE Novasil 207 Clear Sealant (300ML)",
-  quantity: 20,
-  description:
-    "LOCTITE® Novasil 207™ Clear Sealant is a one component, neutral (non-acidic) silicone sealants for polycarbonate, GE Plastics, mirrors, metals, concrete and ceramic materials; adhesion and weather resistance are excellent. Suitable for power machinery, automobiles, engineering machinery, internal combustion engines, mining machinery, and electrical equipment stamping seal. Storage: Store this glue in the unopened original packaging in a cool dry place memory. Optimal Storage: 8°-21°C. Material removed from containers may be contaminated while in use. To prevent contamination of unused product, do not return any material to the original package. Use Guide: This glue is sensitive to moisture. Contact with air is recommended to be avoided during operations and storage . To get the best performance bond, surfaces should be clean and free of grease. Curing speed depends on the ambient humidity and temperature.",
-  batch: 3,
-  price: null,
-  expiry_date: "2019-11-16",
-  file: null
-};
-
-const loctiteList = [loctite, loctite];
-
 //=========================
 // REQUESTS
 //=========================
 const getLoctiteReq = async () => {
-  //const result = await api.get("/show_loctites");
-  const result = loctiteList;
-  return result;
+  const result = await api.get("/show_loctites");
+  return result.data;
 };
 const viewLoctiteReq = async id => {
-  // const result = await api.get(`/update_loctite/${id}`)
-  const result = loctite;
-  return result;
+  const result = await api.get(`/update_loctite/${id}`);
+  return result.data;
 };
 const startEditLoctiteReq = async id => {
-  // const result = await api.get(`/update_loctite/${id}`)
-  const result = loctite;
-  return result;
+  const result = await api.get(`/update_loctite/${id}`);
+  return result.data;
 };
 const submitLoctiteFormRequest = async data => {
-  // const result = await api.post(`/save_loctite`, data)
-  const result = loctite;
-  return result;
+  const result = await api.post(`/save_loctite`, data);
+  return result.data;
 };
 const editLocReq = async item => {
-  // const result = await api.get(`/update_loctite/${item.id}`, item)
-  const result = loctite;
-  return result;
+  const result = await api.post(`/update_loctite/${item.pid}`, item);
+  return result.data;
 };
 const deleteLocReq = async id => {
-  //const result = await api.post(`/delete_loctite/${id}`);
-  const result = {};
-  return result;
+  const result = await api.post(`/delete_loctite/${id}`);
+  return result.data;
 };
 
 //=========================

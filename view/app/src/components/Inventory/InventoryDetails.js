@@ -16,6 +16,7 @@ const InventoryDetails = ({ item }) => {
               <DetailsRow label="Material" value={item.material} />
               <DetailsRow label="Quantity" value={item.quantity} />
               <DetailsRow label="Qty Per Box" value={item.perbox} />
+              <DetailsRow label="Unit Code" value={item.unit_code} />
             </DetailsTable>
           </div>
           <div className="col-6">
@@ -26,6 +27,12 @@ const InventoryDetails = ({ item }) => {
               <DetailsRow label="Warehouse" value={item.wh_name} />
               <DetailsRow label="Rack" value={item.rack} />
             </DetailsTable>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-12">
+            <h5>Description</h5>
+            <p>{item.description}</p>
           </div>
         </div>
       </div>

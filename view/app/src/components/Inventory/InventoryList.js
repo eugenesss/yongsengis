@@ -38,6 +38,7 @@ const InventoryList = ({
       label: "Name",
       name: "name",
       options: {
+        filter: false,
         customBodyRender: (value, tableMeta) => {
           return (
             <a
@@ -50,7 +51,7 @@ const InventoryList = ({
         }
       }
     },
-    { label: "Code", name: "code" },
+    { label: "Code", name: "code", options: { filter: false } },
     {
       label: "Material",
       name: "material"
@@ -61,20 +62,23 @@ const InventoryList = ({
     },
     {
       label: "Unit Code",
-      name: "unit_code"
+      name: "unit_code",
+      options: { filter: false }
     },
     {
       label: "Quantity",
-      name: "quantity"
+      name: "quantity",
+      options: { filter: false }
     },
     {
       label: "Quantity Per Box",
       name: "perbox",
-      options: { display: false }
+      options: { display: false, filter: false }
     },
     {
       label: "Rack",
-      name: "rack"
+      name: "rack",
+      options: { filter: false }
     },
     {
       label: "Warehouse",
