@@ -29,13 +29,7 @@ class LoctiteForm extends Component {
     this.isDisabled = this.isDisabled.bind(this);
     this.onSaveNew = this.onSaveNew.bind(this);
     this.onCancel = this.onCancel.bind(this);
-    if (this.props.edit) {
-      const { expiry_date, ...others } = this.props.edit;
-      this.state = {
-        expiry_date: moment(expiry_date).format("YYYY-MM-DD"),
-        ...others
-      };
-    }
+    if (this.props.edit) this.state = { ...this.props.edit };
   }
 
   handleChange(field, value) {
@@ -93,7 +87,7 @@ class LoctiteForm extends Component {
               label="Batch No."
             />
             <FormBlock
-              value={expiry_date}
+              value={moment(expiry_date).format("YYYY-MM-DD")}
               handleChange={e =>
                 this.handleChange("expiry_date", e.target.value)
               }
