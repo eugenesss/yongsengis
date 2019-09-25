@@ -22,6 +22,7 @@ import {
 } from "Actions";
 
 import api from "Api";
+import moment from "moment";
 
 //=========================
 // REQUESTS
@@ -88,7 +89,12 @@ function* submitLoctiteForm({ payload }) {
 }
 function* editLoc({ payload }) {
   try {
-    const data = yield call(editLocReq, payload);
+    const { expiry_date, ...others } = payload;
+    const loctite = {
+      expiry_date: moment(expiry_date).format("YYYY-MM-DD"),
+      ...others
+    };
+    const data = yield call(editLocReq, loctite);
     yield delay(500);
     yield put(editLoctiteSuccess(data));
   } catch (error) {
