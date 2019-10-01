@@ -71,7 +71,7 @@ table {
   }
 }
 .table-borderless {
-  @include border(1px solid, $input-border-color, top bottom left right);
+  @include border(1px solid, #ebedf200, top bottom left right);
   thead {
     tr {
       th {

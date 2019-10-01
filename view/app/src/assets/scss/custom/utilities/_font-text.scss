@@ -10,7 +10,7 @@
 }
 .font-xs {
   font-size: 0.75rem !important;
-  line-height:1.25rem;
+  line-height: 1.25rem;
 }
 .font-2x {
   font-size: 2rem;
@@ -30,12 +30,18 @@
 .fs-12 {
   font-size: 12px;
 }
+.fs-13 {
+  font-size: 13px;
+}
 .fs-14 {
   font-size: 14px;
 }
+.fs-18 {
+  font-size: 18px;
+}
 //Font weight
-.fw-light{
-   font-weight:300 !important;
+.fw-light {
+  font-weight: 300 !important;
 }
 .fw-normal {
   font-weight: $fw-normal !important;
@@ -48,36 +54,36 @@
 }
 // Font Text
 .text-pink {
-	color: $pink !important;
+  color: $pink !important;
 }
 .text-indigo {
-	color: $indigo !important;
+  color: $indigo !important;
 }
 .text-teal {
-	color: $teal !important;
+  color: $teal !important;
 }
 .text-purple {
-	color: $purple !important;
+  color: $purple !important;
 }
 .text-yellow {
-	color: $orange !important;
+  color: $orange !important;
 }
 .text-gray {
   color: $gray-700;
 }
 .text-base {
-  color: #A5A7B2;
+  color: #a5a7b2;
 }
 
-.facebook{
-  color:$facebook;
+.facebook {
+  color: $facebook;
 }
-.twitter{
-  color:$twitter;
+.twitter {
+  color: $twitter;
 }
-.linkedin{
-  color:$linkedin;
+.linkedin {
+  color: $linkedin;
 }
-.google{
-  color:$google;
+.google {
+  color: $google;
 }

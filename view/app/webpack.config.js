@@ -40,6 +40,8 @@ module.exports = function(env) {
   }, {});
 
   return {
+    // mode: argv.mode ? argv.mode : 'development',
+
     entry: ["babel-polyfill", "react-hot-loader/patch", "./src/index.js"],
     output: {
       // The build folder.
@@ -60,13 +62,15 @@ module.exports = function(env) {
       compress: true,
       port: 3000, // port number
       historyApiFallback: true,
-      quiet: true
+      quiet: true,
+      disableHostCheck: true
     },
     // resolve alias (Absolute paths)
     resolve: {
       alias: {
-        Actions: path.resolve(__dirname, "src/redux/actions/"),
-        Types: path.resolve(__dirname, "src/redux/types"),
+        Redux: path.resolve(__dirname, "src/redux"),
+        Ducks: path.resolve(__dirname, "src/redux/ducks"),
+        Types: path.resolve(__dirname, "src/redux/types/"),
         Components: path.resolve(__dirname, "src/components/"),
         Assets: path.resolve(__dirname, "src/assets/"),
         Util: path.resolve(__dirname, "src/util/"),
@@ -76,6 +80,7 @@ module.exports = function(env) {
         Api: path.resolve(__dirname, "src/api/")
       }
     },
+
     module: {
       rules: [
         {
@@ -164,6 +169,7 @@ module.exports = function(env) {
     performance: {
       hints: process.env.NODE_ENV === "production" ? "warning" : false
     },
+
     plugins: [
       new webpack.DefinePlugin(envKeys),
       new FriendlyErrorsWebpackPlugin(),
@@ -171,7 +177,8 @@ module.exports = function(env) {
       new HtmlWebPackPlugin({
         template: "./public/index.html",
         filename: "./index.html",
-        favicon: "./public/favicon.ico"
+        favicon: "./public/favicon.ico",
+        chunksSortMode: "none"
       }),
       new MiniCssExtractPlugin({
         filename: "[name].css",

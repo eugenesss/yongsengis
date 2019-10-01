@@ -4,20 +4,32 @@
 import React from "react";
 import { Provider } from "react-redux";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import MomentUtils from "material-ui-pickers/utils/moment-utils";
-import MuiPickersUtilsProvider from "material-ui-pickers/utils/MuiPickersUtilsProvider";
 
-// css
-import "./lib/reactifyCss";
+//date moment - material ui
+import { MuiPickersUtilsProvider } from "@material-ui/pickers";
+import moment from "moment";
+import MomentUtils from "@date-io/moment";
+
+/**
+ * CSS imports
+ */
+// Use For Full Calender
+import "react-big-calendar/lib/css/react-big-calendar.css";
+// notifications
+import "react-notifications/lib/notifications.css";
+// calendar
+import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
+// Custom Style File
+import "Assets/scss/_style.scss";
 
 // app component
-import App from "./container/App";
+import App from "Routes/app";
 
-import { configureStore } from "./redux/store";
+import { store } from "Redux/store";
 
 const MainApp = () => (
-  <Provider store={configureStore()}>
-    <MuiPickersUtilsProvider utils={MomentUtils}>
+  <Provider store={store}>
+    <MuiPickersUtilsProvider utils={MomentUtils} moment={moment}>
       <Router>
         <Switch>
           <Route path="/" component={App} />

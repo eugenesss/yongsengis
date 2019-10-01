@@ -68,11 +68,11 @@ $theme-colors: map-merge(
 );
 
 // html font
-$html-font-size: 16px;
+$html-font-size: 16px; // 1 rem
 
 // Block Settings
 $block-bg: $white;
-$block-border-radius: 5px;
+$block-border-radius: 15px;
 $block-border: none;
 $block-spacing: 1.25rem 1.25rem; //20px 20px;
 $block-shadow: 0 1px 15px 1px rgba(69, 65, 78, 0.08);
@@ -93,7 +93,7 @@ $block-footer-border-width: 1px;
 $block-footer-border-color: $gray-300;
 
 //Breadcrumb Variable
-$breadcrumb-font-size: 1.875rem; //30px;
+$breadcrumb-font-size: 1.2rem;
 $breadcrumb-font-color: $gray-900;
 
 // Dark theme
@@ -127,7 +127,7 @@ $navbar-height: 4rem; //80px;
 $navbar-bg: $white;
 $hamburger-icon-color: $gray-600;
 $navbar-icon-height: 35px;
-$navbar-icon-width: 35px;
+$navbar-icon-width: 152px;
 $navbar-link-color: $white;
 
 // Footer Variable
@@ -161,16 +161,25 @@ $sidebar-submenu-spacing: 0.9375rem 2.5rem 0.9375rem 4.375rem;
 // Mini Sidebar Variable
 $mini-sidebar-width: 85px;
 
-// Horizontal Menu sidebar Variable
-$hoz-menu-bg: #ffffff;
-$hoz-nav-link-color: #464d69;
-$hoz-nav-font-size: 0.875rem; //14px
-$hoz-nav-link-spacing: 0.9375rem 1.563rem 0.9375rem 1.563rem; //15px 30px;
-$hoz-nav-link-hover-bg: #fafafa;
-$hoz-menu-height: 3.125rem; //50px;
-$hoz-sub-menu-width: 15rem;
-$hoz-box-shadow: 0 2px 10px 0 rgba(204, 204, 204, 0.5);
-$hoz-sub-menu-box-shadow: 0 2px 15px 0 rgba(0, 0, 0, 0.09);
+// Horizontal Menu Variable
+$hoz-menu-bg: none;
+$hoz-nav-link-color: #a7a7a7;
+$hoz-nav-font-size: 0.9375rem; //15px
+$hoz-nav-link-spacing: 0.7rem 1.6rem;
+$hoz-nav-link-hover-bg: #ffb167;
+$hoz-nav-link-width: 7rem;
+$hoz-menu-height: 2.5rem;
+$hoz-nav-link-active-bg: $primary;
+$hoz-sub-menu-box-shadow: 0 2px 0px 0 rgba(0, 0, 0, 0.09);
+
+// Sub Menu Variable
+$sub-nav-link-color: #a7a7a7;
+$sub-nav-font-size: 0.9rem; //15px
+$sub-nav-link-spacing: 0.5rem 1rem;
+$sub-nav-link-hover-bg: #ffb167;
+$sub-nav-link-width: 8rem;
+$sub-menu-height: 2.7rem;
+$sub-nav-link-active-bg: #ffa854;
 
 // Social Link Variable
 $social-icon-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.19);
@@ -181,7 +190,7 @@ $table-tbody-font-weight: 300;
 
 //Quick link
 $dropdown-link-shadow: 0 3px 2px 0 rgba(0, 0, 0, 0.02);
-$base-light: #fafafa;
+$base-light: #f8f8f8;
 
 //Font Weight
 $fw-semi-bold: 500;

@@ -1,16 +1,50 @@
 import axios from "axios";
+import { NotificationManager } from "react-notifications";
 
 const api = axios.create({
-  baseURL: process.env.API_URL,
-  timeout: 8000
+  baseURL: process.env.API_URL
 });
 
 api.interceptors.request.use(config => {
-  const token = localStorage.getItem("ysis_token");
+  const token = localStorage.getItem("accessKey");
   if (token) {
-    config.headers = { Authorization: `Bearer ${token}` };
+    config.headers = { Authorization: `${token}` };
   }
   return config;
 });
+
+api.interceptors.response.use(
+  response => {
+    return response;
+  },
+  error => {
+    if (error.message === "Network Error") {
+      // The user doesn't have internet
+      return Promise.reject(error);
+    }
+    switch (error.response.status) {
+      case 400:
+        break;
+      case 401:
+        // not logged in
+        // if (window.location.pathname != "/login") {
+        //   window.location.replace("/login");
+        // }
+        break;
+      case 403:
+        // no access rights
+        NotificationManager.error("Unauthorised access");
+        break;
+      case 404:
+        break;
+      case 500:
+        break;
+      default:
+        // Unknown Error
+        break;
+    }
+    return Promise.reject(error);
+  }
+);
 
 export default api;

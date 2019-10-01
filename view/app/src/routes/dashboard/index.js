@@ -1,26 +1,42 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+
+// sub components
 import { Helmet } from "react-helmet";
+
 import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
 
-//Components
-import RctCollapsibleCard from "Components/RctCollapsibleCard/RctCollapsibleCard";
+// Widgets
+import CalendarLayout from "Components/Widgets/Calendar/CalendarLayout";
+import CrmSummary from "Components/Widgets/CrmSummary";
+import UntouchedLeadsTable from "Components/Widgets/UntouchedLeadsTable";
 
-export default class EcommerceDashboard extends Component {
+class Homebase extends Component {
   render() {
-    const { match } = this.props;
+    const { name } = this.props;
     return (
-      <div className="saas-dashboard">
+      <React.Fragment>
         <Helmet>
-          <title>YSIS | Dashboard</title>
-          <meta name="description" content="YSIS Dashboard" />
+          <title>Everyday | Homebase</title>
+          <meta name="description" content="Everyday System" />
         </Helmet>
-        <PageTitleBar title="Dashboard" match={match} />
+        <PageTitleBar title={`Hello ${name},`} noBack />
+        <CrmSummary />
         <div className="row">
-          <div className="col-md-6">
-            <RctCollapsibleCard heading="Upcoming ">table</RctCollapsibleCard>
+          <div className="col-md-8">
+            <UntouchedLeadsTable />
+          </div>
+          <div className="col-md-4">
+            <CalendarLayout />
           </div>
         </div>
-      </div>
+      </React.Fragment>
     );
   }
 }
+const mapStateToProps = ({ authUser }) => {
+  const { name } = authUser.loggedInUser;
+  return { name };
+};
+
+export default connect(mapStateToProps)(Homebase);

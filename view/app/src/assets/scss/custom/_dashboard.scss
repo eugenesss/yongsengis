@@ -1,9 +1,10 @@
 /*========== Dashboard Scss ========*/
-.dash-cards, .dash-cards-lg {
+.dash-cards,
+.dash-cards-lg {
   .card-top-action {
     border-radius: 100%;
     color: $white;
-    box-shadow: 0 5px 9px 0 rgba(0,0,0,0.21);
+    box-shadow: 0 5px 9px 0 rgba(0, 0, 0, 0.21);
     position: absolute;
     top: -10px;
     z-index: 9;
@@ -23,8 +24,8 @@
     position: relative;
     min-height: 190px;
     &:hover {
-			box-shadow: $block-hover-shadow;
-		}
+      box-shadow: $block-hover-shadow;
+    }
     .card-title {
       color: $block-title-color;
       margin-bottom: 1.25rem; //20px;
@@ -54,7 +55,7 @@
   }
 }
 .black-overlay {
-  background-color: rgba(0,0,0,0.4);
+  background-color: rgba(0, 0, 0, 0.4);
   position: absolute;
   top: 0;
   bottom: 0;
@@ -66,7 +67,9 @@
     background: $block-bg;
     color: $gray-900;
     border-color: $gray-300;
-    &:hover, &.active, &:focus {
+    &:hover,
+    &.active,
+    &:focus {
       background-color: $gray-200 !important;
       color: $gray-900 !important;
       border-color: $gray-300 !important;
@@ -91,7 +94,7 @@
 .card-action a {
   color: $gray-600;
   font-size: 0.75rem; //12px;
-  margin-right:  0.9375rem; //15px;
+  margin-right: 0.9375rem; //15px;
   &:last-child {
     margin-right: 0;
   }
@@ -132,7 +135,7 @@
   }
 }
 .counter-point {
-  font-size: 1.5rem; //24px;
+  font-size: 2rem;
   color: $gray-600;
 }
 .featured-section-icon {
@@ -143,8 +146,8 @@
   overflow-x: scroll;
 }
 .current-widget {
-	padding: 1.875rem; //30px;
-	border-radius: 10px;
+  padding: 1.875rem; //30px;
+  border-radius: 10px;
   color: $white;
   margin-bottom: $block-margin-bottom;
   box-shadow: $block-shadow;
@@ -167,8 +170,8 @@
   width: 100% !important;
 }
 
-.pt-xl{
-  padding-top:8rem;
+.pt-xl {
+  padding-top: 8rem;
 }
 /*======== Responsive =======*/
 @media (max-width: 1669px) and (min-width: 320px) {
@@ -189,7 +192,9 @@
     .weather-content {
       text-align: center;
     }
-    h2, h3, h4 {
+    h2,
+    h3,
+    h4 {
       font-size: 1rem;
       margin: 0;
     }
@@ -200,14 +205,15 @@
   }
 }
 @media (max-width: 1560px) and (min-width: 320px) {
-  .hover-action button, .hover-action a {
-  	min-height: 28px;
-  	max-width: 28px;
+  .hover-action button,
+  .hover-action a {
+    min-height: 28px;
+    max-width: 28px;
     height: 28px !important;
-  	font-size: 1rem !important;
+    font-size: 1rem !important;
   }
   .weather-top img {
-  	height: 220px;
+    height: 220px;
   }
 }
 @media (max-width: 1460px) and (min-width: 320px) {
@@ -225,21 +231,18 @@
 }
 @media (max-width: 1430px) {
   .rct-header > div {
-    padding: 0 0.625rem;
+    padding: 0px 1rem;
   }
 }
-@media (max-width: 1400px) {
-  .counter-point ~ p {
-    display: none;
-  }
-}
+
 @media (max-width: 1366px) and (min-width: 992px) {
   .current-widget {
     padding: 0.9375rem; //15px;
     i {
       font-size: 2.125rem;
     }
-    h2, h3 {
+    h2,
+    h3 {
       font-size: 1.8rem;
     }
     h3 {
@@ -259,23 +262,24 @@
 }
 @media (max-width: 1269px) {
   .new-customer-list li a {
-  	font-size: 1rem !important;
-  	height: 20px !important;
-  	width: 20px !important;
-  	line-height: 20px !important;
+    font-size: 1rem !important;
+    height: 20px !important;
+    width: 20px !important;
+    line-height: 20px !important;
   }
   .featured-section-icon {
-  	font-size: 2.75rem;
+    font-size: 2.75rem;
   }
   .counter-point {
-  	font-size: 1.2rem;
+    font-size: 1.8rem;
   }
 }
 @media (max-width: 1199px) and (min-width: 320px) {
   .fixed-plugin {
     .app-settings {
       > li {
-        &:nth-of-type(2), &:nth-of-type(3) {
+        &:nth-of-type(2),
+        &:nth-of-type(3) {
           display: none;
         }
       }
@@ -286,7 +290,8 @@
 @media (max-width: 900px) and (min-width: 320px) {
   .navbar-right {
     li {
-      a button, button {
+      a button,
+      button {
         width: 30px;
         height: 30px;
         .badge-top-right {
@@ -296,12 +301,15 @@
       }
     }
   }
-  .rct-dropdown, .notification-icon, .cart-icon  {
+  .rct-dropdown,
+  .notification-icon,
+  .cart-icon {
     &.show .dropdown-menu {
       transform: translate3d(0, 40px, 0) !important;
     }
   }
-  .notification-icon, .cart-icon {
+  .notification-icon,
+  .cart-icon {
     .dropdown-menu {
       right: -32px !important;
     }
@@ -333,14 +341,15 @@
   }
 }
 @media (max-width: 835px) {
-  .navbar-left >li:nth-of-type(2), .navbar-right >li:last-child  {
+  .navbar-left > li:nth-of-type(2),
+  .navbar-right > li:last-child {
     display: none;
   }
 }
 @media (max-width: 800px) and (min-width: 320px) {
   .dropdown-group-link {
     img {
-      margin-right: 0  !important;
+      margin-right: 0 !important;
     }
     span {
       display: none;
@@ -399,14 +408,15 @@
   }
 }
 @media (max-width: 575px) {
-  .page-title-wrap, .breadcrumb {
+  .page-title-wrap,
+  .breadcrumb {
     display: inline-block;
   }
   .breadcrumb {
     float: right;
     padding: 0 0.625rem;
   }
-  .page-title  {
+  .page-title {
     h2 {
       font-size: 1.2rem;
     }
@@ -444,11 +454,10 @@
     }
   }
   .chat-box-main img {
-  	width: 80px;
+    width: 80px;
   }
   .page-title {
     h2 {
-      width: 50px;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;

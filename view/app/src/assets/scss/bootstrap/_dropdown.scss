@@ -18,7 +18,7 @@
   display: none; // none by default, but block on "open" of the menu
   float: left;
   min-width: $dropdown-min-width;
-  padding: $dropdown-padding-y 0;
+  //padding: $dropdown-padding-y 0;
   margin: $dropdown-spacer 0 0; // override default ul
   font-size: $font-size-base; // Redeclare because nesting can cause inheritance issues
   color: $body-color;
@@ -26,10 +26,10 @@
   list-style: none;
   background-color: $dropdown-bg;
   background-clip: padding-box;
-  border:none;
-  @include border-radius($dropdown-border-radius);
+  border: none;
+  @include border-radius($block-border-radius);
   @include box-shadow($block-shadow);
-  transition: all .2s linear !important;
+  transition: all 0.2s linear !important;
 }
 
 // Allow for dropdowns to go bottom up (aka, dropup-menu)

@@ -34,6 +34,7 @@
 }
 /*=========== Weather Widget Effect =============*/
 .rct-weather-widget {
+  //  background-image: $weather-bg;
   background-size: cover;
   -moz-animation: animatedBackground 25s infinite ease;
   -o-animation: animatedBackground 25s infinite ease;

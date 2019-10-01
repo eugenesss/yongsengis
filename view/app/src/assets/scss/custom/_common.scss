@@ -2,50 +2,52 @@
 html {
   font-size: $html-font-size;
 }
-@media(max-width:1700px) {
+@media (max-width: 1700px) {
   html {
     font-size: ($html-font-size - 1);
   }
 }
-@media(max-width:1366px) {
+@media (max-width: 1366px) {
   html {
     font-size: ($html-font-size - 1);
   }
 }
-@media(max-width:1280px) {
+@media (max-width: 1280px) {
   html {
     font-size: ($html-font-size - 1);
   }
 }
-@media(max-width:991px) {
+@media (max-width: 991px) {
   html {
     font-size: ($html-font-size - 2);
   }
 }
-body, html {
+body,
+html {
   height: 100%;
 }
-html{
+html {
   font-family: $font-family-base;
   line-height: 1.15;
   -webkit-text-size-adjust: 100%;
   -ms-text-size-adjust: 100%;
   -ms-overflow-style: scrollbar;
-  -webkit-tap-highlight-color: rgba(0,0,0,0)
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
-body{
+body {
   font-family: $font-family-base;
   font-weight: $font-weight-normal;
-  color:$body-color;
-  background-color: #f8f9fa;
+  color: $body-color;
+  background-color: #f6f8fc;
   position: relative;
-  overflow:hidden;
+  overflow: hidden;
   width: 100%;
 }
-[tabindex='-1']:focus {
+[tabindex="-1"]:focus {
   outline: none;
 }
-ul, ol {
+ul,
+ol {
   padding: 0;
 }
 select,
@@ -56,54 +58,67 @@ input {
 }
 html,
 body {
-  &[dir=rtl],
-  &[dir=ltr] {
-    unicode-bidi: embed
+  &[dir="rtl"],
+  &[dir="ltr"] {
+    unicode-bidi: embed;
   }
 }
-bdo[dir=rtl] {
+bdo[dir="rtl"] {
   direction: rtl;
   unicode-bidi: bidi-override;
 }
-bdo[dir=ltr] {
+bdo[dir="ltr"] {
   direction: ltr;
   unicode-bidi: bidi-override;
 }
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-weight: $fw-semi-bold;
 }
 p {
-  font-size: 14px;
+  font-size: 16px;
 }
 a {
   transition: all 0.5s ease 0s;
   display: inline-block;
   text-decoration: none;
   cursor: pointer;
-	&:hover, &:focus, &.active {
-		color: inherit;
-		text-decoration: none;
+  &:hover,
+  &:focus,
+  &.active {
+    color: inherit;
+    text-decoration: none;
     outline: 0;
-	}
+  }
 }
 *::-moz-selection {
   background-color: $primary;
   color: $light;
 }
-::-moz-placeholder { /* Firefox 19+ */
+::-moz-placeholder {
+  /* Firefox 19+ */
   color: $input-placeholder-color !important;
 }
 * {
-	outline: none;
-  &:hover, &:focus, &.active {
+  outline: none;
+  &:hover,
+  &:focus,
+  &.active {
     outline: none;
   }
 }
-.pull-left{
-  float:left;
+.pull-left {
+  float: left;
 }
-.pull-right{
-  float:right;
+.pull-right {
+  float: right;
+}
+hr {
+  border-top: 1px solid $gray-300;
 }
 sup {
   top: -0.9em;
@@ -134,7 +149,7 @@ disabled {
   border-radius: 5px;
 }
 .border-rad-md {
-   border-radius: 8px;
+  border-radius: 8px;
 }
 address {
   span {
@@ -156,14 +171,15 @@ address {
   vertical-align: middle;
   width: 90%;
 }
-.strike p,.strike h5 {
+.strike p,
+.strike h5 {
   text-decoration: line-through;
 }
 .row.row-eq-height {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
-  display:         flex;
+  display: flex;
 }
 .switch {
   &.on {
@@ -174,12 +190,12 @@ address {
   overflow: visible !important;
 }
 .aqua-ripple {
-  	>div {
-		transition: all 0.2s ease-in-out;
-      &:hover {
-        background-color: $aqua !important;
-      }
-  	}
+  > div {
+    transition: all 0.2s ease-in-out;
+    &:hover {
+      background-color: $aqua !important;
+    }
+  }
 }
 [class*="col-"] {
   display: grid;
@@ -189,10 +205,10 @@ address {
 /*======== Breadcrumb =========*/
 .breadcrumb {
   background: none;
-  .breadcrumb-item{
-     span{
-        text-transform: lowercase;
-     }
+  .breadcrumb-item {
+    span {
+      text-transform: lowercase;
+    }
   }
 }
 /*======== Loader Scss ========*/
@@ -207,64 +223,65 @@ address {
   }
 }
 .loader-overlay {
-	position: absolute;
-	background: rgba(255,255,255, 0.8);
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0px;
-	z-index: 99;
-	align-items: center;
-	overflow: hidden;
+  position: absolute;
+  background: rgba(255, 255, 255, 0.5);
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0px;
+  z-index: 99;
+  align-items: center;
+  overflow: hidden;
   margin: 0 auto;
 }
-.preloader-sidebar{
-  background-color:rgba(0,0,0,0.2);
+.preloader-sidebar {
+  background-color: rgba(0, 0, 0, 0.2);
 }
-.preload-widget{
-  background-color:$white;
-  box-shadow:$block-shadow;
+.preload-widget {
+  background-color: $white;
+  box-shadow: $block-shadow;
 }
-.preload-header{
-  background-color:$white;
-  box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+.preload-header {
+  background-color: $white;
+  box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2),
+    0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
 }
-.fixed-plugin{
-  .agency-bg{
-    display:none;
+.fixed-plugin {
+  .agency-bg {
+    display: none;
   }
 }
 
 /*======== Responsive =========*/
 @media (max-width: 1199px) and (min-width: 768px) {
-	.d-sm-full {
-		max-width: 100% !important;
-		flex-basis: 100% !important;
-	}
-	.d-sm-half-block {
-		max-width: 50% !important;
-		flex-basis: 50% !important;
-	}
+  .d-sm-full {
+    max-width: 100% !important;
+    flex-basis: 100% !important;
+  }
+  .d-sm-half-block {
+    max-width: 50% !important;
+    flex-basis: 50% !important;
+  }
 }
 @media (max-width: 991px) and (min-width: 576px) {
-	.d-xs-full {
-		max-width: 100% !important;
-		flex-basis: 100% !important;
-	}
-	.d-xs-half-block {
-		max-width: 50% !important;
-		flex-basis: 50% !important;
-	}
+  .d-xs-full {
+    max-width: 100% !important;
+    flex-basis: 100% !important;
+  }
+  .d-xs-half-block {
+    max-width: 50% !important;
+    flex-basis: 50% !important;
+  }
 }
 @media (max-width: 575px) and (min-width: 450px) {
   .d-xxs-full {
-		max-width: 100% !important;
-		flex-basis: 100% !important;
-	}
-	.d-xxs-half-block {
-		max-width: 50% !important;
-		flex-basis: 50% !important;
-	}
+    max-width: 100% !important;
+    flex-basis: 100% !important;
+  }
+  .d-xxs-half-block {
+    max-width: 50% !important;
+    flex-basis: 50% !important;
+  }
 }
 @media (max-width: 450px) {
   .d-xs-none {
@@ -276,4 +293,3 @@ address {
     display: none !important;
   }
 }
-
