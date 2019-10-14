@@ -147,7 +147,7 @@ class Inventory(db.Model, Serializer):
     __tablename__ = 'inventory'
     pid = db.Column("pid", db.Integer, primary_key=True)
     name = db.Column("name", db.String(50))
-    description = db.Column("description", db.String(150))
+    description = db.Column("description", db.Text)
     code = db.Column("code", db.String(100))
     material = db.Column("material", db.String(50))
     price = db.Column("price", db.Integer)
@@ -164,7 +164,6 @@ class Inventory(db.Model, Serializer):
     warehouse = relationship("Warehouse", backref=db.backref("inventory", lazy='dynamic'))
     category = relationship("Category", backref=db.backref("inventory", lazy='dynamic'))
 
-
     def __init__(self, name, description, code, material, price, quantity, perbox, location, file,
                  wid, cid, rack, unit_code):
         self.name = name
@@ -180,6 +179,9 @@ class Inventory(db.Model, Serializer):
         self.cid = cid
         self.rack = rack
         self.unit_code = unit_code
+
+    def __getitem__(self, item):
+        return getattr(self, item)
 
 
 class InventorySchema(Schema):
@@ -220,7 +222,7 @@ class Loctite(db.Model, Serializer):
     """
     __tablename__ = 'loctite'
     pid = db.Column("pid", db.Integer, primary_key=True)
-    name = db.Column("name", db.String(100))
+    name = db.Column("name", db.Text)
     description = db.Column("description", db.String(255))
     price = db.Column("price", db.Integer)
     quantity = db.Column("quantity", db.Integer)
@@ -246,6 +248,40 @@ class LoctiteSchema(Schema):
     class Meta:
         # Fields to expose
         fields = ("pid", "name", "quantity", "description", "price", "batch", "expiry_date", "file")
+
+
+class AuditLog(db.Model, Serializer):
+    """
+    Create an Audit Log table
+    """
+    __tablename__ = 'auditlog'
+    pid = db.Column("pid", db.Integer, primary_key=True)
+    name = db.Column("name", db.String(255))
+    field = db.Column("field", db.String(255))
+    old_value = db.Column("old_value", db.Text)
+    new_value = db.Column("new_value", db.Text)
+    date_time = db.Column("date_time", db.DateTime, default=datetime.datetime.now())
+    user = db.Column("user", db.String(255))
+    action = db.Column("action", db.String(255))
+
+    def __init__(self, name, field, old_value, new_value, user, action):
+        self.name = name
+        self.field = field
+        self.old_value = old_value
+        self.new_value = new_value
+        self.user = user
+        self.action = action
+
+
+class AuditLogSchema(Schema):
+    """
+    AuditLog Schema
+    """
+    class Meta:
+        # Fields to expose
+        fields = ("name", "field", "old_value", "new_value", "date_time", "user", "action")
+
+
 
 
 def get_all_items():
