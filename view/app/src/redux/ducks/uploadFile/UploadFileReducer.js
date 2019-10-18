@@ -3,11 +3,10 @@
  */
 import { NotificationManager } from "react-notifications";
 import {
-    UPLOAD_FILE,
-    UPLOAD_FILE_SUCCESS,
-    UPLOAD_FILE_FAILURE,
-} from "Types";
-
+  UPLOAD_FILE,
+  UPLOAD_FILE_SUCCESS,
+  UPLOAD_FILE_FAILURE
+} from "./UploadFileTypes";
 
 /**
  * initial auth user
@@ -18,20 +17,17 @@ const INIT_STATE = {
 };
 
 export default (state = INIT_STATE, action) => {
-
   switch (action.type) {
-
     case UPLOAD_FILE:
-      return { ...state, };
+      return { ...state };
 
     case UPLOAD_FILE_SUCCESS:
-        NotificationManager.success("File uploaded successfully");
-        return { ...state, };
+      NotificationManager.success("File uploaded successfully");
+      return { ...state };
 
     case UPLOAD_FILE_FAILURE:
-        NotificationManager.error('Unable to upload file');
-        return { ...state, };
-      
+      NotificationManager.error("Unable to upload file");
+      return { ...state };
 
     default:
       return { ...state };

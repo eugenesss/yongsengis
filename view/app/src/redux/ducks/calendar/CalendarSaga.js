@@ -35,7 +35,8 @@ const getAllEventsRequest = async () => {
 };
 const addEventRequest = async newEvent => {
   try {
-    const result = await api.post("/events", newEvent);
+    console.log(newEvent);
+    const result = await api.post("/events", { data: newEvent });
     // const result = newEvent;
     return result.data;
   } catch (err) {

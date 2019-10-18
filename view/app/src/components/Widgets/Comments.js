@@ -4,12 +4,12 @@ import Button from "@material-ui/core/Button";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 
-import BgCard from "Components/Everyday/BgCard";
-import BaseInput from "Components/Form/Components/BaseInput";
+import BgCard from "Components/BgCard";
+import BgCardFooter from "Components/BgCard/BgCardFooter";
+import BaseInput from "Components/Form/BaseInput";
 import Avatar from "Components/Everyday/Avatar";
 
 // card component
-import { RctCardFooter } from "Components/RctCard";
 import { Fab } from "@material-ui/core";
 import {
   Edit,
@@ -109,7 +109,7 @@ export default class Comments extends PureComponent {
             )}
           </List>
         </Scrollbars>
-        <RctCardFooter customClasses="d-flex justify-content-between align-items-center rounded-bottom">
+        <BgCardFooter customClasses="d-flex justify-content-between align-items-center rounded-bottom">
           <BaseInput
             value={content}
             onChange={e => this.onChange(e.target.value)}
@@ -124,7 +124,7 @@ export default class Comments extends PureComponent {
           >
             Post
           </Button>
-        </RctCardFooter>
+        </BgCardFooter>
       </BgCard>
     );
   }

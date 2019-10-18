@@ -70,6 +70,7 @@ module.exports = function(env) {
       alias: {
         Redux: path.resolve(__dirname, "src/redux"),
         Ducks: path.resolve(__dirname, "src/redux/ducks"),
+        Actions: path.resolve(__dirname, "src/redux/actions/"),
         Types: path.resolve(__dirname, "src/redux/types/"),
         Components: path.resolve(__dirname, "src/components/"),
         Assets: path.resolve(__dirname, "src/assets/"),
@@ -77,7 +78,9 @@ module.exports = function(env) {
         Routes: path.resolve(__dirname, "src/routes/"),
         Constants: path.resolve(__dirname, "src/constants/"),
         Helpers: path.resolve(__dirname, "src/helpers/"),
-        Api: path.resolve(__dirname, "src/api/")
+        Api: path.resolve(__dirname, "src/api/"),
+        Services: path.resolve(__dirname, "src/services/"),
+        Auth: path.resolve(__dirname, "src/auth/")
       }
     },
 

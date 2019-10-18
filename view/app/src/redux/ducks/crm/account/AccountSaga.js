@@ -12,7 +12,7 @@ import {
   GET_ACCOUNT_FORM_FIELDS
 } from "./AccountTypes";
 import * as actions from "./AccountActions";
-import { singleAccount, accountListPage } from "Helpers/url/crm";
+import { singleAccount, accountListPage } from "Helpers/crmURL";
 
 import api from "Api";
 

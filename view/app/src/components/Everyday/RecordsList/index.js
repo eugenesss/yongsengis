@@ -31,14 +31,14 @@ const myTheme = createMuiTheme({
 });
 
 export default function RecordsList(props) {
-  const { title, columns, data, options } = props;
+  const { title, columns, data, options, style } = props;
   return (
     <MuiThemeProvider theme={myTheme}>
       <MUIDataTable
         title={title}
         columns={columns}
         data={data}
-        options={options}
+        options={options}        
       />
     </MuiThemeProvider>
   );

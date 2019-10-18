@@ -3,6 +3,14 @@
  */
 import { all } from "redux-saga/effects";
 
+// accounting
+import {
+  CreditNoteSaga,
+  InvoiceSaga,
+  PaymentSaga,
+  QuotationSaga
+} from "Ducks/accounting";
+
 //  crm
 import {
   LeadSaga,
@@ -18,9 +26,8 @@ import { UserManagementSaga, RolesSaga } from "Ducks/setting";
 // calendar
 import { CalendarSaga } from "Ducks/calendar";
 
-// auth
-import loginSagas from "./auth/Login";
-import registerSagas from "./auth/Register";
+// session
+import AuthSaga from "Ducks/session/auth/AuthSaga";
 
 // reports
 import { ReportSaga } from "Ducks/report";
@@ -28,8 +35,14 @@ import { ReportSaga } from "Ducks/report";
 // widgets
 import { WidgetSaga } from "Ducks/widget";
 
-export default function* rootSaga(getState) {
+export default function* rootSaga() {
   yield all([
+    // Accounting
+    CreditNoteSaga(),
+    InvoiceSaga(),
+    PaymentSaga(),
+    QuotationSaga(),
+
     // CRM
     LeadSaga(),
     CustomerSaga(),
@@ -37,13 +50,13 @@ export default function* rootSaga(getState) {
     DealSaga(),
     CrmFieldSaga(),
 
-    // Auth
-    loginSagas(),
-    registerSagas(),
+    // Session
+    AuthSaga(),
 
     // System
     ReportSaga(),
     WidgetSaga(),
+
     // Calendar
     CalendarSaga(),
 

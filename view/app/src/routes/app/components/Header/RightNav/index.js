@@ -1,7 +1,7 @@
 import React from "react";
 // import Notifications from "Components/Header/RightNav/Notifications";
-import UserDrawer from "Components/Header/RightNav/UserDrawer";
-import QuickAdd from "Components/Header/RightNav/QuickAdd";
+import UserDrawer from "./UserDrawer";
+import QuickAdd from "./QuickAdd";
 
 export default function RightNav() {
   return (

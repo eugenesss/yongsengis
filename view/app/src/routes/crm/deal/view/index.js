@@ -8,14 +8,14 @@ import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
 import RctPageLoader from "Components/RctPageLoader";
 import RecordNotFound from "Components/Everyday/Error/RecordNotFound";
 // Layout
-import DealCard from "Components/CRM/Deal/DealCard";
+import DealCard from "../components/DealCard";
 import ProfileTabs from "Components/Everyday/Layout/View/ProfileTabs";
 // routes
-import { dealEditPage, dealListPage, dealNewPage } from "Helpers/url/crm";
+import { dealEditPage, dealListPage, dealNewPage } from "Helpers/crmURL";
 // Tabs
 import OverviewTab from "./tabs/Overview";
 import DetailsTab from "./tabs/Details";
-import EventsTab from "Components/CRM/View/Events/EventTab";
+import EventsTab from "../../components/EventsTab";
 // Actions
 import {
   getSingleDeal,

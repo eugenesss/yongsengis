@@ -7,7 +7,7 @@ import { Helmet } from "react-helmet";
 import ImportRecords from "Components/Everyday/ImportRecords";
 
 // Actions
-import { importRecord, fetchImportMapping } from "Actions";
+import { importRecord, fetchImportMapping } from "Ducks/import";
 
 class crm_import_lead extends Component {
   constructor(props) {

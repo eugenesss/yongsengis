@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 //Sub Components
-import LeadList from "Components/CRM/Lead/LeadList";
+import LeadList from "./components/LeadList";
 //Page Req
 import { Helmet } from "react-helmet";
 import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
@@ -12,7 +12,7 @@ import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
 // import ShowListSummaryButton from "Components/Everyday/ListSummary/ShowListSummaryButton";
 // Actions
 import { changeLeadView, getAllLead, getLeadSummary } from "Ducks/crm/lead";
-import { leadNewPage, leadImportPage } from "Helpers/url/crm";
+import { leadNewPage, leadImportPage } from "Helpers/crmURL";
 
 class crm_lead extends Component {
   constructor(props) {

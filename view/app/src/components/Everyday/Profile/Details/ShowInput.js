@@ -53,7 +53,7 @@ const ShowInput = props => {
         {label}
       </InputLabel>
 
-      <div style={{marginTop: 16, fontSize: 18}} {...others}>
+      <div style={{marginTop: 16}} {...others}>
         {value}
       </div>
 

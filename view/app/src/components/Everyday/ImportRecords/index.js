@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import BgCard from "Components/Everyday/BgCard";
+import BgCard from "Components/BgCard";
 import { Table } from "reactstrap";
 import Button from "@material-ui/core/Button";
 import RctSectionLoader from "Components/RctSectionLoader";

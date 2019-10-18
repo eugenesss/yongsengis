@@ -3,9 +3,9 @@ import { connect } from "react-redux";
 
 // Widgets
 import Comments from "Components/Widgets/Comments";
-import RelatedCustomer from "Components/CRM/Account/RelatedCustomer";
+import RelatedCustomer from "../../components/RelatedCustomer";
 
-import { addNoteAccount } from "Actions";
+import { addNoteAccount } from "Ducks/crm/account";
 
 function AccountOverviewTab(props) {
   const { acct } = props;

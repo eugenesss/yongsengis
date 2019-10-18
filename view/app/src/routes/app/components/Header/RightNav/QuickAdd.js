@@ -12,13 +12,13 @@ import {
   customerNewPage,
   accountNewPage,
   dealNewPage
-} from "Helpers/url/crm";
+} from "Helpers/crmURL";
 import {
   quoteNewPage,
   invoiceNewPage,
   crednoteNewPage,
   newPayment
-} from "Helpers/url/accounting";
+} from "Helpers/accountingURL";
 
 const links = [
   { title: "sidebar.lead", link: leadNewPage },

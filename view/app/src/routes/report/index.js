@@ -5,7 +5,7 @@ import { Helmet } from "react-helmet";
 import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
 
 //Page Req
-import ReportViews from "Components/Report/Views";
+import ReportViews from "./components/Views";
 
 // Side Drawer
 import SideDrawer from "Components/Everyday/SideDrawer";

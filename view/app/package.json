@@ -1,9 +1,9 @@
 {
-  "name": "everyday",
-  "version": "0.1.0",
-  "description": "Everday, a System for your Everyday Needs",
+  "name": "ysis",
+  "version": "1.0.0",
+  "description": "Yong Seng Inventory System",
   "scripts": {
-    "start": "npm run prod",
+    "start": "npm run dev",
     "prod": "webpack-dev-server --env.API_URL=http://178.128.84.254:8000/ --mode development --inline --progress",
     "dev": "webpack-dev-server --env.API_URL=http://localhost:5000/ --mode development --inline --progress",
     "build": "webpack --env.API_URL=http://178.128.84.254:8000/ --mode production"
@@ -11,7 +11,7 @@
   "keywords": [
     "reactjs"
   ],
-  "author": "OC Digital",
+  "author": "eugenessss",
   "license": "ISC",
   "devDependencies": {
     "babel-core": "^6.26.0",

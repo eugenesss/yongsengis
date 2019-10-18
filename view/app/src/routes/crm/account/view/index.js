@@ -8,13 +8,13 @@ import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
 import RctPageLoader from "Components/RctPageLoader";
 import RecordNotFound from "Components/Everyday/Error/RecordNotFound";
 // Layout
-import AccountCard from "Components/CRM/Account/AccountCard";
+import AccountCard from "../components/AccountCard";
 import ProfileTabs from "Components/Everyday/Layout/View/ProfileTabs";
 // Tabs
 import OverviewTab from "./tabs/Overview";
 import DetailsTab from "./tabs/Details";
 import DealsTab from "./tabs/Deals";
-import EventsTab from "Components/CRM/View/Events/EventTab";
+import EventsTab from "../../components/EventsTab";
 
 // Routes
 import {
@@ -22,7 +22,7 @@ import {
   accountListPage,
   dealNewPage,
   accountNewPage
-} from "Helpers/url/crm";
+} from "Helpers/crmURL";
 // Actions
 import {
   getSingleAccount,

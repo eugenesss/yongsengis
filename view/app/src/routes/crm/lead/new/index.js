@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { Helmet } from "react-helmet";
 
 // Page Components
-import LeadForm from "Components/Form/Lead/LeadForm";
+import LeadForm from "../components/forms/LeadForm";
 
 // Actions
 import { newLead } from "Ducks/crm/lead";

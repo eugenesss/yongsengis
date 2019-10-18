@@ -3,7 +3,7 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import { Link, withRouter } from "react-router-dom";
 
-import navLinks from "./Menu/NavLinks";
+import navLinks from "Services/_navLinks";
 
 // Right Nav
 import RightNav from "./RightNav";

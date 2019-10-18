@@ -2,8 +2,8 @@ import React from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 
 // async components
-import * as async from "Components/AsyncComponent/CRM";
-import * as url from "Helpers/url/crm";
+import * as async from "./AsyncRoutes";
+import * as url from "Helpers/crmURL";
 
 function crmSwitcher() {
   return (
@@ -78,9 +78,6 @@ function crmSwitcher() {
           path={`${url.dealListPage}/:id/edit`}
           component={async.crm_edit_deal}
         />
-
-        {/* ------- /Team ------- */}
-        <Route path={url.teamListPage} component={async.crm_team_component} />
 
         {/* ------- /404 ------- */}
         <Redirect to="/404" />

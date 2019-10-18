@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { Helmet } from "react-helmet";
 
 // Page Components
-import CustomerForm from "Components/Form/Customer/CustomerForm";
+import CustomerForm from "../components/forms/CustomerForm";
 
 // Action
 import { newCustomer } from "Ducks/crm/customer";

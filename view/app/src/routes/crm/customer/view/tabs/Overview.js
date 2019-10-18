@@ -5,9 +5,9 @@ import { connect } from "react-redux";
 import Comments from "Components/Widgets/Comments";
 
 // deals list
-import DealList from "Components/CRM/Deal/DealList";
+import DealList from "../../../deal/components/DealList";
 
-import { addNoteCustomer } from "Actions";
+import { addNoteCustomer } from "Ducks/crm/customer";
 
 function CustomerOverviewTab(props) {
   const { cust } = props;

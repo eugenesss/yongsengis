@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Moment from "moment";
-import BgCard from "Components/Everyday/BgCard";
+import BgCard from "Components/BgCard";
 
 export default class DisplayEvent extends Component {
   render() {

@@ -6,7 +6,7 @@ import { Helmet } from "react-helmet";
 
 // Page Components
 import RctPageLoader from "Components/RctPageLoader";
-import CustomerForm from "Components/Form/Customer/CustomerForm";
+import CustomerForm from "../components/forms/CustomerForm";
 
 // Actions
 import { editCustomer, getSingleCustomer } from "Ducks/crm/customer";

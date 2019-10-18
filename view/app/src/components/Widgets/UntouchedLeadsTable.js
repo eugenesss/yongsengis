@@ -2,13 +2,13 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { NavLink } from "react-router-dom";
 
-import BgCard from "Components/Everyday/BgCard";
+import BgCard from "Components/BgCard";
 import RecordsList from "Components/Everyday/RecordsList";
 import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
 import { Refresh } from "@material-ui/icons";
 
-import { singleLead } from "Helpers/url/crm";
+import { singleLead } from "Helpers/crmURL";
 import RctSectionLoader from "Components/RctSectionLoader";
 import StatusBadge from "Components/Everyday/StatusBadge/StatusBadge";
 

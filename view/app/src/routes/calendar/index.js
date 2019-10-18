@@ -7,15 +7,15 @@ import { show } from "redux-modal";
 import BigCalendar from "react-big-calendar";
 import moment from "moment";
 
-// Calendar Components
-import CustomToolbar from "Components/Calendar/CustomToolbar";
-import CustomEvent from "Components/Calendar/CustomEvent";
+// Customised Calendar Components
+import CustomToolbar from "./components/CustomToolbar";
+import CustomEventView from "./components/CustomEventView";
 
 // Event Info
-import EventInfo from "Components/Calendar/EventInfo";
+import EventInfo from "./components/EventInfo";
 
 // Calendar form
-import NewEventForm from "Components/Form/Calendar/NewEventForm";
+import NewEventForm from "./components/forms/NewEventForm";
 
 import { getAllEvents, addEvent } from "Ducks/calendar";
 import Popover from "@material-ui/core/Popover";
@@ -110,7 +110,7 @@ class Calendar extends Component {
                 }
                 components={{
                   toolbar: CustomToolbar,
-                  event: CustomEvent
+                  event: CustomEventView
                 }}
               />
             </div>

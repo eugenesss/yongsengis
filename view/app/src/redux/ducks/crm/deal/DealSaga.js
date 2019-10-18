@@ -14,7 +14,7 @@ import {
 } from "./DealTypes";
 import * as actions from "./DealActions";
 
-import { singleDeal, dealListPage } from "Helpers/url/crm";
+import { singleDeal, dealListPage } from "Helpers/crmURL";
 
 import api from "Api";
 

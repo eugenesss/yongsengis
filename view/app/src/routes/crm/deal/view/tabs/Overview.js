@@ -1,17 +1,17 @@
 import React from "react";
 import { connect } from "react-redux";
-// import BgCard from "Components/Everyday/BgCard";
+// import BgCard from "Components/BgCard";
 
 // Deal Stage Widget
-import SelectDealStage from "Components/CRM/Deal/SelectDealStage";
+import SelectDealStage from "../../components/SelectDealStage";
 
 // Comment Widget
 import Comments from "Components/Widgets/Comments";
 
 // Deal history widget
-import DealHistory from "Components/CRM/Deal/DealHistory";
+import DealHistory from "../../components/DealHistory";
 
-import { addNoteDeal } from "Actions";
+import { addNoteDeal } from "Ducks/crm/deal";
 
 function OverviewTab(props) {
   const { deal } = props;

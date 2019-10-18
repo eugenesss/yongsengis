@@ -1,11 +1,11 @@
 import React from "react";
-import BgCard from "Components/Everyday/BgCard";
+import BgCard from "Components/BgCard";
 import EditableInput from "Components/Everyday/Profile/Details/EditableInput";
 
 import {
   KeyInformation,
   PersonalInformation
-} from "Components/Form/Customer//Layout";
+} from "../../components/forms/Layout";
 
 function CustomerDetailsTab(props) {
   const { cust } = props;

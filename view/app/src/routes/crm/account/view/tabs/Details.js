@@ -1,12 +1,12 @@
 import React from "react";
-import BgCard from "Components/Everyday/BgCard";
+import BgCard from "Components/BgCard";
 import EditableInput from "Components/Everyday/Profile/Details/EditableInput";
 
 import {
   KeyInformation,
   AccountInformation,
   ShippingInformation
-} from "Components/Form/Account//Layout";
+} from "../../components/forms/Layout";
 
 function AccountDetailsTab(props) {
   const { acct } = props;
@@ -22,9 +22,13 @@ function AccountDetailsTab(props) {
       <AccountInformation
         fullWidth
         office={<EditableInput label="Office" value={acct.baseContact.phone} />}
-        website={<EditableInput label="Website" value={acct.baseContact.website} />}
+        website={
+          <EditableInput label="Website" value={acct.baseContact.website} />
+        }
         fax={<EditableInput label="Fax" value={acct.baseContact.fax} />}
-        description={<EditableInput label="Description" value={acct.baseContact.info} />}
+        description={
+          <EditableInput label="Description" value={acct.baseContact.info} />
+        }
       />
       <hr />
       <ShippingInformation

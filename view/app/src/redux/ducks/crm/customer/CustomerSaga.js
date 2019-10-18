@@ -13,7 +13,7 @@ import {
 } from "./CustomerTypes";
 import * as actions from "./CustomerActions";
 
-import { singleCustomer, customerListPage } from "Helpers/url/crm";
+import { singleCustomer, customerListPage } from "Helpers/crmURL";
 
 import api from "Api";
 

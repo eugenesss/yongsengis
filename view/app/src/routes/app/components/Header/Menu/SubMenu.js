@@ -1,10 +1,10 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
 import IntlMessages from "Util/IntlMessages";
+
 import { makeStyles, withStyles } from "@material-ui/core/styles";
-import AppBar from "@material-ui/core/AppBar";
-import Tabs from "@material-ui/core/Tabs";
-import Tab from "@material-ui/core/Tab";
+import { AppBar, Tabs, Tab } from "@material-ui/core";
+
 import AppConfig from "Constants/AppConfig";
 
 const StyledTabs = withStyles({

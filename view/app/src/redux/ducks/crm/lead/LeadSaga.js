@@ -14,7 +14,7 @@ import {
   GET_LEADFORM_FIELDS
 } from "./LeadTypes";
 import * as actions from "./LeadActions";
-import { singleLead, leadListPage } from "Helpers/url/crm";
+import { singleLead, leadListPage } from "Helpers/crmURL";
 
 import api from "Api";
 

@@ -4,10 +4,10 @@ import RctSectionLoader from "Components/RctSectionLoader";
 import { kFormatter } from "Helpers/helpers";
 
 // rct card box
-import { RctCard } from "Components/RctCard";
+import BgCard from "Components/BgCard";
 
 const DataBlock = ({ label, amount, loading }) => (
-  <RctCard>
+  <BgCard fullBlock>
     {loading && <RctSectionLoader />}
     <div className="d-flex justify-content-center py-20">
       <div className="text-center">
@@ -15,7 +15,7 @@ const DataBlock = ({ label, amount, loading }) => (
         <p className="text-muted">{label}</p>
       </div>
     </div>
-  </RctCard>
+  </BgCard>
 );
 
 export default DataBlock;

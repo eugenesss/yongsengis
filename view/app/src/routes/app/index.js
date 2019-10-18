@@ -3,51 +3,70 @@ import { Redirect, Route, Switch } from "react-router-dom";
 import { NotificationContainer } from "react-notifications";
 import { connect } from "react-redux";
 
-// rct theme provider
-import RctThemeProvider from "./RctThemeProvider";
+// App theme
+import ThemeProvider from "./components/ThemeProvider";
 
 //Horizontal Layout
-import HorizontalLayout from "./HorizontalLayout";
-import Login from "Routes/login";
+import HorizontalContainer from "./components/HorizontalContainer";
 
-import NotFound from ".components/error_pages/Err404";
-
+// App level dialogs
 import SystemDialogs from "Components/Everyday/SystemDialogs";
 
+// Main Routes (App level)
+import { LoginComponent } from "../session";
+// import Login from "Routes/login";
+// import Register from "Routes/register";
+// import ForgetPassword from "Routes/forgetpassword/forgetpassword";
+
+// Error pages
+import NotFound from "./components/ErrorPages/Err404";
+
+/**
+ * Initial Path To Check Whether User Is Logged In Or Not
+ *
+ */
+const AppEntry = ({ component: Component, ...rest }) => (
+  <Route {...rest} render={props => <Component {...props} />} />
+);
 function App(props) {
-  const { match, user } = props;
+  const { location, match, user } = props;
+  console.log(user);
+  // check if user is authenticated, if not redirect to login
+  if (location.pathname === "/") {
+    if (user != null) {
+      return <Redirect to={"/app/dashboard"} />;
+    } else {
+      return <Redirect to={"/login"} />;
+    }
+  }
 
   return (
-    <RctThemeProvider>
+    <ThemeProvider>
       <NotificationContainer />
       <SystemDialogs />
       <Switch>
-        <Route
+        <AppEntry
           path={`${match.url}app`}
-          render={() =>
-            user ? (
-              <HorizontalLayout />
+          authUser={user}
+          component={() =>
+            user != null ? (
+              <HorizontalContainer />
             ) : (
               <Redirect to={{ pathname: "/login" }} />
             )
           }
         />
-        <Route
-          exact
-          path={"/"}
-          render={() => <Redirect to={{ pathname: "/app/dashboard" }} />}
-        />
-        <Route path={`/login`} component={Login} />
-
+        <Route path={`/login`} exact component={LoginComponent} />
         <Route component={NotFound} />
       </Switch>
-    </RctThemeProvider>
+    </ThemeProvider>
   );
 }
 
 // map state to props
-const mapStateToProps = ({ authUser }) => {
-  const { user } = authUser;
+const mapStateToProps = ({ sessionState }) => {
+  const { authState } = sessionState;
+  const { user } = authState;
   return { user };
 };
 

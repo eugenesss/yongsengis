@@ -29,7 +29,6 @@ export default (state = INIT_STATE, action) => {
     //=====================
     case types.GET_REPORT_FAILURE:
       NotificationManager.error("Error in fetching Report");
-      console.log(action.payload);
       return INIT_STATE;
 
     //=====================

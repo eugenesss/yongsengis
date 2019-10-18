@@ -3,10 +3,10 @@ import { connect } from "react-redux";
 import { connectModal } from "redux-modal";
 import DialogRoot from "Components/Dialog/DialogRoot";
 import { FormControl, InputLabel, Select, MenuItem } from "@material-ui/core";
-import BaseInput from "Components/Form/Components/BaseInput";
+import BaseInput from "Components/Form/BaseInput";
 
 // Actions
-import { getAllUsers } from "Actions";
+import { getAllUsers } from "Ducks/setting/userManagement";
 
 class TransferRecordModal extends Component {
   constructor(props) {

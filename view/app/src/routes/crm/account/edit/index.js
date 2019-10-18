@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { Helmet } from "react-helmet";
 
 // Page Components
-import AccountForm from "Components/Form/Account/AccountForm";
+import AccountForm from "../components/forms/AccountForm";
 import RctPageLoader from "Components/RctPageLoader";
 
 // Actions

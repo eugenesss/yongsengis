@@ -8,17 +8,17 @@ import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
 import RctPageLoader from "Components/RctPageLoader";
 import RecordNotFound from "Components/Everyday/Error/RecordNotFound";
 // Layout
-import LeadCard from "Components/CRM/Lead/LeadCard";
+import LeadCard from "../components/LeadCard";
 import ProfileTabs from "Components/Everyday/Layout/View/ProfileTabs";
 // Tabs
 import LeadOverviewTab from "./tabs/Overview";
 import LeadDetailsTab from "./tabs/Details";
-import EventsTab from "Components/CRM/View/Events/EventTab";
+import EventsTab from "../../components/EventsTab";
 // Modals
-import ConvertLeadModal from "Components/CRM/Lead/Convert/ConvertLeadModal";
-import ConvertSuccessModal from "Components/CRM/Lead/Convert/ConvertSuccessModal";
+import ConvertLeadModal from "../components/dialogs/ConvertLead";
+import ConvertSuccessModal from "../components/dialogs/ConvertSuccess";
 // routes
-import { leadEditPage, leadListPage, leadNewPage } from "Helpers/url/crm";
+import { leadEditPage, leadListPage, leadNewPage } from "Helpers/crmURL";
 //Actions
 import {
   getSingleLead,
