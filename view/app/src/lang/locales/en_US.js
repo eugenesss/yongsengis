@@ -40,5 +40,8 @@ module.exports = {
   "sidebar.newPayment": "New Payment",
 
   "sidebar.reports": "Reports",
-  "sidebar.reminders": "Reminders"
+  "sidebar.reminders": "Reminders",
+
+  "sidebar.inventory": "Inventory",
+  "sidebar.loctite": "Loctite"
 };

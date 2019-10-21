@@ -1,7 +1,7 @@
 import React from "react";
 import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
-import RecordsList from "Components/Everyday/RecordsList";
+import RecordsList from "Components/RecordsList";
 import { EventNote, Edit } from "@material-ui/icons";
 
 import { getTheDate, getTheTime } from "Helpers/helpers";

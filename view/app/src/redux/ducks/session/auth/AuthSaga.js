@@ -33,11 +33,13 @@ function* loginUser({ payload }) {
   const { data, history } = payload;
   try {
     const user = yield call(loginUserRequest, data);
-    console.log(user);
+    // console.log(user);
+    // console.log(history);
     localStorage.setItem("ysis_token", user.token);
     delete user.token;
-    history.push("/app/dashboard");
+
     yield put(loginSuccess(user));
+    history.push("/");
   } catch (error) {
     yield put(loginFailure(error));
   }

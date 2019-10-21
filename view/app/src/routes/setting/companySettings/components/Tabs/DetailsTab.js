@@ -1,7 +1,7 @@
 import React from "react";
 import { Col, Row } from "reactstrap";
 
-// // import TabsHeader from "Components/Everyday/Tabs/TabsHeader";
+// // import TabsHeader from "Components/Tabs/TabsHeader";
 
 const DetailsTab = ({company}) => {
   return (

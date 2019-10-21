@@ -45,9 +45,7 @@ function UserDrawerContent(props) {
         autoHeightMin={350}
         style={{ maxHeight: "calc(100vh - 250px)" }}
       >
-        <div className="user-drawer-content">
-          <Calendar />
-        </div>
+        <div className="user-drawer-content"></div>
       </Scrollbars>
       <div className="drawer-footer">
         <hr />

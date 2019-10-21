@@ -30,7 +30,6 @@ const AppEntry = ({ component: Component, ...rest }) => (
 );
 function App(props) {
   const { location, match, user } = props;
-  console.log(user);
   // check if user is authenticated, if not redirect to login
   if (location.pathname === "/") {
     if (user != null) {

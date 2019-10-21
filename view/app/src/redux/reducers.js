@@ -32,6 +32,9 @@ import { ReportReducer } from "Ducks/report";
 import { CalendarReducer } from "Ducks/calendar";
 import { WidgetReducer } from "Ducks/widget";
 
+// ims
+import { InventoryReducer, LoctiteReducer } from "Ducks/ims";
+
 const reducers = combineReducers({
   sessionState: combineReducers({
     authState: AuthReducer
@@ -43,12 +46,15 @@ const reducers = combineReducers({
     dealState: DealReducer,
     crmField: CrmFieldReducer
   }),
+  imsState: combineReducers({
+    inventoryState: InventoryReducer,
+    loctiteState: LoctiteReducer
+  }),
   accountingState: combineReducers({
     quotationState: QuotationReducer,
     invoiceState: InvoiceReducer,
     creditNoteState: CreditNoteReducer,
     paymentState: PaymentReducer
-    // accountState: AccountingReducer
   }),
   widgetState: WidgetReducer,
   reportState: ReportReducer,

@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { Person, SupervisedUserCircle } from "@material-ui/icons";
 
-import TabsWrapper from "Components/Everyday/Tabs/TabsWrapper";
+import TabsWrapper from "Components/Tabs/TabsWrapper";
 import RctSectionLoader from "Components/RctSectionLoader";
 
 // forms

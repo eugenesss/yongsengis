@@ -3,11 +3,11 @@ import MUIDataTable from "mui-datatables";
 import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
 const myTheme = createMuiTheme({
   overrides: {
-    MUIDataTable: {
-      responsiveScroll: {
-        maxHeight: "auto"
-      }
-    },
+    // MUIDataTable: {
+    //   responsiveScroll: {
+    //     maxHeight: "auto"
+    //   }
+    // },
     MuiPaper: {
       rounded: { borderRadius: "15px" }
     },
@@ -38,7 +38,7 @@ export default function RecordsList(props) {
         title={title}
         columns={columns}
         data={data}
-        options={options}        
+        options={options}
       />
     </MuiThemeProvider>
   );

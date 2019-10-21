@@ -3,7 +3,7 @@ import { connectModal } from "redux-modal";
 import DialogRoot from "Components/Dialog/DialogRoot";
 
 // Components
-import TabsWrapper from "Components/Everyday/Tabs/TabsWrapper";
+import TabsWrapper from "Components/Tabs/TabsWrapper";
 
 // Credit Note Tab
 import ViewTemplate from "Components/Accounting/View/Templates/ViewTemplate";

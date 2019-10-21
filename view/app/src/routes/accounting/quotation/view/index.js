@@ -11,7 +11,7 @@ import { Route, Redirect } from "react-router";
 import MatButton from "@material-ui/core/Button";
 
 // Components
-import TabsWrapper from "Components/Everyday/Tabs/TabsWrapper";
+import TabsWrapper from "Components/Tabs/TabsWrapper";
 import RctPageLoader from "Components/RctPageLoader";
 import BgCard from "Components/BgCard";
 import PageErrorMessage from "Components/Everyday/Error/PageErrorMessage";
@@ -50,7 +50,6 @@ import {
   HandleStateRevertPreviousVersion,
   HandleConvertInvoiceQuotation
 } from "Ducks/accounting/quotation";
-
 
 // addNoteToQuotation(acctID), onNoteChange, clearNote
 // Add events dialog
@@ -257,7 +256,6 @@ const mapStateToProps = ({ accountingState }) => {
   const { quotationToView, quotationList } = quotationState;
   return { quotationToView, quotationList };
 };
-
 
 export default connect(
   mapStateToProps,

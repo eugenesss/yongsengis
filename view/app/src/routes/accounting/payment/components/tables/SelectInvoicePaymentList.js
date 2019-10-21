@@ -2,7 +2,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 
-import RecordsList from "Components/Everyday/RecordsList";
+import RecordsList from "Components/RecordsList";
 import { listOptions } from "Helpers/helpers";
 
 //Page req

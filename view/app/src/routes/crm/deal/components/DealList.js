@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 //Component Req
 // import IconButton from "@material-ui/core/IconButton";
 // import Tooltip from "@material-ui/core/Tooltip";
-import RecordsList from "Components/Everyday/RecordsList";
+import RecordsList from "Components/RecordsList";
 import { listOptions } from "Helpers/helpers";
 import { singleDeal } from "Helpers/crmURL";
 import RctSectionLoader from "Components/RctSectionLoader";

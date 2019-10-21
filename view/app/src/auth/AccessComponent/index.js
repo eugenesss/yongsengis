@@ -6,15 +6,15 @@ class AccessComponent extends PureComponent {
     super(props);
   }
   render() {
-    const { currentUser, children } = this.props;
-    if (currentUser.is_admin == true) return children;
+    const { loggedInUser, children } = this.props;
+    if (loggedInUser.is_admin == true) return children;
     else return null;
   }
 }
 
-const mapStateToProps = ({ authUser }) => {
-  const { currentUser } = authUser;
-  return { currentUser };
+const mapStateToProps = ({ sessionState }) => {
+  const { loggedInUser } = sessionState.authState;
+  return { loggedInUser };
 };
 
 export default connect(mapStateToProps)(AccessComponent);

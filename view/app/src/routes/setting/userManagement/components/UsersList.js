@@ -1,7 +1,7 @@
 import React from "react";
 
 import BgCard from "Components/BgCard";
-import RecordsList from "Components/Everyday/RecordsList";
+import RecordsList from "Components/RecordsList";
 import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
 import { PersonAdd, Edit } from "@material-ui/icons";

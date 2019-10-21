@@ -6,7 +6,7 @@ import { Helmet } from "react-helmet";
 import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
 
 // Components
-import TabsWrapper from "Components/Everyday/Tabs/TabsWrapper";
+import TabsWrapper from "Components/Tabs/TabsWrapper";
 import RctPageLoader from "Components/RctPageLoader";
 import AccountingDetails from "Components/Accounting/View/AccountingDetails";
 import BgCard from "Components/BgCard";

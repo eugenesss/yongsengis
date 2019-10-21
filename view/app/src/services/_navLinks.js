@@ -12,6 +12,8 @@ import {
   crednoteListPage,
   paymentPage
 } from "Helpers/accountingURL";
+// ims routes
+import { inventoryListPage, loctiteListPage } from "Helpers/imsURL";
 
 export default [
   {
@@ -46,6 +48,21 @@ export default [
       {
         title: "sidebar.deals",
         path: dealListPage
+      }
+    ]
+  },
+  {
+    url: "/app/ims/inventory",
+    baseUrl: "/app/ims",
+    name: "IMS",
+    child_routes: [
+      {
+        title: "sidebar.inventory",
+        path: inventoryListPage
+      },
+      {
+        title: "sidebar.loctite",
+        path: loctiteListPage
       }
     ]
   },

@@ -20,6 +20,9 @@ import {
   CrmFieldSaga
 } from "Ducks/crm";
 
+// ims
+import { InventorySaga, LoctiteSaga } from "Ducks/ims";
+
 // settings
 import { UserManagementSaga, RolesSaga } from "Ducks/setting";
 
@@ -49,6 +52,10 @@ export default function* rootSaga() {
     AccountSaga(),
     DealSaga(),
     CrmFieldSaga(),
+
+    // IMS
+    InventorySaga(),
+    LoctiteSaga(),
 
     // Session
     AuthSaga(),

@@ -2,7 +2,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 
 //Page req
-import RecordsList from "Components/Everyday/RecordsList";
+import RecordsList from "Components/RecordsList";
 import { listOptions } from "Helpers/helpers";
 
 import IconButton from "@material-ui/core/IconButton";
@@ -43,7 +43,7 @@ const QuotationList = ({ loading, title, action, tableData }) => {
       name: "totalAmt",
       options: {
         customBodyRender: value => {
-          return `$${value.toFixed(2)}`
+          return `$${value.toFixed(2)}`;
         }
       }
     },

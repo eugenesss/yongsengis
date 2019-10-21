@@ -2,7 +2,7 @@ import React from "react";
 
 import SettingsTab from "./Tabs/SettingsTab";
 import DetailsTab from "./Tabs/DetailsTab";
-import TabsWrapper from "Components/Everyday/Tabs/TabsWrapper";
+import TabsWrapper from "Components/Tabs/TabsWrapper";
 
 const CompanyDetailsBlock = ({ company }) => {
   return (

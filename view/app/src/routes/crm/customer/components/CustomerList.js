@@ -1,7 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 
-import RecordsList from "Components/Everyday/RecordsList";
+import RecordsList from "Components/RecordsList";
 import { listOptions } from "Helpers/helpers";
 import { singleCustomer, singleAccount } from "Helpers/crmURL";
 import RctSectionLoader from "Components/RctSectionLoader";
