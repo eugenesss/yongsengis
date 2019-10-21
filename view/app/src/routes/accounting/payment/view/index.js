@@ -6,18 +6,20 @@ import { Helmet } from "react-helmet";
 
 // Components
 import RctPageLoader from "Components/RctPageLoader";
-import PageErrorMessage from "Components/Everyday/Error/PageErrorMessage";
+import PageErrorMessage from "Components/Error/PageErrorMessage";
 
 // InvoicePaymentList
 import ViewInvoicePaymentList from "../components/tables/ViewInvoicePaymentList";
-import ViewPayment from "../components/ViewPayment"
-
+import ViewPayment from "../components/ViewPayment";
 
 import FormWrapper from "Components/Form/Layout/FormWrapper";
 import FormInputLayout from "Components/Form/Layout/FormInputLayout";
 
 // Actions
-import { getSingleCompanyPayment, clearSinglePayment }  from "Ducks/accounting/payment";
+import {
+  getSingleCompanyPayment,
+  clearSinglePayment
+} from "Ducks/accounting/payment";
 
 class acct_view_payment extends Component {
   componentDidMount() {
@@ -30,18 +32,17 @@ class acct_view_payment extends Component {
   }
 
   _submitPayment() {
-    console.log('submit payment')
+    console.log("submit payment");
   }
 
-  state=({
+  state = {
     payment: {},
-    paymentData : []
-  })
+    paymentData: []
+  };
 
   preparePayment(item) {
-    this.setState({payment: item})
+    this.setState({ payment: item });
   }
-
 
   // getSnapshotBeforeUpdate(prevProps, prevState) {
 
@@ -57,28 +58,21 @@ class acct_view_payment extends Component {
   //   }
   // }
 
-
-
   onCheckList = (rowIndex, value) => {
-    let data = this.state.paymentData
-    data[rowIndex].reconcile.reconcile = value
-    this.setState({paymentData: data})
-  }
-
-
+    let data = this.state.paymentData;
+    data[rowIndex].reconcile.reconcile = value;
+    this.setState({ paymentData: data });
+  };
 
   render() {
     const { loading, company, payment } = this.props.paymentToView;
 
-
     return loading ? (
       <RctPageLoader />
     ) : company ? (
-
       <React.Fragment>
-    
         <Helmet>
-            <title>Everyday | View Payment</title>
+          <title>Everyday | View Payment</title>
         </Helmet>
 
         <FormWrapper
@@ -86,37 +80,29 @@ class acct_view_payment extends Component {
           // disabled={false}
           title={`Payment for ${company.customerName}`}
         >
-        
           {/* {loading && <RctSectionLoader />} */}
 
           <form autoComplete="off">
-            <FormInputLayout
-              title="Key Information"
-              desc="Payment information"
-            >
-                <ViewPayment
-                  invoice={company}
-                  preparePayment={this.preparePayment}
-                />
-                
+            <FormInputLayout title="Key Information" desc="Payment information">
+              <ViewPayment
+                invoice={company}
+                preparePayment={this.preparePayment}
+              />
             </FormInputLayout>
 
             <div className="row border-top py-30 px-30 justify-content-md-center">
               <div className="col-11">
                 <ViewInvoicePaymentList
-                    // title={nowShowing}
-                    // action={action}
-                    tableData={payment}
-                    loading={loading}
-                    onCheckList={this.onCheckList}
+                  // title={nowShowing}
+                  // action={action}
+                  tableData={payment}
+                  loading={loading}
+                  onCheckList={this.onCheckList}
                 />
               </div>
             </div>
-
           </form>
         </FormWrapper>
-              
-             
       </React.Fragment>
     ) : (
       <PageErrorMessage
@@ -137,8 +123,6 @@ export default connect(
   mapStateToProps,
   { getSingleCompanyPayment, clearSinglePayment }
 )(acct_view_payment);
-
-
 
 /*
 <div className="col-md-8">

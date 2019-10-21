@@ -11,7 +11,7 @@ import IntlMessages from "Util/IntlMessages";
 import BgCard from "Components/BgCard";
 import RctSectionLoader from "Components/RctSectionLoader";
 
-import PageErrorMessage from "Components/Everyday/Error/PageErrorMessage";
+import PageErrorMessage from "Components/Error/PageErrorMessage";
 import RctPageLoader from "Components/RctPageLoader";
 
 import InvoiceFields from "Components/Form/Inputs/Accounting/InvoiceFields";
@@ -35,11 +35,7 @@ import {
   getSingleInvoice
 } from "Ducks/accounting/invoice";
 
-
-
-
 class acct_edit_quotation extends Component {
-
   UNSAFE_componentWillMount() {
     var id = this.props.match.params.id;
     this.props.getSingleInvoice(id);

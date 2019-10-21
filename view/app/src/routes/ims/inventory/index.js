@@ -8,6 +8,10 @@ import { Helmet } from "react-helmet";
 import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
 // List View
 import ListViewSelector from "Components/PageTitleBar/ListViewSelector";
+// View Dialog
+import ShowInventory from "./view";
+import EditInventory from "./edit";
+import { inventoryNewPage } from "Helpers/imsURL";
 // Actions
 import {
   getAllInventory,
@@ -15,12 +19,13 @@ import {
   deleteInventory
 } from "Ducks/ims/inventory";
 
-class ims_inventory extends Component {
+class ims_inventory_list extends Component {
   constructor(props) {
     super(props);
     this.handleView = this.handleView.bind(this);
     this.handleEdit = this.handleEdit.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
+    this.newInv = this.newInv.bind(this);
   }
   componentWillMount() {
     this.props.getAllInventory();
@@ -37,6 +42,9 @@ class ims_inventory extends Component {
       action: () => this.delete(itemID)
     });
   }
+  newInv() {
+    this.props.history.push(inventoryNewPage);
+  }
   delete(id) {
     this.props.deleteInventory(id);
   }
@@ -49,7 +57,6 @@ class ims_inventory extends Component {
     const {
       options,
       nowShowing,
-      action,
       tableData,
       loading
     } = this.props.inventoryList;
@@ -62,7 +69,7 @@ class ims_inventory extends Component {
         <PageTitleBar
           title={nowShowing}
           actionGroup={{
-            // add: { onClick: this.newLead },
+            add: { onClick: this.newInv },
             // mid: { label: "Import", onClick: this.importLead },
             more: [{ label: "Refresh List", onClick: this.refresh }]
           }}
@@ -81,6 +88,8 @@ class ims_inventory extends Component {
           handleView={this.handleView}
           handleDelete={this.handleDelete}
         />
+        <ShowInventory />
+        <EditInventory />
       </React.Fragment>
     );
   }
@@ -100,4 +109,4 @@ export default connect(
     changeInvList,
     deleteInventory
   }
-)(ims_inventory);
+)(ims_inventory_list);

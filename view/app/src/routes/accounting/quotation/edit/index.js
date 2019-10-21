@@ -11,7 +11,7 @@ import IntlMessages from "Util/IntlMessages";
 import BgCard from "Components/BgCard";
 import RctSectionLoader from "Components/RctSectionLoader";
 
-import PageErrorMessage from "Components/Everyday/Error/PageErrorMessage";
+import PageErrorMessage from "Components/Error/PageErrorMessage";
 import RctPageLoader from "Components/RctPageLoader";
 import QuotationForm from "../components/QuotationForm";
 

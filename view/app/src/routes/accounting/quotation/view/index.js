@@ -14,7 +14,7 @@ import MatButton from "@material-ui/core/Button";
 import TabsWrapper from "Components/Tabs/TabsWrapper";
 import RctPageLoader from "Components/RctPageLoader";
 import BgCard from "Components/BgCard";
-import PageErrorMessage from "Components/Everyday/Error/PageErrorMessage";
+import PageErrorMessage from "Components/Error/PageErrorMessage";
 import AccountingDetails from "Components/Accounting/View/AccountingDetails";
 
 // Quotation Tab

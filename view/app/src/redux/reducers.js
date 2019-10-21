@@ -33,7 +33,7 @@ import { CalendarReducer } from "Ducks/calendar";
 import { WidgetReducer } from "Ducks/widget";
 
 // ims
-import { InventoryReducer, LoctiteReducer } from "Ducks/ims";
+import { InventoryReducer, LoctiteReducer, ImsFieldReducer } from "Ducks/ims";
 
 const reducers = combineReducers({
   sessionState: combineReducers({
@@ -48,7 +48,8 @@ const reducers = combineReducers({
   }),
   imsState: combineReducers({
     inventoryState: InventoryReducer,
-    loctiteState: LoctiteReducer
+    loctiteState: LoctiteReducer,
+    imsField: ImsFieldReducer
   }),
   accountingState: combineReducers({
     quotationState: QuotationReducer,

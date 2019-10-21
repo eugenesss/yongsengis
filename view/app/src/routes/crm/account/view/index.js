@@ -6,7 +6,7 @@ import { Helmet } from "react-helmet";
 import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
 //Page Components
 import RctPageLoader from "Components/RctPageLoader";
-import RecordNotFound from "Components/Everyday/Error/RecordNotFound";
+import RecordNotFound from "Components/Error/RecordNotFound";
 // Layout
 import AccountCard from "../components/AccountCard";
 import ProfileTabs from "Components/Everyday/Layout/View/ProfileTabs";

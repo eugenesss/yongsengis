@@ -3,11 +3,10 @@ import { show } from "redux-modal";
 import { connect } from "react-redux";
 //Sub Components
 import LoctiteList from "./components/LoctiteList";
+import ViewLoctite from "./view";
 //Page Req
 import { Helmet } from "react-helmet";
 import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
-// List View
-import ListViewSelector from "Components/PageTitleBar/ListViewSelector";
 // Actions
 import { getAllLoctite, deleteLoctite } from "Ducks/ims/loctite";
 
@@ -64,6 +63,7 @@ class ims_loctite extends Component {
           handleDelete={this.handleDelete}
           handleView={this.handleView}
         />
+        <ViewLoctite />
       </React.Fragment>
     );
   }

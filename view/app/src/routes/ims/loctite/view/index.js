@@ -4,13 +4,13 @@ import { connectModal } from "redux-modal";
 import DialogRoot from "Components/Dialog/DialogRoot";
 
 import RctSectionLoader from "Components/RctSectionLoader";
-
+import { Details } from "@material-ui/icons";
 // Components
-// import PageErrorMsg from "Components/YSIS/ErrorMsg/PageErrorMsg";
-// import TabsWrapper from "Components/YSIS/Tabs/TabsWrapper";
+import PageErrorMsg from "Components/Error/PageErrorMessage";
+import TabsWrapper from "Components/Tabs/TabsWrapper";
 // Loctite details
-// import InventoryCard from "Components/Inventory/InventoryCard";
-// import LoctiteDetails from "Components/Loctite/LoctiteDetails";
+import InventoryCard from "../../inventory/components/InventoryCard";
+import LoctiteDetails from "../components/LoctiteDetails";
 
 import { viewLoctite } from "Ducks/ims/loctite";
 
@@ -40,7 +40,7 @@ class ims_loctite_view extends Component {
             </div>
             <div className="col-md-9">
               <TabsWrapper>
-                <div label="Details" icon="zmdi-lamp">
+                <div label="Details" icon={<Details fontSize="small" />}>
                   <LoctiteDetails item={loctite} />
                 </div>
               </TabsWrapper>

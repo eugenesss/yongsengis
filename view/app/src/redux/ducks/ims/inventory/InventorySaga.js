@@ -112,7 +112,8 @@ function* changeInvList({ payload }) {
 function* getInventoryFromDB({ payload }) {
   try {
     //const inv = yield call(getInventoryReq, payload);
-    const invList = state => state.inventoryState.inventoryList.tableData;
+    const invList = state =>
+      state.imsState.inventoryState.inventoryList.tableData;
     const tableData = yield select(invList);
     const inv = tableData.find(inv => inv.pid === payload);
     yield put(getInventorySuccess(inv));

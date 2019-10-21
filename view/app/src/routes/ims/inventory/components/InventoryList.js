@@ -8,7 +8,14 @@ import RecordsList from "Components/RecordsList";
 import { listOptions } from "Helpers/helpers";
 import RctSectionLoader from "Components/RctSectionLoader";
 
-const InventoryList = ({ tableData, loading, title, action }) => {
+const InventoryList = ({
+  tableData,
+  loading,
+  title,
+  handleView,
+  handleEdit,
+  handleDelete
+}) => {
   const columns = [
     {
       label: "ID",

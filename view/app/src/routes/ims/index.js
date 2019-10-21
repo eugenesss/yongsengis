@@ -15,6 +15,11 @@ function imsSwitcher() {
           path={url.inventoryListPage}
           component={async.ims_inventory_list}
         />
+        <Route
+          exact
+          path={url.inventoryNewPage}
+          component={async.ims_inventory_new}
+        />
 
         {/* ------- /Loctite ------- */}
         <Route

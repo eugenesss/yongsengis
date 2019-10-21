@@ -8,7 +8,14 @@ import RecordsList from "Components/RecordsList";
 import { listOptions, getTheDate } from "Helpers/helpers";
 import RctSectionLoader from "Components/RctSectionLoader";
 
-const LoctiteList = ({ tableData, loading, title, action }) => {
+const LoctiteList = ({
+  tableData,
+  loading,
+  title,
+  handleView,
+  handleEdit,
+  handleDelete
+}) => {
   const columns = [
     {
       label: "ID",

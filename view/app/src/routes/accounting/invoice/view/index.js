@@ -13,36 +13,35 @@ import MatButton from "@material-ui/core/Button";
 import RctPageLoader from "Components/RctPageLoader";
 import MakePayment from "../components/MakePayment";
 
-
 import DialogRoot from "Components/Dialog/DialogRoot";
-import PageErrorMessage from "Components/Everyday/Error/PageErrorMessage";
-
+import PageErrorMessage from "Components/Error/PageErrorMessage";
 
 // Actions
-import { newInvoice, invoiceEditPage, invoiceNewPage } from "Helpers/accountingURL";
+import {
+  newInvoice,
+  invoiceEditPage,
+  invoiceNewPage
+} from "Helpers/accountingURL";
 
-import { 
-  getSingleInvoice, 
-  clearSingleInvoice, 
-  deleteSingleInvoice, 
-  InvoiceHandleStateUpdate, 
-  InvoiceHandleStateCreateNewVersion, 
-  InvoiceHandleStateRevertPreviousVersion, 
+import {
+  getSingleInvoice,
+  clearSingleInvoice,
+  deleteSingleInvoice,
+  InvoiceHandleStateUpdate,
+  InvoiceHandleStateCreateNewVersion,
+  InvoiceHandleStateRevertPreviousVersion
 } from "Ducks/accounting/invoice";
 
 import {
-  makePayment, 
+  makePayment,
   makePaymentIncompleteFields
-} from 'Ducks/accounting/payment';
+} from "Ducks/accounting/payment";
 
 import InvoiceCard from "../components/InvoiceCard";
 import ProfileTabs from "Components/Everyday/Layout/View/ProfileTabs";
 import OverviewTab from "./tabs/Overview";
 
-
-
 class acct_view_invoice extends Component {
-
   state = {
     makePayment: false
   };
@@ -61,7 +60,7 @@ class acct_view_invoice extends Component {
   };
 
   newInvoice() {
-    this.props.history.push(invoiceNewPage)
+    this.props.history.push(invoiceNewPage);
   }
 
   edit(invoice) {
@@ -76,59 +75,56 @@ class acct_view_invoice extends Component {
     this.setState({ makePayment: !this.state.makePayment });
   };
 
-  makePayment = (item) =>  {
+  makePayment = item => {
+    let amount;
 
-    let amount
-
-    if(item.amount != 0){
-      item.amount = parseInt(item.amount)
+    if (item.amount != 0) {
+      item.amount = parseInt(item.amount);
     } else {
       amount = 0;
     }
-    
-    if(amount == 0) {
-      this.props.makePaymentIncompleteFields('paid amount')
-      return
+
+    if (amount == 0) {
+      this.props.makePaymentIncompleteFields("paid amount");
+      return;
     }
-    if(item.paymentRef == ""){
-      this.props.makePaymentIncompleteFields('payment reference')
-      return
-    } 
-    if(item.paymentMethod == "" ){
-      this.props.makePaymentIncompleteFields('payment method')
-      return
+    if (item.paymentRef == "") {
+      this.props.makePaymentIncompleteFields("payment reference");
+      return;
     }
-  
-    
+    if (item.paymentMethod == "") {
+      this.props.makePaymentIncompleteFields("payment method");
+      return;
+    }
+
     let payment = {
       payment: {
         customer: item.customer,
         customerName: item.customerName,
-        amount : item.amount,
+        amount: item.amount,
         paymentMethod: item.paymentMethod,
         date: item.date,
         paymentRef: item.paymentRef,
-        memo : item.memo,
+        memo: item.memo,
         paymentDifference: item.paymentDifference,
-        userId : localStorage.getItem('user_id'),
+        userId: localStorage.getItem("user_id")
       },
-      invoices : [{
-        amount : item.amount,
-        invoiceQuote : item.invoiceQuote,
-        invoiceId : item.invoiceId,
-        reconciled : item.reconcileInvoice,
-      }]
-    }
+      invoices: [
+        {
+          amount: item.amount,
+          invoiceQuote: item.invoiceQuote,
+          invoiceId: item.invoiceId,
+          reconciled: item.reconcileInvoice
+        }
+      ]
+    };
 
-    this.props.makePayment({payment: payment, balance: []})
+    this.props.makePayment({ payment: payment, balance: [] });
 
     this.launchMakePaymentDialog();
   };
 
-
   render() {
-    
-   
     const { loading, invoice, payment, amount } = this.props.invoiceToView;
 
     let buttonCollection = null;
@@ -136,8 +132,7 @@ class acct_view_invoice extends Component {
     if (invoice) {
       switch (invoice.state) {
         case "Draft":
-
-        buttonCollection = (
+          buttonCollection = (
             <PageTitleBar
               title="View Invoice"
               actionGroup={{
@@ -146,22 +141,26 @@ class acct_view_invoice extends Component {
                 more: [
                   {
                     label: "Confirm Invoice",
-                    onClick: () => this.props.InvoiceHandleStateUpdate(invoice.id, "Confirmed")
+                    onClick: () =>
+                      this.props.InvoiceHandleStateUpdate(
+                        invoice.id,
+                        "Confirmed"
+                      )
                   },
-   
+
                   {
                     label: "Delete Invoice",
-                    onClick: () => this.props.deleteSingleInvoice(this.props.match.params.id)
-                  },
+                    onClick: () =>
+                      this.props.deleteSingleInvoice(this.props.match.params.id)
+                  }
                 ]
               }}
             />
-          )
-         
+          );
+
           break;
 
         case "Current":
-
           buttonCollection = (
             <PageTitleBar
               title="View Invoice"
@@ -171,55 +170,64 @@ class acct_view_invoice extends Component {
                 more: [
                   {
                     label: "New Version Invoice",
-                    onClick: () => {                   
-                      this.props.InvoiceHandleStateUpdate(invoice.id, "Current")
+                    onClick: () => {
+                      this.props.InvoiceHandleStateUpdate(
+                        invoice.id,
+                        "Current"
+                      );
                     }
                   },
                   {
                     label: "Confirm Invoice",
-                    onClick: () => this.props.InvoiceHandleStateUpdate(invoice.id, "Confirmed")
+                    onClick: () =>
+                      this.props.InvoiceHandleStateUpdate(
+                        invoice.id,
+                        "Confirmed"
+                      )
                   }
                 ]
               }}
             />
-          )
-        
+          );
+
           break;
 
         case "Confirmed":
-
-
-            buttonCollection = (
-              <PageTitleBar
-                title="View Invoice"
-                actionGroup={{
-                  add: { onClick: () => this.newInvoice() },
-                  mid: { label: "Pay", onClick:() =>  this.launchMakePaymentDialog()},
-                  more: [
-                    {
-                      label: "New Version",
-                      onClick: () => {
-                        this.props.InvoiceHandleStateUpdate(invoice.id, "Current")
-                      }
+          buttonCollection = (
+            <PageTitleBar
+              title="View Invoice"
+              actionGroup={{
+                add: { onClick: () => this.newInvoice() },
+                mid: {
+                  label: "Pay",
+                  onClick: () => this.launchMakePaymentDialog()
+                },
+                more: [
+                  {
+                    label: "New Version",
+                    onClick: () => {
+                      this.props.InvoiceHandleStateUpdate(
+                        invoice.id,
+                        "Current"
+                      );
                     }
-                  ]
-                }}
-              />
-            )
+                  }
+                ]
+              }}
+            />
+          );
 
-    
           break;
 
         case "Paid":
-
-            buttonCollection = (
-              <PageTitleBar
-                title="View Invoice"
-                actionGroup={{
-                  add: { onClick: () => this.newInvoice() },
-                }}
-              />
-            )
+          buttonCollection = (
+            <PageTitleBar
+              title="View Invoice"
+              actionGroup={{
+                add: { onClick: () => this.newInvoice() }
+              }}
+            />
+          );
 
           break;
 
@@ -231,61 +239,47 @@ class acct_view_invoice extends Component {
     if (this.props.invoiceList.deleted) {
       return <Redirect to="/app/acct/invoices" />;
     }
-      
 
     return loading ? (
       <RctPageLoader />
     ) : invoice ? (
-
       <React.Fragment>
         <Helmet>
           <title>Everyday | View Invoice</title>
         </Helmet>
-        
+
         {buttonCollection}
 
         <div className="row">
-          
           <div className="col-md-3">
-            <InvoiceCard
-              quotation={invoice}
-            />
+            <InvoiceCard quotation={invoice} />
           </div>
 
           <div className="col-md-9">
-          
-          
             <ProfileTabs loading={false}>
+              <div label="Overview">
+                <OverviewTab
+                  quotation={invoice}
+                  payment={payment}
+                  reconciledAmount={amount}
+                />
+              </div>
 
-                  <div label="Overview">
-                    <OverviewTab
-                      quotation={invoice}
-                      payment = {payment}
-                      reconciledAmount={amount}
-                    />
-                  </div>
+              <div label="Deals">
+                {/* <DealsTab deals={customer.deals} /> */}
+              </div>
 
-                  <div label="Deals">
-                   {/* <DealsTab deals={customer.deals} /> */}
-                  </div>
-
-                  <div label="Events">
-                    {/* <EventsTab
+              <div label="Events">
+                {/* <EventsTab
                       eventableType="Customer"
                       eventableId={customer.id}
                       events={customer.events}
                     /> */}
-                  </div>
+              </div>
 
-                  <div label="Details">
-                    {/* <DetailsTab cust={customer} /> */}
-                  </div>
-
+              <div label="Details">{/* <DetailsTab cust={customer} /> */}</div>
             </ProfileTabs>
-         
-
           </div>
-        
         </div>
 
         {this.state.makePayment && (
@@ -309,7 +303,6 @@ class acct_view_invoice extends Component {
             </div>
           </DialogRoot>
         )}
-
       </React.Fragment>
     ) : (
       <PageErrorMessage
@@ -327,12 +320,12 @@ const mapStateToProps = ({ accountingState }) => {
 
 export default connect(
   mapStateToProps,
-  { 
-    getSingleInvoice, 
-    clearSingleInvoice, 
-    deleteSingleInvoice, 
-    InvoiceHandleStateUpdate, 
-    InvoiceHandleStateCreateNewVersion, 
+  {
+    getSingleInvoice,
+    clearSingleInvoice,
+    deleteSingleInvoice,
+    InvoiceHandleStateUpdate,
+    InvoiceHandleStateCreateNewVersion,
     InvoiceHandleStateRevertPreviousVersion,
     makePayment,
     makePaymentIncompleteFields

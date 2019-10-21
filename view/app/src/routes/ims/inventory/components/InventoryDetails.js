@@ -1,39 +1,87 @@
 import React from "react";
-import TabsHeader from "Components/YSIS/Tabs/TabsHeader";
-import DetailsRow from "Components/YSIS/Details/DetailsRow";
-import DetailsTable from "Components/YSIS/Details/DetailsTable";
+import { Table, TableBody, TableRow, TableCell } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles({
+  title: {
+    fontWeight: 600
+  }
+});
 
 const InventoryDetails = ({ item }) => {
+  const classes = useStyles();
   return (
     <React.Fragment>
-      <div className="mb-30">
-        <div className="row">
-          <div className="col-6">
-            <TabsHeader title="Inventory Details" />
-            <DetailsTable>
-              <DetailsRow label="Name" value={item.name} />
-              <DetailsRow label="Category" value={item.cat_name} />
-              <DetailsRow label="Material" value={item.material} />
-              <DetailsRow label="Quantity" value={item.quantity} />
-              <DetailsRow label="Qty Per Box" value={item.perbox} />
-              <DetailsRow label="Unit Code" value={item.unit_code} />
-            </DetailsTable>
-          </div>
-          <div className="col-6">
-            <TabsHeader title="Location Details" />
-            <DetailsTable>
-              <DetailsRow label="Code" value={item.code} />
-              <DetailsRow label="Location" value={item.location} />
-              <DetailsRow label="Warehouse" value={item.wh_name} />
-              <DetailsRow label="Rack" value={item.rack} />
-            </DetailsTable>
+      <div className="row">
+        <div className="col-md-6 align-items-start">
+          <div>
+            <h3>Inventory Details</h3>
+            <Table>
+              <TableBody>
+                <TableRow>
+                  <TableCell className={classes.title}>Name</TableCell>
+                  <TableCell align="right">{item.name}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell className={classes.title}>Category</TableCell>
+                  <TableCell align="right">{item.cat_name}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell className={classes.title}>Material</TableCell>
+                  <TableCell align="right">{item.material}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell className={classes.title}>Quantity</TableCell>
+                  <TableCell align="right">{item.quantity}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell className={classes.title}>Qty Per Box</TableCell>
+                  <TableCell align="right">{item.perbox}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell className={classes.title}>Unit Code</TableCell>
+                  <TableCell align="right">{item.unit_code}</TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
           </div>
         </div>
-        <div className="row">
-          <div className="col-md-12">
-            <h5>Description</h5>
-            <p>{item.description}</p>
+        <div className="col-md-6 align-items-start">
+          <div>
+            <h3>Inventory Details</h3>
+            <Table>
+              <TableBody>
+                <TableRow>
+                  <TableCell className={classes.title}>Code</TableCell>
+                  <TableCell align="right">{item.code}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell className={classes.title}>Location</TableCell>
+                  <TableCell align="right">{item.location}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell className={classes.title}>Warehouse</TableCell>
+                  <TableCell align="right">{item.wh_name}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell className={classes.title}>Rack</TableCell>
+                  <TableCell align="right">{item.rack}</TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
           </div>
+        </div>
+      </div>
+      <div className="row">
+        <div className="col-md-12 align-items-start">
+          <Table>
+            <TableBody>
+              <TableRow>
+                <TableCell className={classes.title}>Description</TableCell>
+                <TableCell>{item.description}</TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
         </div>
       </div>
     </React.Fragment>
