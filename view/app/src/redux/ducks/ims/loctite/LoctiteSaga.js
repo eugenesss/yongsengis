@@ -21,6 +21,8 @@ import {
   deleteLoctiteFailure
 } from "./LoctiteActions";
 
+import { loctiteListPage } from "Helpers/imsURL";
+
 import api from "Api";
 import moment from "moment";
 
@@ -80,9 +82,14 @@ function* startLoctiteEdit({ payload }) {
   }
 }
 function* submitLoctiteForm({ payload }) {
+  const { data, redirect, history } = payload;
   try {
-    const data = yield call(submitLoctiteFormRequest, payload);
-    yield put(submitLoctiteSuccess(data));
+    const inv = yield call(submitLoctiteFormRequest, data);
+    if (redirect) {
+      yield delay(400);
+      history.push(loctiteListPage);
+    }
+    yield put(submitLoctiteSuccess(inv));
   } catch (error) {
     yield put(submitLoctiteFailure(error));
   }

@@ -38,9 +38,9 @@ export const getInventorySuccess = inv => ({
 /**
  * New Inventory
  */
-export const submitInventory = (data, redirect) => ({
+export const submitInventory = (data, redirect, history) => ({
   type: types.SUBMIT_INVENTORY_FORM,
-  payload: { data, redirect }
+  payload: { data, redirect, history }
 });
 export const submitInventorySuccess = data => ({
   type: types.SUBMIT_INVENTORY_SUCCESS,

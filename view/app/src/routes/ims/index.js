@@ -27,6 +27,11 @@ function imsSwitcher() {
           path={url.loctiteListPage}
           component={async.ims_loctite_list}
         />
+        <Route
+          exact
+          path={url.loctiteNewPage}
+          component={async.ims_loctite_new}
+        />
         {/* <Route path={url.customerNewPage} component={async.crm_new_customer} />
         <Route
           path={url.customerImportPage}

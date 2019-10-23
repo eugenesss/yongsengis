@@ -30,6 +30,8 @@ import {
   deleteInventoryFailure
 } from "./InventoryActions";
 
+import { inventoryListPage } from "Helpers/imsURL";
+
 import api from "Api";
 
 //=========================
@@ -122,12 +124,12 @@ function* getInventoryFromDB({ payload }) {
   }
 }
 function* submitInvToDB({ payload }) {
-  const { data, redirect } = payload;
+  const { data, redirect, history } = payload;
   try {
     const inv = yield call(postInventoryReq, data);
     if (redirect) {
       yield delay(400);
-      window.location.replace("/app/inventory/all");
+      history.push(inventoryListPage);
     }
     yield put(submitInventorySuccess(inv));
   } catch (error) {

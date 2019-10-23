@@ -43,5 +43,9 @@ module.exports = {
   "sidebar.reminders": "Reminders",
 
   "sidebar.inventory": "Inventory",
-  "sidebar.loctite": "Loctite"
+  "sidebar.newInventory": "New Inventory",
+  "sidebar.editInventory": "Edit Inventory",
+  "sidebar.loctite": "Loctite",
+  "sidebar.newLoctite": "New Loctite",
+  "sidebar.editLoctite": "Edit Loctite"
 };

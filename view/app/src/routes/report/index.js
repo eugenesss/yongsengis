@@ -18,6 +18,7 @@ class ReportsComponent extends Component {
     this.state = {
       activeView: "",
       nestedView: {
+        editHistory: true,
         sales: false,
         leads: false,
         deals: false,
@@ -60,6 +61,27 @@ class ReportsComponent extends Component {
           <div className="col-lg-2">
             <SideDrawer listHeader="Reports List">
               <DrawerListCollapsible
+                title="Edit History"
+                state={nestedView.editHistory}
+                openNested={() => this.handleNestedView("editHistory")}
+              >
+                <DrawerListItem
+                  onClickListItem={() => this.onSelectView("editHistoryInv")}
+                  title="Inventory"
+                  secondary
+                  selected={activeView == "editHistoryInv"}
+                />
+                <DrawerListItem
+                  onClickListItem={() =>
+                    this.onSelectView("editHistoryLoctite")
+                  }
+                  title="Loctite"
+                  secondary
+                  selected={activeView == "editHistoryLoctite"}
+                />
+              </DrawerListCollapsible>
+
+              {/* <DrawerListCollapsible
                 title="Deals"
                 state={nestedView.deals}
                 openNested={() => this.handleNestedView("deals")}
@@ -94,12 +116,6 @@ class ReportsComponent extends Component {
                   secondary
                   selected={activeView == "wonByOwner"}
                 />
-                {/* <DrawerListItem
-                    onClickListItem={() => this.onSelectView("lostDealsReason")}
-                    title="Lost Deals by Reason"
-                    secondary
-                    selected={activeView == "lostDealsReason"}
-                  /> */}
               </DrawerListCollapsible>
               <DrawerListCollapsible
                 title="Leads"
@@ -150,10 +166,8 @@ class ReportsComponent extends Component {
                 onClickListItem={() => this.onSelectView("individual")}
                 title="Individual"
                 selected={activeView == "individual"}
-              />
+              /> */}
             </SideDrawer>
-            {/* </List>
-            </Drawer> */}
           </div>
           <div className="col-lg-10">
             <ReportViews componentToRender={activeView} />

@@ -3,69 +3,81 @@ import { ReportDefaultMessage } from "../DefaultMessages";
 
 // Report Components
 
-// Deal Reports
-import DealsByOwnerReport from "./DealReports/DealsByOwnerReport";
-import DealsByTypeReport from "./DealReports/DealsByTypeReport";
-import DealsPipelineReport from "./DealReports/DealsPipelineReport";
+// Edit History
+import InventoryHistory from "./EditHistory/InventoryHistory";
+import LoctiteHistory from "./EditHistory/LoctiteHistory";
 
-// Closed Deal Reports
-import WonByOwnerReport from "./ClosedDealReports/WonByOwnerReport";
+// // Deal Reports
+// import DealsByOwnerReport from "./DealReports/DealsByOwnerReport";
+// import DealsByTypeReport from "./DealReports/DealsByTypeReport";
+// import DealsPipelineReport from "./DealReports/DealsPipelineReport";
 
-// Lead Reports
-import LeadsByStatusReport from "./LeadReports/LeadsByStatusReport";
-import LeadsByOwnerReport from "./LeadReports/LeadsByOwnerReport";
-import LeadsBySourceReport from "./LeadReports/LeadsBySourceReport";
+// // Closed Deal Reports
+// import WonByOwnerReport from "./ClosedDealReports/WonByOwnerReport";
 
-// Acct Cust Reports
-import TopSpenderAccountReport from "./AcctCustReports/TopSpenderAccountReport";
-import TopSpenderCustomerReport from "./AcctCustReports/TopSpenderCustomerReport";
+// // Lead Reports
+// import LeadsByStatusReport from "./LeadReports/LeadsByStatusReport";
+// import LeadsByOwnerReport from "./LeadReports/LeadsByOwnerReport";
+// import LeadsBySourceReport from "./LeadReports/LeadsBySourceReport";
 
-// Individual Report
-import IndividualReport from "./IndividualReport";
+// // Acct Cust Reports
+// import TopSpenderAccountReport from "./AcctCustReports/TopSpenderAccountReport";
+// import TopSpenderCustomerReport from "./AcctCustReports/TopSpenderCustomerReport";
+
+// // Individual Report
+// import IndividualReport from "./IndividualReport";
 
 const ReportRender = ({ componentToRender }) => {
   switch (componentToRender) {
     //===================
-    // Open Deal Reports
+    // Edit History
     //===================
-    case "dealsByOwner":
-      return <DealsByOwnerReport />;
-    case "dealsByType":
-      return <DealsByTypeReport />;
-    case "dealsPipeline":
-      return <DealsPipelineReport />;
+    case "editHistoryInv":
+      return <InventoryHistory />;
+    case "editHistoryLoctite":
+      return <LoctiteHistory />;
 
-    //===================
-    // Closed Deal Reports
-    //===================
-    case "wonByOwner":
-      return <WonByOwnerReport />;
-    case "lostDealsReason":
-      return <ReportDefaultMessage />;
+    // //===================
+    // // Open Deal Reports
+    // //===================
+    // case "dealsByOwner":
+    //   return <DealsByOwnerReport />;
+    // case "dealsByType":
+    //   return <DealsByTypeReport />;
+    // case "dealsPipeline":
+    //   return <DealsPipelineReport />;
 
-    //===================
-    // Lead Reports
-    //===================
-    case "leadsByStatus":
-      return <LeadsByStatusReport />;
-    case "leadsByOwner":
-      return <LeadsByOwnerReport />;
-    case "leadsBySource":
-      return <LeadsBySourceReport />;
+    // //===================
+    // // Closed Deal Reports
+    // //===================
+    // case "wonByOwner":
+    //   return <WonByOwnerReport />;
+    // case "lostDealsReason":
+    //   return <ReportDefaultMessage />;
 
-    //===================
-    // Acct Cust Reports
-    //===================
-    case "topSpenderAccount":
-      return <TopSpenderAccountReport />;
-    case "topSpenderCustomer":
-      return <TopSpenderCustomerReport />;
+    // //===================
+    // // Lead Reports
+    // //===================
+    // case "leadsByStatus":
+    //   return <LeadsByStatusReport />;
+    // case "leadsByOwner":
+    //   return <LeadsByOwnerReport />;
+    // case "leadsBySource":
+    //   return <LeadsBySourceReport />;
 
-    //===================
-    // Individual Reports
-    //===================
-    case "individual":
-      return <IndividualReport />;
+    // //===================
+    // // Acct Cust Reports
+    // //===================
+    // case "topSpenderAccount":
+    //   return <TopSpenderAccountReport />;
+    // case "topSpenderCustomer":
+    //   return <TopSpenderCustomerReport />;
+
+    // //===================
+    // // Individual Reports
+    // //===================
+    // case "individual":
+    //   return <IndividualReport />;
     default:
       return <ReportDefaultMessage />;
   }

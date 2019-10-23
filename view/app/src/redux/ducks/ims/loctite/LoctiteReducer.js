@@ -133,7 +133,6 @@ export default (state = INIT_STATE, action) => {
       };
     case types.START_EDIT_LOCTITE_FAILURE:
       NotificationManager.error("Error in fetching loctite");
-      console.log(action.payload);
       return {
         ...state,
         loctiteForm: { ...state.loctiteForm, modalLoading: false }
@@ -153,7 +152,7 @@ export default (state = INIT_STATE, action) => {
         loctiteForm: {
           ...state.loctiteForm,
           modalLoading: false,
-          item: action.payload
+          loctite: action.payload
         }
       };
     case types.EDIT_LOCTITE_FAILURE:

@@ -4,9 +4,11 @@ import { connect } from "react-redux";
 //Sub Components
 import LoctiteList from "./components/LoctiteList";
 import ViewLoctite from "./view";
+import EditLoctite from "./edit";
 //Page Req
 import { Helmet } from "react-helmet";
 import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
+import { loctiteNewPage } from "Helpers/imsURL";
 // Actions
 import { getAllLoctite, deleteLoctite } from "Ducks/ims/loctite";
 
@@ -16,6 +18,7 @@ class ims_loctite extends Component {
     this.handleView = this.handleView.bind(this);
     this.handleEdit = this.handleEdit.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
+    this.newLoctite = this.newLoctite.bind(this);
   }
   componentWillMount() {
     this.props.getAllLoctite();
@@ -35,9 +38,11 @@ class ims_loctite extends Component {
   delete(id) {
     this.props.deleteLoctite(id);
   }
-
+  newLoctite() {
+    this.props.history.push(loctiteNewPage);
+  }
   refresh() {
-    console.log("refresh");
+    this.props.getAllLoctite();
   }
 
   render() {
@@ -51,7 +56,7 @@ class ims_loctite extends Component {
         <PageTitleBar
           title="All Loctite"
           actionGroup={{
-            // add: { onClick: this.newLead },
+            add: { onClick: this.newLoctite },
             // mid: { label: "Import", onClick: this.importLead },
             more: [{ label: "Refresh List", onClick: this.refresh }]
           }}
@@ -64,6 +69,7 @@ class ims_loctite extends Component {
           handleView={this.handleView}
         />
         <ViewLoctite />
+        <EditLoctite />
       </React.Fragment>
     );
   }

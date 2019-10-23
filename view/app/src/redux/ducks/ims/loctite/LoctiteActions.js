@@ -35,9 +35,9 @@ export const viewLoctiteSuccess = inv => ({
 /**
  * New Loctite
  */
-export const submitLoctite = data => ({
+export const submitLoctite = (data, redirect, history) => ({
   type: types.SUBMIT_LOCTITE_FORM,
-  payload: data
+  payload: { data, redirect, history }
 });
 export const submitLoctiteSuccess = data => ({
   type: types.SUBMIT_LOCTITE_SUCCESS,
