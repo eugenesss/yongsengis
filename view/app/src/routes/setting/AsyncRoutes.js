@@ -5,22 +5,6 @@ import Loadable from "react-loadable";
 import RctPageLoader from "Components/RctPageLoader";
 
 /**
- * Company Settings
- */
-// export const companySettings = Loadable({
-//   loader: () => import("./companySettings"),
-//   loading: () => <RctPageLoader />
-// });
-
-/**
- * Profile Settings
- */
-export const profileSettings = Loadable({
-  loader: () => import("./profileSettings"),
-  loading: () => <RctPageLoader />
-});
-
-/**
  * User Management
  */
 export const userManagement = Loadable({

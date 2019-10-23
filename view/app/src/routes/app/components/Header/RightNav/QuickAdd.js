@@ -7,24 +7,27 @@ import { Add } from "@material-ui/icons";
 import IconButton from "@material-ui/core/IconButton";
 // intl messages
 import IntlMessages from "Util/IntlMessages";
-import {
-  leadNewPage,
-  customerNewPage,
-  accountNewPage,
-  dealNewPage
-} from "Helpers/crmURL";
-import {
-  quoteNewPage,
-  invoiceNewPage,
-  crednoteNewPage,
-  newPayment
-} from "Helpers/accountingURL";
+// import {
+//   leadNewPage,
+//   customerNewPage,
+//   accountNewPage,
+//   dealNewPage
+// } from "Helpers/crmURL";
+// import {
+//   quoteNewPage,
+//   invoiceNewPage,
+//   crednoteNewPage,
+//   newPayment
+// } from "Helpers/accountingURL";
+import { inventoryNewPage, loctiteNewPage } from "Helpers/imsURL";
 
 const links = [
-  { title: "sidebar.lead", link: leadNewPage },
-  { title: "sidebar.customer", link: customerNewPage },
-  { title: "sidebar.account", link: accountNewPage },
-  { title: "sidebar.deal", link: dealNewPage }
+  { title: "sidebar.inventory", link: inventoryNewPage },
+  { title: "sidebar.loctite", link: loctiteNewPage }
+  // { title: "sidebar.lead", link: leadNewPage },
+  // { title: "sidebar.customer", link: customerNewPage },
+  // { title: "sidebar.account", link: accountNewPage },
+  // { title: "sidebar.deal", link: dealNewPage }
   // { title: "sidebar.quotation", link: quoteNewPage },
   // { title: "sidebar.invoice", link: invoiceNewPage },
   // { title: "sidebar.payment", link: newPayment },

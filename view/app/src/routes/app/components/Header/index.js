@@ -3,6 +3,7 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import { Link, withRouter } from "react-router-dom";
 
+import AppConfig from "Constants/AppConfig";
 import navLinks from "Services/_navLinks";
 
 // Right Nav
@@ -51,11 +52,7 @@ function Header(props) {
           <div className="d-flex">
             <div className="site-logo">
               <Link to="/" className="logo-mini">
-                <img
-                  src={require("Assets/img/appLogo_orig_light.png")}
-                  alt="site logo"
-                  width="100"
-                />
+                <img src={AppConfig.appLogo} alt="site logo" width="100" />
               </Link>
             </div>
           </div>

@@ -1,17 +1,6 @@
-import { profileSettings, userManagement, roles } from "../AsyncRoutes";
+import { userManagement } from "../AsyncRoutes";
 
 export default [
-  {
-    title: "General",
-    stateName: "general",
-    links: [
-      {
-        title: "Profile Settings",
-        asyncComponent: profileSettings,
-        path: "/general/profile-settings"
-      }
-    ]
-  },
   {
     title: "Users & Control",
     stateName: "user",
@@ -20,12 +9,12 @@ export default [
         title: "User Management",
         asyncComponent: userManagement,
         path: "/users-control/user-management"
-      },
-      {
-        title: "Roles & Permissions",
-        asyncComponent: roles,
-        path: "/users-control/roles-permissions"
       }
+      // {
+      //   title: "Roles & Permissions",
+      //   asyncComponent: roles,
+      //   path: "/users-control/roles-permissions"
+      // }
     ]
   }
 ];

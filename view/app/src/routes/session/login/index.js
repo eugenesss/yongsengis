@@ -37,23 +37,6 @@ class Signin extends Component {
     }
   };
 
-  routeChange(element) {
-    let path = "";
-    switch (element) {
-      case "register":
-        path = `/register`;
-        this.props.history.push(path);
-        break;
-
-      case "forget":
-        path = `/forgetpassword`;
-        this.props.history.push(path);
-        break;
-      default:
-        break;
-    }
-  }
-
   render() {
     const { email, password } = this.state;
     const { loading, error } = this.props;
@@ -66,33 +49,11 @@ class Signin extends Component {
           <div className="row justify-content-center">
             <div className="col-md-8 col-sm-12">
               <div className="session-body text-center">
-                <div
-                  className="logo-mini"
-                  style={{ marginBottom: 25, textAlign: "left" }}
-                >
-                  <img
-                    src={require("Assets/img/appLogo_orig_light.png")}
-                    alt="site logo"
-                    width="150"
-                  />
-                  <p
-                    className="session-head fw-light text-left mb-30 fs-14 text-muted"
-                    style={{ margin: 5 }}
-                  >
-                    Work-life has never been better
-                  </p>
+                <div className="logo-mini" style={{ textAlign: "left" }}>
+                  <img src={AppConfig.appLogo} alt="site logo" width="150" />
                 </div>
-
-                <h2
-                  className="text-left
-                "
-                >
-                  Get your {AppConfig.brandName} account now
-                </h2>
                 <p className="session-head fw-light text-left mb-30 fs-14 text-muted">
-                  Try everyday business account
-                  <br />
-                  forever free for unlimited time
+                  {AppConfig.tagLine}
                 </p>
 
                 <Form onSubmit={this.onUserLogin}>
@@ -129,17 +90,6 @@ class Signin extends Component {
                         }
                       />
                     </FormGroup>
-                    <div className="text-right">
-                      <a
-                        className="fw-light fs-12"
-                        onClick={() => this.routeChange("forget")}
-                        style={{
-                          color: "rgba(0,0,0,0.4)"
-                        }}
-                      >
-                        Forget Password?
-                      </a>
-                    </div>
                     {this.state.error && (
                       <div className="mt-10">
                         <p className="text-danger">{this.state.error}</p>
@@ -155,21 +105,6 @@ class Signin extends Component {
                       >
                         <span className="px-10">Sign in</span>
                       </Fab>
-
-                      <div className="row d-flex justify-content-center align-items-center">
-                        <p
-                          className="fs-12 fw-light"
-                          style={{ color: "rgba(0,0,0,0.4)" }}
-                        >
-                          Don't have an account?
-                          <a
-                            className="fw-semi-bold ml-5"
-                            onClick={() => this.routeChange("register")}
-                          >
-                            Sign up now
-                          </a>
-                        </p>
-                      </div>
                     </FormGroup>
                   </div>
                 </Form>

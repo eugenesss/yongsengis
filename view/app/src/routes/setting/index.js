@@ -11,13 +11,12 @@ class Settings extends Component {
   render() {
     const { match, location } = this.props;
     if (location.pathname === "/app/settings") {
-      return <Redirect to={"/app/settings/general/profile-settings"} />;
+      return <Redirect to={"/app/settings/users-control/user-management"} />;
     }
     return (
       <React.Fragment>
         <Helmet>
-          <title>Everyday | System Settings</title>
-          <meta name="description" content="Everyday System" />
+          <title>YSIS | System Settings</title>
         </Helmet>
         <PageTitleBar title="Settings" />
         <div className="row">
