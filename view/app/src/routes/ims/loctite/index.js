@@ -8,7 +8,7 @@ import EditLoctite from "./edit";
 //Page Req
 import { Helmet } from "react-helmet";
 import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
-import { loctiteNewPage } from "Helpers/imsURL";
+import { loctiteNewPage, loctiteMassUpdatePage } from "Helpers/imsURL";
 // Actions
 import { getAllLoctite, deleteLoctite } from "Ducks/ims/loctite";
 
@@ -19,6 +19,7 @@ class ims_loctite extends Component {
     this.handleEdit = this.handleEdit.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
     this.newLoctite = this.newLoctite.bind(this);
+    this.massUpdate = this.massUpdate.bind(this);
   }
   componentWillMount() {
     this.props.getAllLoctite();
@@ -44,6 +45,9 @@ class ims_loctite extends Component {
   refresh() {
     this.props.getAllLoctite();
   }
+  massUpdate() {
+    this.props.history.push(loctiteMassUpdatePage);
+  }
 
   render() {
     const { action, tableData, loading } = this.props.loctiteList;
@@ -57,7 +61,7 @@ class ims_loctite extends Component {
           title="All Loctite"
           actionGroup={{
             add: { onClick: this.newLoctite },
-            // mid: { label: "Import", onClick: this.importLead },
+            mid: { label: "Mass Update", onClick: this.massUpdate },
             more: [{ label: "Refresh List", onClick: this.refresh }]
           }}
         />

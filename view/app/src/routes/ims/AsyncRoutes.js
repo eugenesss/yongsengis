@@ -15,6 +15,10 @@ export const ims_inventory_new = Loadable({
   loader: () => import("./inventory/new"),
   loading: () => <RctPageLoader />
 });
+export const ims_inventory_massupdate = Loadable({
+  loader: () => import("./inventory/massUpdate"),
+  loading: () => <RctPageLoader />
+});
 
 /**
  * Customer Routes
@@ -25,5 +29,9 @@ export const ims_loctite_list = Loadable({
 });
 export const ims_loctite_new = Loadable({
   loader: () => import("./loctite/new"),
+  loading: () => <RctPageLoader />
+});
+export const ims_loctite_massupdate = Loadable({
+  loader: () => import("./loctite/massUpdate"),
   loading: () => <RctPageLoader />
 });

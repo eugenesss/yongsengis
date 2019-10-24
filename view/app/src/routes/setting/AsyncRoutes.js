@@ -11,11 +11,3 @@ export const userManagement = Loadable({
   loader: () => import("./userManagement"),
   loading: () => <RctPageLoader />
 });
-
-/**
- * Roles
- */
-export const roles = Loadable({
-  loader: () => import("./roles"),
-  loading: () => <RctPageLoader />
-});

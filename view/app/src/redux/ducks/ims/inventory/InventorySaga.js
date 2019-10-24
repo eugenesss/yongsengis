@@ -14,7 +14,9 @@ import {
   SUBMIT_INVENTORY_FORM,
   START_EDIT_INVENTORY,
   EDIT_INVENTORY,
-  DELETE_INVENTORY
+  DELETE_INVENTORY,
+  MASS_UPDATE_FILTER_INVENTORY,
+  MASS_UPDATE_INVENTORY
 } from "./InventoryTypes";
 import {
   inventoryApiFailure,
@@ -27,7 +29,11 @@ import {
   editInventorySuccess,
   editInventoryFailure,
   deleteInventorySuccess,
-  deleteInventoryFailure
+  deleteInventoryFailure,
+  filterInventorySuccess,
+  filterInventoryFailure,
+  massUpdateInventorySuccess,
+  massUpdateInventoryFailure
 } from "./InventoryActions";
 
 import { inventoryListPage } from "Helpers/imsURL";
@@ -67,6 +73,11 @@ const editInvReq = async item => {
 };
 const deleteInvReq = async id => {
   const result = await api.post(`/delete_item/${id}`);
+  return result.data;
+};
+const massUpdateInvRequest = async data => {
+  const result = await api.post("/update_items", data);
+  console.log(result);
   return result.data;
 };
 
@@ -163,6 +174,28 @@ function* deleteInv({ payload }) {
     yield put(deleteInventoryFailure(error));
   }
 }
+function* filterInv({ payload }) {
+  const { field, keyword } = payload;
+  const invList = state =>
+    state.imsState.inventoryState.inventoryList.tableData;
+  try {
+    //filter object
+    const tableData = yield select(invList);
+    const data = tableData.filter(inv => inv[field].includes(keyword));
+    yield delay(500);
+    yield put(filterInventorySuccess(data));
+  } catch (error) {
+    yield put(filterInventoryFailure(error));
+  }
+}
+function* massUpdateInv({ payload }) {
+  try {
+    const data = yield call(massUpdateInvRequest, payload);
+    yield put(massUpdateInventorySuccess(data));
+  } catch (error) {
+    yield put(massUpdateInventoryFailure(error));
+  }
+}
 
 //=========================
 // WATCHERS
@@ -188,6 +221,12 @@ export function* editInventoryWatcher() {
 export function* deleteInventoryWatcher() {
   yield takeEvery(DELETE_INVENTORY, deleteInv);
 }
+export function* filterInvWatcher() {
+  yield takeEvery(MASS_UPDATE_FILTER_INVENTORY, filterInv);
+}
+export function* massUpdateInvWatcher() {
+  yield takeEvery(MASS_UPDATE_INVENTORY, massUpdateInv);
+}
 
 //=======================
 // FORK SAGAS TO STORE
@@ -200,6 +239,8 @@ export default function* rootSaga() {
     fork(submitInventoryWatcher),
     fork(startEditInventoryWatcher),
     fork(editInventoryWatcher),
-    fork(deleteInventoryWatcher)
+    fork(deleteInventoryWatcher),
+    fork(filterInvWatcher),
+    fork(massUpdateInvWatcher)
   ]);
 }

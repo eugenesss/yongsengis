@@ -11,7 +11,7 @@ import ListViewSelector from "Components/PageTitleBar/ListViewSelector";
 // View Dialog
 import ShowInventory from "./view";
 import EditInventory from "./edit";
-import { inventoryNewPage } from "Helpers/imsURL";
+import { inventoryNewPage, inventoryMassUpdatePage } from "Helpers/imsURL";
 // Actions
 import {
   getAllInventory,
@@ -26,6 +26,7 @@ class ims_inventory_list extends Component {
     this.handleEdit = this.handleEdit.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
     this.newInv = this.newInv.bind(this);
+    this.massUpdate = this.massUpdate.bind(this);
   }
   componentWillMount() {
     this.props.getAllInventory();
@@ -44,6 +45,9 @@ class ims_inventory_list extends Component {
   }
   newInv() {
     this.props.history.push(inventoryNewPage);
+  }
+  massUpdate() {
+    this.props.history.push(inventoryMassUpdatePage);
   }
   delete(id) {
     this.props.deleteInventory(id);
@@ -70,7 +74,7 @@ class ims_inventory_list extends Component {
           title={nowShowing}
           actionGroup={{
             add: { onClick: this.newInv },
-            // mid: { label: "Import", onClick: this.importLead },
+            mid: { label: "Mass Update", onClick: this.massUpdate },
             more: [{ label: "Refresh List", onClick: this.refresh }]
           }}
         />

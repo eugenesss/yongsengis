@@ -20,6 +20,11 @@ function imsSwitcher() {
           path={url.inventoryNewPage}
           component={async.ims_inventory_new}
         />
+        <Route
+          exact
+          path={url.inventoryMassUpdatePage}
+          component={async.ims_inventory_massupdate}
+        />
 
         {/* ------- /Loctite ------- */}
         <Route
@@ -31,6 +36,11 @@ function imsSwitcher() {
           exact
           path={url.loctiteNewPage}
           component={async.ims_loctite_new}
+        />
+        <Route
+          exact
+          path={url.loctiteMassUpdatePage}
+          component={async.ims_loctite_massupdate}
         />
         {/* <Route path={url.customerNewPage} component={async.crm_new_customer} />
         <Route

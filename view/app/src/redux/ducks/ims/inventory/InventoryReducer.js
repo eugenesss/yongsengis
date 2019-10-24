@@ -31,7 +31,8 @@ const INIT_STATE = {
       warehouse: "",
       description: ""
     }
-  }
+  },
+  massUpdate: { populatedData: [], loading: false }
 };
 
 export default (state = INIT_STATE, action) => {
@@ -205,6 +206,51 @@ export default (state = INIT_STATE, action) => {
         ...state,
         inventoryList: { ...state.inventoryList, loading: false }
       };
+
+    //=========================
+    //  MASS UPDATE
+    //=========================
+    case types.MASS_UPDATE_FILTER_INVENTORY:
+      return { ...state, massUpdate: { ...state.massUpdate, loading: true } };
+    case types.MASS_UPDATE_FILTER_INVENTORY_SUCCESS:
+      return {
+        ...state,
+        massUpdate: { populatedData: action.payload, loading: false }
+      };
+    case types.MASS_UPDATE_FILTER_INVENTORY_FAILURE:
+      NotificationManager.error("Error in filter");
+      return { ...state, massUpdate: { ...state.massUpdate, loading: false } };
+    case types.CLEAR_UPDATE_FILTER_INVENTORY:
+      return { ...state, massUpdate: INIT_STATE.massUpdate };
+
+    case types.REMOVE_FROM_INV_LIST:
+      /*   var removedFromList = Object.assign(
+        [],
+        state.inventoryList.tableData
+      ).filter(inv => inv.pid != action.payload); */
+      var removedFromMassUpdate = Object.assign(
+        [],
+        state.massUpdate.populatedData
+      ).filter(inv => inv.pid != action.payload);
+      return {
+        ...state,
+        // inventoryList: { ...state.inventoryList, tableData: removedFromList },
+        massUpdate: {
+          ...state.massUpdate,
+          populatedData: removedFromMassUpdate
+        }
+      };
+
+    case types.MASS_UPDATE_INVENTORY:
+      return { ...state, massUpdate: { ...state.massUpdate, loading: true } };
+    case types.MASS_UPDATE_INVENTORY_SUCCESS:
+      NotificationManager.success("Items Updated!");
+      return { ...state, massUpdate: { ...state.massUpdate, loading: false } };
+    case types.MASS_UPDATE_INVENTORY_FAILURE:
+      NotificationManager.erorr("Error");
+      console.log(action.payload);
+      return { ...state, massUpdate: { ...state.massUpdate, loading: false } };
+
     default:
       return { ...state };
   }

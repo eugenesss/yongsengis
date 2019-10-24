@@ -98,3 +98,43 @@ export const deleteInventoryFailure = error => ({
   type: types.DELETE_INVENTORY_FAILURE,
   payload: error
 });
+
+// Mass update
+export const massUpdateInventory = data => ({
+  type: types.MASS_UPDATE_INVENTORY,
+  payload: data
+});
+export const massUpdateInventorySuccess = data => ({
+  type: types.MASS_UPDATE_INVENTORY_SUCCESS,
+  payload: data
+});
+export const massUpdateInventoryFailure = error => ({
+  type: types.MASS_UPDATE_INVENTORY_FAILURE,
+  payload: error
+});
+
+// filter mass update
+export const filterInventory = (field, keyword) => ({
+  type: types.MASS_UPDATE_FILTER_INVENTORY,
+  payload: { field, keyword }
+});
+export const filterInventorySuccess = data => ({
+  type: types.MASS_UPDATE_FILTER_INVENTORY_SUCCESS,
+  payload: data
+});
+export const filterInventoryFailure = error => ({
+  type: types.MASS_UPDATE_FILTER_INVENTORY_FAILURE,
+  payload: error
+});
+export const clearFilterInventory = () => ({
+  type: types.CLEAR_UPDATE_FILTER_INVENTORY
+});
+
+export const removeFromInvList = id => ({
+  type: types.REMOVE_FROM_INV_LIST,
+  payload: id
+});
+// export const addToInvList = (data) => ({
+//   type: types.ADD_TO_INV_LIST,
+//   payload: data
+// })

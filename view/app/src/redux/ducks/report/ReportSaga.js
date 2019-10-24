@@ -9,7 +9,8 @@ import {
   GET_TOP_SPENDER_ACCOUNT,
   GET_TOP_SPENDER_CUSTOMER,
   GET_INDIVIDUAL_REPORT,
-  GET_CLOSED_BY_OWNER
+  GET_CLOSED_BY_OWNER,
+  GET_EDIT_HISTORY_INV
 } from "./ReportTypes";
 
 import {
@@ -23,7 +24,8 @@ import {
   getTopSpenderAccountSuccess,
   getTopSpenderCustomerSuccess,
   getIndividualReportSuccess,
-  getWonByOwnerSuccess
+  getWonByOwnerSuccess,
+  getEditHistoryInvSuccess
 } from "./ReportActions";
 
 import api from "Api";
@@ -101,6 +103,11 @@ const getWonByOwnerRequest = async (startDate, endDate) => {
     endDate
   });
   return result.data.data;
+};
+const getEditHistoryInvRequest = async () => {
+  const result = await api.get("/auditlog");
+  console.log(result);
+  return result.data;
 };
 
 //=========================
@@ -206,6 +213,15 @@ function* getWonByOwner({ payload }) {
     yield put(getReportFailure(error));
   }
 }
+function* getEditHistoryInv() {
+  try {
+    const data = yield call(getEditHistoryInvRequest);
+    yield delay(500);
+    yield put(getEditHistoryInvSuccess(data));
+  } catch (error) {
+    yield put(getReportFailure(error));
+  }
+}
 
 //=======================
 // WATCHER FUNCTIONS
@@ -240,6 +256,9 @@ export function* getIndividualReportWatcher() {
 export function* getWonByOwnerWatcher() {
   yield takeEvery(GET_CLOSED_BY_OWNER, getWonByOwner);
 }
+export function* getEditHistoryInvWatcher() {
+  yield takeEvery(GET_EDIT_HISTORY_INV, getEditHistoryInv);
+}
 
 //=======================
 // FORK SAGAS TO STORE
@@ -255,6 +274,7 @@ export default function* rootSaga() {
     fork(getTopSpenderAccountWatcher),
     fork(getTopSpenderCustomerWatcher),
     fork(getIndividualReportWatcher),
-    fork(getWonByOwnerWatcher)
+    fork(getWonByOwnerWatcher),
+    fork(getEditHistoryInvWatcher)
   ]);
 }

@@ -19,6 +19,10 @@ const INIT_STATE = {
   individualReport: { loading: false, data: null },
   closedDealsReport: {
     wonByOwner: { loading: false, data: null }
+  },
+  editHistory: {
+    inventory: { loading: false, data: null },
+    loctite: { loading: false, data: null }
   }
 };
 
@@ -252,6 +256,60 @@ export default (state = INIT_STATE, action) => {
           ...state.closedDealsReport,
           wonByOwner: {
             ...state.closedDealsReport.wonByOwner,
+            loading: false,
+            data: action.payload
+          }
+        }
+      };
+
+    //=====================
+    // Edit History Reports
+    //=====================
+
+    // Inventory
+    case types.GET_EDIT_HISTORY_INV:
+      return {
+        ...state,
+        editHistory: {
+          ...state.editHistory,
+          inventory: {
+            ...state.editHistory.inventory,
+            loading: true
+          }
+        }
+      };
+    case types.GET_EDIT_HISTORY_INV_SUCCESS:
+      return {
+        ...state,
+        editHistory: {
+          ...state.editHistory,
+          inventory: {
+            ...state.editHistory.inventory,
+            loading: false,
+            data: action.payload
+          }
+        }
+      };
+
+    // Loctite
+    case types.GET_EDIT_HISTORY_LOC:
+      return {
+        ...state,
+        editHistory: {
+          ...state.editHistory,
+          loctite: {
+            ...state.editHistory.loctite,
+            loading: true
+          }
+        }
+      };
+    case types.GET_EDIT_HISTORY_LOC_SUCCESS:
+      return {
+        ...state,
+        editHistory: {
+          ...state.editHistory,
+          loctite: {
+            ...state.editHistory.loctite,
             loading: false,
             data: action.payload
           }
