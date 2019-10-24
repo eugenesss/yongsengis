@@ -39,7 +39,7 @@ const QuickLinks = () => (
     <DropdownToggle nav className="p-0">
       <Tooltip title="Add" placement="bottom">
         <IconButton aria-label="plus">
-          <Add fontSize="small" />
+          <Add className="text-white" fontSize="small" />
         </IconButton>
       </Tooltip>
     </DropdownToggle>

@@ -51,8 +51,11 @@ function Header(props) {
         <Toolbar className="d-flex justify-content-between w-100">
           <div className="d-flex">
             <div className="site-logo">
-              <Link to="/" className="logo-mini">
-                <img src={AppConfig.appLogo} alt="site logo" width="100" />
+              <Link to="/" className="logo-mini d-flex">
+                <img src={AppConfig.appLogo} alt="site logo" height="40" />
+                <h2 className="pl-10 mb-0 my-auto text-white">
+                  Yong Seng Inventory
+                </h2>
               </Link>
             </div>
           </div>

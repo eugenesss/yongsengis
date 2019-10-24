@@ -50,7 +50,10 @@ class Signin extends Component {
             <div className="col-md-8 col-sm-12">
               <div className="session-body text-center">
                 <div className="logo-mini" style={{ textAlign: "left" }}>
-                  <img src={AppConfig.appLogo} alt="site logo" width="150" />
+                  <a href="/">
+                    <img src={AppConfig.appLogo} alt="site logo" height="100" />
+                  </a>
+                  <h2>{AppConfig.brandName}</h2>
                 </div>
                 <p className="session-head fw-light text-left mb-30 fs-14 text-muted">
                   {AppConfig.tagLine}

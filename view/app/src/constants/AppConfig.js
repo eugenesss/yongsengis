@@ -2,9 +2,9 @@
  * App Config File
  */
 const AppConfig = {
-  appLogo: require("Assets/img/appLogo_orig_light.png"), // App Logo
-  tagLine: "For Your Everyday System Needs",
-  brandName: "Everyday", // Brand Name
+  appLogo: require("Assets/img/ys-logo.png"), // App Logo
+  tagLine: "Inventory System for Yong Seng Screws",
+  brandName: "Yong Seng Inventory", // Brand Name
   locale: {
     languageId: "english",
     locale: "en",
@@ -14,8 +14,8 @@ const AppConfig = {
   copyRightText: "Everyday © All Rights Reserved.", // Copy Right Text
   // light theme colors
   themeColors: {
-    primary: "#ff952e",
-    secondary: "#1e4e94",
+    primary: "#1e4e94",
+    secondary: "#22ad83",
     success: "#22ad83",
     danger: "#D15D5D",
     warning: "#E5AA4A",

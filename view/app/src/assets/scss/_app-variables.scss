@@ -124,7 +124,7 @@ $gradient-danger: linear-gradient(0deg, #b02e0c 0%, #ffb70f 100%); // danger
 
 // Navbar Varibale
 $navbar-height: 4rem; //80px;
-$navbar-bg: $white;
+$navbar-bg: $blue;
 $hamburger-icon-color: $gray-600;
 $navbar-icon-height: 35px;
 $navbar-icon-width: 152px;
@@ -163,13 +163,13 @@ $mini-sidebar-width: 85px;
 
 // Horizontal Menu Variable
 $hoz-menu-bg: none;
-$hoz-nav-link-color: #a7a7a7;
+$hoz-nav-link-color: #dad8d8;
 $hoz-nav-font-size: 0.9375rem; //15px
 $hoz-nav-link-spacing: 0.7rem 1.6rem;
-$hoz-nav-link-hover-bg: #ffb167;
+$hoz-nav-link-hover-bg: $white;
 $hoz-nav-link-width: 7rem;
 $hoz-menu-height: 2.5rem;
-$hoz-nav-link-active-bg: $primary;
+$hoz-nav-link-active-bg: $white;
 $hoz-sub-menu-box-shadow: 0 2px 0px 0 rgba(0, 0, 0, 0.09);
 
 // Sub Menu Variable

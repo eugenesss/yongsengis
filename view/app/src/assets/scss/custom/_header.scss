@@ -7,7 +7,7 @@
     box-shadow: $hoz-sub-menu-box-shadow;
     .site-logo {
       padding: 0.75rem 2rem 0.75rem 0;
-      width: $navbar-icon-width;
+      // width: $navbar-icon-width;
     }
     .navbar-left {
       margin-left: 0.85rem;
@@ -30,7 +30,7 @@
   vertical-align: middle;
   font-size: 1.25rem; //20px;
   transition: all 0.5s ease 0s;
-  color: $gray-600;
+  color: $white;
   &:hover,
   &:focus,
   &.active {

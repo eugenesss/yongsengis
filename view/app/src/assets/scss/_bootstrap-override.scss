@@ -55,7 +55,7 @@ $orange-4: #ffb167 !default;
 $orange-5: #ff9e41 !default;
 
 // Secondary Color
-$blue: #1e4e94 !default;
+$blue: #466ea7 !default;
 $blue-1: #e8edf5 !default;
 $blue-2: #98aece !default;
 $blue-3: #6f8eba !default;
@@ -81,8 +81,8 @@ $colors: map-merge(
   $colors
 );
 
-$primary: $orange !default;
-$secondary: $blue !default;
+$primary: $blue !default;
+$secondary: $orange !default;
 $success: $green !default;
 $info: $cyan !default;
 $warning: $yellow !default;
@@ -95,7 +95,7 @@ $purple: $purple !default;
 $theme-colors: () !default;
 $theme-colors: map-merge(
   (
-    "primary": $orange,
+    "primary": $primary,
     "secondary": $secondary,
     "success": $success,
     "info": $info,

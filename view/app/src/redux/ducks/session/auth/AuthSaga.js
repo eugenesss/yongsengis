@@ -1,4 +1,4 @@
-import { all, call, fork, put, takeEvery } from "redux-saga/effects";
+import { all, call, fork, put, takeEvery, delay } from "redux-saga/effects";
 import { LOGIN_USER, LOGOUT_USER, GET_CURRENT_USER } from "./AuthTypes";
 import {
   loginSuccess,
@@ -33,13 +33,14 @@ function* loginUser({ payload }) {
   const { data, history } = payload;
   try {
     const user = yield call(loginUserRequest, data);
-    // console.log(user);
-    // console.log(history);
-    localStorage.setItem("ysis_token", user.token);
-    delete user.token;
-
-    yield put(loginSuccess(user));
-    history.push("/");
+    if (user.length == null) {
+      localStorage.setItem("ysis_token", user.token);
+      delete user.token;
+      yield put(loginSuccess(user));
+      history.push("/app/dashboard");
+    } else {
+      yield put(loginFailure("Error in logging in"));
+    }
   } catch (error) {
     yield put(loginFailure(error));
   }
