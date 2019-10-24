@@ -47,13 +47,7 @@ function App(props) {
         <AppEntry
           path={`${match.url}app`}
           authUser={user}
-          component={() =>
-            user != null ? (
-              <HorizontalContainer />
-            ) : (
-              <Redirect to={{ pathname: "/login" }} />
-            )
-          }
+          component={<HorizontalContainer />}
         />
         <Route path={`/login`} exact component={LoginComponent} />
         <Route component={NotFound} />
