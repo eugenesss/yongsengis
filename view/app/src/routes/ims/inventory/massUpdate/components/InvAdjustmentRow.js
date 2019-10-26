@@ -27,15 +27,15 @@ function InvAdjustmentRow(props) {
         <div className="d-flex justify-content-around">
           <Button
             variant="outlined"
-            onClick={() => adjust("quantity", item.quantity + 10, index)}
+            onClick={() => adjust("quantity", item.quantity - 10, index)}
           >
-            +10
+            -10
           </Button>
           <Button
             variant="outlined"
-            onClick={() => adjust("quantity", item.quantity + 1, index)}
+            onClick={() => adjust("quantity", item.quantity - 1, index)}
           >
-            +
+            -
           </Button>
           <Input
             onChange={e => adjust("quantity", e.target.value, index)}
@@ -45,15 +45,15 @@ function InvAdjustmentRow(props) {
           />
           <Button
             variant="outlined"
-            onClick={() => adjust("quantity", item.quantity - 1, index)}
+            onClick={() => adjust("quantity", item.quantity + 1, index)}
           >
-            -
+            +
           </Button>
           <Button
             variant="outlined"
-            onClick={() => adjust("quantity", item.quantity - 10, index)}
+            onClick={() => adjust("quantity", item.quantity + 10, index)}
           >
-            -10
+            +10
           </Button>
         </div>
       </TableCell>

@@ -47,7 +47,7 @@ function App(props) {
         <AppEntry
           path={`${match.url}app`}
           authUser={user}
-          component={<HorizontalContainer />}
+          component={HorizontalContainer}
         />
         <Route path={`/login`} exact component={LoginComponent} />
         <Route component={NotFound} />
