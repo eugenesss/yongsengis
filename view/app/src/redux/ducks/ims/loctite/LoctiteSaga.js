@@ -1,11 +1,21 @@
-import { all, call, fork, put, takeEvery, delay } from "redux-saga/effects";
+import {
+  all,
+  call,
+  fork,
+  put,
+  takeEvery,
+  delay,
+  select
+} from "redux-saga/effects";
 import {
   GET_ALL_LOCTITE,
   VIEW_LOCTITE,
   START_EDIT_LOCTITE,
   SUBMIT_LOCTITE_FORM,
   EDIT_LOCTITE,
-  DELETE_LOCTITE
+  DELETE_LOCTITE,
+  MASS_UPDATE_FILTER_LOCTITE,
+  MASS_UPDATE_LOCTITE
 } from "./LoctiteTypes";
 import {
   loctiteApiFailure,
@@ -18,7 +28,11 @@ import {
   editLoctiteSuccess,
   editLoctiteFailure,
   deleteLoctiteSuccess,
-  deleteLoctiteFailure
+  deleteLoctiteFailure,
+  filterLoctiteSuccess,
+  filterLoctiteFailure,
+  massUpdateLoctiteSuccess,
+  massUpdateLoctiteFailure
 } from "./LoctiteActions";
 
 import { loctiteListPage } from "Helpers/imsURL";
@@ -52,6 +66,12 @@ const editLocReq = async item => {
 const deleteLocReq = async id => {
   const result = await api.post(`/delete_loctite/${id}`);
   return result.data;
+};
+const massUpdateLocRequest = async data => {
+  // const result = await api.post("/update_items", data);
+  console.log(data);
+  return [];
+  // return result.data;
 };
 
 //=========================
@@ -117,6 +137,29 @@ function* deleteLoc({ payload }) {
     yield put(deleteLoctiteFailure(error));
   }
 }
+function* filterLoc({ payload }) {
+  const { field, keyword } = payload;
+  const invList = state => state.imsState.loctiteState.loctiteList.tableData;
+  try {
+    //filter object
+    const tableData = yield select(invList);
+    const data = tableData.filter(inv =>
+      inv[field].toLowerCase().includes(keyword.toLowerCase())
+    );
+    yield delay(500);
+    yield put(filterLoctiteSuccess(data));
+  } catch (error) {
+    yield put(filterLoctiteFailure(error));
+  }
+}
+function* massUpdateLoc({ payload }) {
+  try {
+    const data = yield call(massUpdateLocRequest, payload);
+    yield put(massUpdateLoctiteSuccess(data));
+  } catch (error) {
+    yield put(massUpdateLoctiteFailure(error));
+  }
+}
 
 //=========================
 // WATCHERS
@@ -139,6 +182,12 @@ export function* editLoctiteWatcher() {
 export function* deleteLoctiteWatcher() {
   yield takeEvery(DELETE_LOCTITE, deleteLoc);
 }
+export function* filterLocWatcher() {
+  yield takeEvery(MASS_UPDATE_FILTER_LOCTITE, filterLoc);
+}
+export function* massUpdateLocWatcher() {
+  yield takeEvery(MASS_UPDATE_LOCTITE, massUpdateLoc);
+}
 
 //=======================
 // FORK SAGAS TO STORE
@@ -150,6 +199,8 @@ export default function* rootSaga() {
     fork(startEditLoctiteWatcher),
     fork(submitLoctiteFormWatcher),
     fork(editLoctiteWatcher),
-    fork(deleteLoctiteWatcher)
+    fork(deleteLoctiteWatcher),
+    fork(filterLocWatcher),
+    fork(massUpdateLocWatcher)
   ]);
 }

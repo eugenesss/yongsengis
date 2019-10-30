@@ -88,3 +88,39 @@ export const deleteLoctiteFailure = error => ({
   type: types.DELETE_LOCTITE_FAILURE,
   payload: error
 });
+
+// Mass update
+export const massUpdateLoctite = data => ({
+  type: types.MASS_UPDATE_LOCTITE,
+  payload: data
+});
+export const massUpdateLoctiteSuccess = data => ({
+  type: types.MASS_UPDATE_LOCTITE_SUCCESS,
+  payload: data
+});
+export const massUpdateLoctiteFailure = error => ({
+  type: types.MASS_UPDATE_LOCTITE_FAILURE,
+  payload: error
+});
+
+// filter mass update
+export const filterLoctite = (field, keyword) => ({
+  type: types.MASS_UPDATE_FILTER_LOCTITE,
+  payload: { field, keyword }
+});
+export const filterLoctiteSuccess = data => ({
+  type: types.MASS_UPDATE_FILTER_LOCTITE_SUCCESS,
+  payload: data
+});
+export const filterLoctiteFailure = error => ({
+  type: types.MASS_UPDATE_FILTER_LOCTITE_FAILURE,
+  payload: error
+});
+export const clearFilterLoctite = () => ({
+  type: types.CLEAR_UPDATE_FILTER_LOCTITE
+});
+
+export const removeFromLocList = id => ({
+  type: types.REMOVE_FROM_LOC_LIST,
+  payload: id
+});

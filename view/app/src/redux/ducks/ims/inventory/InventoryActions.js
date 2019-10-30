@@ -134,7 +134,3 @@ export const removeFromInvList = id => ({
   type: types.REMOVE_FROM_INV_LIST,
   payload: id
 });
-// export const addToInvList = (data) => ({
-//   type: types.ADD_TO_INV_LIST,
-//   payload: data
-// })

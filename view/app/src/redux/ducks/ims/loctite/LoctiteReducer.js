@@ -24,7 +24,8 @@ const INIT_STATE = {
       batch: 0,
       expiry: ""
     }
-  }
+  },
+  massUpdate: { populatedData: [], loading: false }
 };
 
 export default (state = INIT_STATE, action) => {
@@ -163,7 +164,7 @@ export default (state = INIT_STATE, action) => {
         loctiteForm: { ...state.loctiteForm, modalLoading: false }
       };
     //=========================
-    //  Delete INVENTORY
+    //  Delete Loctite
     //=========================
     case types.DELETE_LOCTITE:
       return {
@@ -190,6 +191,45 @@ export default (state = INIT_STATE, action) => {
         ...state,
         loctiteList: { ...state.loctiteList, loading: false }
       };
+
+    //=========================
+    //  MASS UPDATE
+    //=========================
+    case types.MASS_UPDATE_FILTER_LOCTITE:
+      return { ...state, massUpdate: { ...state.massUpdate, loading: true } };
+    case types.MASS_UPDATE_FILTER_LOCTITE_SUCCESS:
+      return {
+        ...state,
+        massUpdate: { populatedData: action.payload, loading: false }
+      };
+    case types.MASS_UPDATE_FILTER_LOCTITE_FAILURE:
+      NotificationManager.error("Error in filter");
+      return { ...state, massUpdate: { ...state.massUpdate, loading: false } };
+    case types.CLEAR_UPDATE_FILTER_LOCTITE:
+      return { ...state, massUpdate: INIT_STATE.massUpdate };
+
+    case types.REMOVE_FROM_LOC_LIST:
+      var removedFromMassUpdate = Object.assign(
+        [],
+        state.massUpdate.populatedData
+      ).filter(inv => inv.pid != action.payload);
+      return {
+        ...state,
+        massUpdate: {
+          ...state.massUpdate,
+          populatedData: removedFromMassUpdate
+        }
+      };
+
+    case types.MASS_UPDATE_LOCTITE:
+      return { ...state, massUpdate: { ...state.massUpdate, loading: true } };
+    case types.MASS_UPDATE_LOCTITE_SUCCESS:
+      NotificationManager.success("Items Updated!");
+      return { ...state, massUpdate: { ...state.massUpdate, loading: false } };
+    case types.MASS_UPDATE_LOCTITE_FAILURE:
+      NotificationManager.erorr("Error");
+      console.log(action.payload);
+      return { ...state, massUpdate: { ...state.massUpdate, loading: false } };
 
     default:
       return { ...state };

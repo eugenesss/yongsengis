@@ -181,7 +181,9 @@ function* filterInv({ payload }) {
   try {
     //filter object
     const tableData = yield select(invList);
-    const data = tableData.filter(inv => inv[field].includes(keyword));
+    const data = tableData.filter(inv =>
+      inv[field].toLowerCase().includes(keyword.toLowerCase())
+    );
     yield delay(500);
     yield put(filterInventorySuccess(data));
   } catch (error) {

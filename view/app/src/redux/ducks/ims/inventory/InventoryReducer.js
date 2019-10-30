@@ -224,17 +224,12 @@ export default (state = INIT_STATE, action) => {
       return { ...state, massUpdate: INIT_STATE.massUpdate };
 
     case types.REMOVE_FROM_INV_LIST:
-      /*   var removedFromList = Object.assign(
-        [],
-        state.inventoryList.tableData
-      ).filter(inv => inv.pid != action.payload); */
       var removedFromMassUpdate = Object.assign(
         [],
         state.massUpdate.populatedData
       ).filter(inv => inv.pid != action.payload);
       return {
         ...state,
-        // inventoryList: { ...state.inventoryList, tableData: removedFromList },
         massUpdate: {
           ...state.massUpdate,
           populatedData: removedFromMassUpdate
