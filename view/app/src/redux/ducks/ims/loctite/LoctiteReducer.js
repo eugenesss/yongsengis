@@ -204,6 +204,7 @@ export default (state = INIT_STATE, action) => {
       };
     case types.MASS_UPDATE_FILTER_LOCTITE_FAILURE:
       NotificationManager.error("Error in filter");
+      console.log(action.payload);
       return { ...state, massUpdate: { ...state.massUpdate, loading: false } };
     case types.CLEAR_UPDATE_FILTER_LOCTITE:
       return { ...state, massUpdate: INIT_STATE.massUpdate };

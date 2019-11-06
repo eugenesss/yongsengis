@@ -68,10 +68,9 @@ const deleteLocReq = async id => {
   return result.data;
 };
 const massUpdateLocRequest = async data => {
-  // const result = await api.post("/update_items", data);
-  console.log(data);
-  return [];
-  // return result.data;
+  const result = await api.post("/update_loctites", data);
+  console.log(result);
+  return result.data;
 };
 
 //=========================
@@ -143,9 +142,12 @@ function* filterLoc({ payload }) {
   try {
     //filter object
     const tableData = yield select(invList);
-    const data = tableData.filter(inv =>
-      inv[field].toLowerCase().includes(keyword.toLowerCase())
-    );
+    const data = tableData.filter(inv => {
+      if (typeof inv[field] == "number") {
+        return inv[field].toString().includes(keyword);
+      }
+      return inv[field].toLowerCase().includes(keyword.toLowerCase());
+    });
     yield delay(500);
     yield put(filterLoctiteSuccess(data));
   } catch (error) {

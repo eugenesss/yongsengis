@@ -106,7 +106,6 @@ const getWonByOwnerRequest = async (startDate, endDate) => {
 };
 const getEditHistoryInvRequest = async () => {
   const result = await api.get("/auditlog");
-  console.log(result);
   return result.data;
 };
 
