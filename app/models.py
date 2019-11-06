@@ -241,6 +241,10 @@ class Loctite(db.Model, Serializer):
         self.expiry_date = expiry_date
         self.file = file
 
+    def __getitem__(self, item):
+        return getattr(self, item)
+
+
 class LoctiteSchema(Schema):
     """
     Loctite Schema
