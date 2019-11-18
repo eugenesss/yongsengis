@@ -3,65 +3,34 @@ import { connect } from "react-redux";
 
 import Button from "@material-ui/core/Button";
 
-// Multiple Select
-import Select from "@material-ui/core/Select";
-import Chip from "@material-ui/core/Chip";
-import MenuItem from "@material-ui/core/MenuItem";
-import { withStyles } from "@material-ui/core/styles";
-
 // Form Inputs
 import FormInput from "Components/Form/FormInput";
-import BaseInput from "Components/Form/BaseInput";
 
-import { addUser, onChangeAddUser } from "Ducks/setting/userManagement";
-
-const styles = theme => ({
-  item: {
-    paddingLeft: theme.spacing(3)
-  },
-  group: {
-    fontWeight: theme.typography.fontWeightMedium,
-    opacity: 1
-  },
-  menuChips: {
-    marginRight: theme.spacing(1),
-    color: "#fff",
-    backgroundColor: theme.palette.secondary.main
-  }
-});
+import { addUser } from "Ducks/setting/userManagement";
 
 class AddUserForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
       email: "",
-      baseContact: {
-        firstName: "",
-        lastName: "",
-        mobile: ""
-      },
+      firstName: "",
+      lastName: "",
+      mobile: "",
       password: "",
-      confirmPassword: "",
-      roles: []
+      confirmPassword: ""
     };
     this.handleChange = this.handleChange.bind(this);
-    this.handleChangeContact = this.handleChangeContact.bind(this);
     this.handleSubmitForm = this.handleSubmitForm.bind(this);
   }
 
   handleChange(field, value) {
     this.setState({ [field]: value });
   }
-  handleChangeContact(field, value) {
-    this.setState({
-      baseContact: { ...this.state.baseContact, [field]: value }
-    });
-  }
 
   handleSubmitForm() {
     const newUser = {
       ...this.state,
-      name: `${this.state.baseContact.firstName} ${this.state.baseContact.lastName}`
+      name: `${this.state.firstName} ${this.state.lastName}`
     };
     this.props.addUser(newUser);
   }
@@ -71,37 +40,15 @@ class AddUserForm extends Component {
     return re.test(String(email).toLowerCase());
   };
 
-  renderMenu(accessGroups) {
-    const menu = [];
-    accessGroups.forEach(group => {
-      menu.push(
-        <MenuItem key={group.id} disabled className={this.props.classes.group}>
-          {group.name}
-        </MenuItem>
-      );
-      group.roles
-        .sort((a, b) => b.tier - a.tier)
-        .forEach(grpRole => {
-          menu.push(
-            <MenuItem
-              key={grpRole.id}
-              value={grpRole.id}
-              className={this.props.classes.item}
-            >
-              {grpRole.name}
-              <span className="text-muted font-italic fs-12 ml-5">
-                Tier: {grpRole.tier}
-              </span>
-            </MenuItem>
-          );
-        });
-    });
-    return menu;
-  }
-
   render() {
-    const { classes, accessGroups } = this.props;
-    const { email, baseContact, password, confirmPassword, roles } = this.state;
+    const {
+      firstName,
+      lastName,
+      email,
+      password,
+      mobile,
+      confirmPassword
+    } = this.state;
     return (
       <form autoComplete="off">
         <h3 style={{ marginLeft: 35 }}>User Contact Details</h3>
@@ -109,25 +56,25 @@ class AddUserForm extends Component {
           <div className="col-5">
             <FormInput
               label="First Name"
-              value={baseContact.firstName}
-              required={!baseContact.firstName}
+              value={firstName}
+              required={!firstName}
               target="firstName"
-              handleChange={this.handleChangeContact}
+              handleChange={this.handleChange}
             />
             <FormInput
               label="Mobile"
-              value={baseContact.mobile}
+              value={mobile}
               target="mobile"
-              handleChange={this.handleChangeContact}
+              handleChange={this.handleChange}
             />
           </div>
           <div className="col-5 offset-md-1">
             <FormInput
               label="Last Name"
-              value={baseContact.lastName}
-              required={!baseContact.lastName}
+              value={lastName}
+              required={!lastName}
               target="lastName"
-              handleChange={this.handleChangeContact}
+              handleChange={this.handleChange}
             />
           </div>
         </div>
@@ -165,51 +112,17 @@ class AddUserForm extends Component {
           </div>
         </div>
 
-        <h3 style={{ marginLeft: 35 }}>User Role</h3>
-        <div className="row justify-content-center">
-          <div className="col-11">
-            <Select
-              multiple
-              input={<BaseInput />}
-              value={roles}
-              onChange={e => this.handleChange("roles", e.target.value)}
-              renderValue={selected => (
-                <div className="d-flex">
-                  {selected.map(value => {
-                    for (const grp of accessGroups) {
-                      var role = grp.roles.find(role => role.id == value);
-                      if (role !== undefined) {
-                        break;
-                      }
-                    }
-
-                    return (
-                      <Chip
-                        key={value}
-                        label={role.name}
-                        className={classes.menuChips}
-                      />
-                    );
-                  })}
-                </div>
-              )}
-            >
-              {this.renderMenu(accessGroups)}
-            </Select>
-          </div>
-        </div>
         <div className="d-flex mt-40 justify-content-end">
           <Button
             variant="contained"
             className="btn-success text-white"
             onClick={this.handleSubmitForm}
             disabled={
-              !baseContact.firstName ||
-              !baseContact.lastName ||
+              !firstName ||
+              !lastName ||
               !this.validateEmail(email) ||
               !password ||
-              password !== confirmPassword ||
-              roles.length == 0
+              password !== confirmPassword
             }
           >
             Create
@@ -220,12 +133,4 @@ class AddUserForm extends Component {
   }
 }
 
-const mapStateToProps = ({ usersState }) => {
-  const { userAdd, accessGroups } = usersState;
-  return { userAdd, accessGroups };
-};
-
-export default connect(
-  mapStateToProps,
-  { addUser, onChangeAddUser }
-)(withStyles(styles)(AddUserForm));
+export default connect(null, { addUser })(AddUserForm);

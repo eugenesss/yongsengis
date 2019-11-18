@@ -1,6 +1,17 @@
-import { userManagement } from "../AsyncRoutes";
+import { userManagement, categoriesManagement } from "../AsyncRoutes";
 
 export default [
+  {
+    title: "Inventory Management",
+    stateName: "inv",
+    links: [
+      {
+        title: "Categories",
+        asyncComponent: categoriesManagement,
+        path: "/inventory/categories"
+      }
+    ]
+  },
   {
     title: "Users & Control",
     stateName: "user",
@@ -10,11 +21,6 @@ export default [
         asyncComponent: userManagement,
         path: "/users-control/user-management"
       }
-      // {
-      //   title: "Roles & Permissions",
-      //   asyncComponent: roles,
-      //   path: "/users-control/roles-permissions"
-      // }
     ]
   }
 ];

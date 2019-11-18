@@ -25,9 +25,9 @@ import {
 export const getAllUsers = () => ({
   type: GET_ALL_USERS
 });
-export const getAllUsersSuccess = (users, settings, groups) => ({
+export const getAllUsersSuccess = data => ({
   type: GET_ALL_USERS_SUCCESS,
-  payload: { users: users, settings: settings, accessGroups: groups }
+  payload: data
 });
 
 /**

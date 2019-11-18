@@ -53,8 +53,7 @@ class ReportsComponent extends Component {
     return (
       <div className="todo-dashboard">
         <Helmet>
-          <title>Everyday | Reports</title>
-          <meta name="description" content="Everyday Informational Reports" />
+          <title>YSIS | Reports</title>
         </Helmet>
         <PageTitleBar title="Reports" />
         <div className="row">

@@ -10,7 +10,7 @@ import AddUserDialog from "./components/dialogs/AddUserDialog";
 // Actions
 import { getAllUsers } from "Ducks/setting/userManagement";
 
-class UsersLayout extends Component {
+class Setting_UserManagement extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -67,4 +67,4 @@ const mapStateToProps = ({ usersState }) => {
 export default connect(
   mapStateToProps,
   { getAllUsers }
-)(UsersLayout);
+)(Setting_UserManagement);

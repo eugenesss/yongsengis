@@ -26,8 +26,6 @@ const INIT_STATE = {
   isUserControl: false,
   userControl: {},
 
-  userSettings: [],
-  accessGroups: [],
   userUpdate: null
 };
 
@@ -46,9 +44,7 @@ export default (state = INIT_STATE, action) => {
       return {
         ...state,
         usersLoading: false,
-        userList: action.payload.users,
-        userSettings: action.payload.settings,
-        accessGroups: action.payload.accessGroups
+        userList: action.payload
       };
 
     /**
@@ -111,7 +107,6 @@ export default (state = INIT_STATE, action) => {
         profileLoading: false
       };
     case ON_CHANGE_UPDATE_USER_RIGHTS:
-      //console.log(action.payload);
       var userRightsObject = {
         userid: action.payload.userid,
         username: action.payload.username,
@@ -152,28 +147,6 @@ export default (state = INIT_STATE, action) => {
     case GET_USER_FAILURE:
       NotificationManager.warning("Error in fetching User Data");
       return INIT_STATE;
-
-    /**
-     * State Changes
-     */
-    // case SHOW_USER_CONTROLS:
-    //   var allsettings = state.userSettings;
-    //   var userSetting = allsettings.find(setting => {
-    //     return action.payload == setting.userid;
-    //   });
-    //   var userControl = state.users.find(user => user.id == action.payload);
-    //   return {
-    //     ...state,
-    //     isUserControl: true,
-    //     userControl: userControl,
-    //     userSettings: userSetting
-    //   };
-
-    // case HIDE_USER_CONTROLS:
-    //   return {
-    //     ...state,
-    //     isUserControl: false
-    //   };
 
     default:
       return { ...state };

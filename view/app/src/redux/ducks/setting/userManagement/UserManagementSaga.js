@@ -22,23 +22,13 @@ import api from "Api";
 // REQUESTS
 //=========================
 const getAllUsersRequest = async () => {
-  const result = await api.get("/users");
-  return result.data;
-};
-
-const getAllSettingsRequest = async () => {
-  const result = await api.post("/accesssettings/viewall");
-  return result.data.data;
-};
-
-const getAllGroupsRequest = async () => {
-  const result = await api.post(`/accessgroups/viewall`);
-  return result.data.data;
+  // const result = await api.get("/users");
+  // return result.data;
+  return [];
 };
 
 const addUserRequest = async newUser => {
   const result = await api.post("/users", newUser);
-  console.log(result);
   return result.data;
 };
 const updateUserRequest = async user => {
@@ -64,9 +54,7 @@ const updateUserRights = async (userId, rights) => {
 function* getAllUsersFromDB() {
   try {
     const data = yield call(getAllUsersRequest);
-    const settings = yield call(getAllSettingsRequest);
-    const groups = yield call(getAllGroupsRequest);
-    yield put(getAllUsersSuccess(data, settings, groups));
+    yield put(getAllUsersSuccess(data));
   } catch (err) {
     yield put(getUserFailure(err));
   }
