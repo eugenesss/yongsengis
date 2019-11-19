@@ -15,7 +15,7 @@ from ..models import Inventory, InventorySchema, UpdateInventorySchema, get_all_
 @jwt_required
 def save_item():
     user = get_jwt_identity()
-    if user["access"] == 2:
+    if user["access"] == 1:
         return jsonify("Forbidden"), 403
     """
     Add an item
@@ -46,7 +46,7 @@ def save_item():
                      rack=rack, unit_code=unit_code)
     db.session.add(item)
     db.session.commit()
-    auditlog_record(item, None, None, None, "create")
+    auditlog_record(item, None, None, "create")
     inventory_schema = InventorySchema()
     return inventory_schema.jsonify(get_item(item.pid))
 
