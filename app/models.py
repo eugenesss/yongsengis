@@ -24,6 +24,11 @@ class Serializer(object):
     def serialize_list(l):
         return [m.serialize() for m in l]
 
+ACCESS = {
+    'guest': 0,
+    'user': 1,
+    'admin': 2
+}
 
 class Employee(UserMixin, db.Model, Serializer):
     """
@@ -39,6 +44,20 @@ class Employee(UserMixin, db.Model, Serializer):
     last_name = db.Column(db.String(60), index=True)
     password_hash = db.Column(db.String(128))
     is_admin = db.Column(db.Boolean, default=False)
+    access = db.Column(db.Integer, index=True)
+
+    def __init__(self, email, username, first_name, last_name, access=ACCESS['user']):
+        self.email = email
+        self.username = username
+        self.first_name = first_name
+        self.last_name = last_name
+        self.access = access
+
+    def is_user_admin(self):
+        return self.access == ACCESS['admin']
+
+    def allowed(self, access_level):
+        return self.access >= access_level
 
     @property
     def password(self):
@@ -62,6 +81,12 @@ class Employee(UserMixin, db.Model, Serializer):
         #return check_password_hash(self.password_hash, password)
         return pwd_context.verify(password, self.password_hash)
 
+    def admin_or_user(self):
+        """
+        Verify if user is admin
+        """
+        return self.is_admin
+
     def __repr__(self):
         return '<User: {}>'.format(self.username)
 
@@ -70,19 +95,6 @@ class Employee(UserMixin, db.Model, Serializer):
     def load_user(user_id):
         #return Employee.query.get(int(user_id))
         return Employee.query.get(int(user_id))
-
-
-# @http_auth.verify_password
-# def verify_password(username_or_token, password):
-#     # Try to authenticate by Token
-#     employee = Employee.verify_auth_token(username_or_token)
-#     if not employee:
-#         # try to authenticate with username/password
-#         employee = Employee.query.filter_by(email=username_or_token).first()
-#         if not employee or not employee.verify_password(password):
-#             return False
-#     g.employee = employee
-#     return True
 
 
 class Warehouse(db.Model, Serializer):

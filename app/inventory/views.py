@@ -1,17 +1,22 @@
 from flask import request, json, jsonify
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from . import inventory
+from functools import wraps
+
 import os
 import datetime
 
 from app import db
 from ..models import Inventory, InventorySchema, UpdateInventorySchema, get_all_items, get_item, get_item_by_warehouse, \
-    AuditLog, AuditLogSchema
+    AuditLog, AuditLogSchema, Employee
 
 
 @inventory.route('/save_item', methods=['GET', 'POST'])
 @jwt_required
 def save_item():
+    user = get_jwt_identity()
+    if user["access"] == 2:
+        return jsonify("Forbidden"), 403
     """
     Add an item
     """
@@ -60,6 +65,9 @@ def show_items():
 @inventory.route("/update_item/<int:pid>", methods=['POST', 'GET'])
 @jwt_required
 def update_items(pid):
+    user = get_jwt_identity()
+    if user["access"] == 1:
+        return jsonify("Forbidden"), 403
     """
     Update inventory
     """
@@ -141,6 +149,9 @@ def update_items(pid):
 @inventory.route("/update_items", methods=['POST', 'GET'])
 @jwt_required
 def update_multiple_items():
+    user = get_jwt_identity()
+    if user["access"] == 1:
+        return jsonify("Forbidden"), 403
     """
     Update multiple items
     """
@@ -213,6 +224,9 @@ def update_multiple_items():
 @inventory.route("/delete_item/<int:pid>", methods=['POST'])
 @jwt_required
 def delete_items(pid):
+    user = get_jwt_identity()
+    if user["access"] == 1:
+        return jsonify("Forbidden"), 403
     """
     Delete inventory
     """
@@ -278,7 +292,6 @@ def auditlog_record(item, field, new_value, action):
         record = AuditLog(name, None, None, None, user_name, action)
         db.session.add(record)
         db.session.commit()
-
 
 
 

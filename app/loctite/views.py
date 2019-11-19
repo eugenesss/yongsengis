@@ -13,6 +13,9 @@ from ..models import Loctite, LoctiteSchema, AuditLog, AuditLogSchema
 @loctite.route('/save_loctite', methods=['POST'])
 @jwt_required
 def save_item():
+    user = get_jwt_identity()
+    if user["access"] == 1:
+        return jsonify("Forbidden"), 403
     """
     Add a loctite
     """
@@ -50,6 +53,9 @@ def show_items():
 @loctite.route("/update_loctite/<int:pid>", methods=['GET', 'POST'])
 @jwt_required
 def update_items(pid):
+    user = get_jwt_identity()
+    if user["access"] == 1:
+        return jsonify("Forbidden"), 403
     """
     Update loctite
     """
@@ -105,6 +111,9 @@ def update_items(pid):
 @loctite.route("/update_loctites", methods=['GET', 'POST'])
 @jwt_required
 def update_multiple_items():
+    user = get_jwt_identity()
+    if user["access"] == 1:
+        return jsonify("Forbidden"), 403
     """
     Update loctite
     """
@@ -154,6 +163,9 @@ def update_multiple_items():
 @loctite.route("/delete_loctite/<int:pid>", methods=['POST'])
 @jwt_required
 def delete_items(pid):
+    user = get_jwt_identity()
+    if user["access"] == 1:
+        return jsonify("Forbidden"), 403
     """
     Delete loctite
     """

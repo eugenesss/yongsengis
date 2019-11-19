@@ -5,6 +5,7 @@ from . import auth
 from .. import db, http_auth
 from ..models import Employee
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
+from functools import wraps
 
 
 @auth.route('/register', methods=['GET', 'POST'])
@@ -19,7 +20,8 @@ def register():
                             username=form.username.data,
                             first_name=form.first_name.data,
                             last_name=form.last_name.data,
-                            password=form.password.data)
+                            password=form.password.data,
+                            access=form.acccess.data)
 
         # add employee to the database
         db.session.add(employee)
@@ -52,14 +54,16 @@ def login():
             access_token = create_access_token(identity={'email': employee.email,
                                                          'first_name': employee.first_name,
                                                          'last_name': employee.last_name,
+                                                         'access': employee.access,
                                                          'is_admin': True}, expires_delta=False)
         else:
             access_token = create_access_token(identity={'email': employee.email,
                                                          'first_name': employee.first_name,
                                                          'last_name': employee.last_name,
+                                                         'access': employee.access,
                                                          'is_admin': False}, expires_delta=False)
         results = {'token': access_token, 'is_admin': employee.is_admin, 'first_name': employee.first_name,
-                   'last_name': employee.last_name}
+                   'last_name': employee.last_name, 'access': employee.access}
     # when login details are incorrect
     else:
         results = {'error': 'invalid email or password.'}, 403
@@ -92,3 +96,15 @@ def get_auth_token():
 def get_current_user():
     current_user = get_jwt_identity()
     return make_response(jsonify(logged_in_as=current_user)), 200
+
+
+def requires_access_level():
+    def decorator(f):
+        @wraps(f)
+        def decorated_function(*args, **kwargs):
+            user = get_jwt_identity()
+            if user["access"] == 2:
+                return jsonify("Forbidden!"), 403
+            return f(*args, **kwargs)
+        return decorated_function
+    return decorator
