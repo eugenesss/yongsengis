@@ -2,22 +2,7 @@
  * Users Reducers
  */
 import { NotificationManager } from "react-notifications";
-import {
-  GET_ALL_USERS,
-  GET_ALL_USERS_SUCCESS,
-  ADD_USER,
-  ADD_USER_SUCCESS,
-  ADD_USER_FAILURE,
-  UPDATE_USER_START,
-  ON_CHANGE_UPDATE_USER,
-  UPDATE_USER,
-  UPDATE_USER_SUCCESS,
-  UPDATE_USER_FAILURE,
-  ON_CHANGE_UPDATE_USER_RIGHTS,
-  UPDATE_USER_RIGHTS,
-  UPDATE_USER_RIGHTS_SUCCESS,
-  GET_USER_FAILURE
-} from "./UserManagementTypes";
+import * as types from "./UserManagementTypes";
 
 const INIT_STATE = {
   userList: [],
@@ -34,13 +19,13 @@ export default (state = INIT_STATE, action) => {
     /**
      * GET All Users
      */
-    case GET_ALL_USERS:
+    case types.GET_ALL_USERS:
       return {
         ...state,
         usersLoading: true
       };
 
-    case GET_ALL_USERS_SUCCESS:
+    case types.GET_ALL_USERS_SUCCESS:
       return {
         ...state,
         usersLoading: false,
@@ -50,22 +35,22 @@ export default (state = INIT_STATE, action) => {
     /**
      * ADD User
      */
-    case ADD_USER:
+    case types.ADD_USER:
       return {
         ...state,
         usersLoading: true
       };
-    case ADD_USER_SUCCESS:
+    case types.ADD_USER_SUCCESS:
       var allUsers = Object.assign([], state.userList);
-      var users = [...allUsers, action.payload];
+      allUsers.unshift(action.payload);
       NotificationManager.success("User Added");
       return {
         ...state,
-        // userAdd: INIT_STATE.userAdd,
         usersLoading: false,
-        userList: users
+        userList: allUsers
       };
-    case ADD_USER_FAILURE:
+
+    case types.ADD_USER_FAILURE:
       NotificationManager.error("Failed to Add User");
       return {
         ...state,
@@ -75,76 +60,95 @@ export default (state = INIT_STATE, action) => {
     /**
      * UPDATE User
      */
-    case UPDATE_USER_START:
+    case types.EDIT_USER:
+      return { ...state, usersLoading: true };
+    case types.EDIT_USER_SUCCESS:
+      var editUser = Object.assign([], state.userList);
+      var editIndex = editUser.findIndex(user => user.id == action.payload.id);
+      editUser[editIndex] = action.payload;
+      NotificationManager.success("User Edited");
       return {
         ...state,
-        userUpdate: action.payload
+        usersLoading: false,
+        userList: editUser
       };
-    case ON_CHANGE_UPDATE_USER:
-      return {
-        ...state,
-        userUpdate: {
-          ...state.userUpdate,
-          [action.payload.field]: action.payload.value
-        }
-      };
-    case UPDATE_USER:
-      return {
-        ...state,
-        profileLoading: true
-      };
-    case UPDATE_USER_SUCCESS:
-      NotificationManager.success("User Updated");
-      return {
-        ...state,
-        profileLoading: false,
-        userUpdate: action.payload
-      };
-    case UPDATE_USER_FAILURE:
-      NotificationManager.error("Failed to Update User");
-      return {
-        ...state,
-        profileLoading: false
-      };
-    case ON_CHANGE_UPDATE_USER_RIGHTS:
-      var userRightsObject = {
-        userid: action.payload.userid,
-        username: action.payload.username,
-        groups: []
-      };
-      for (const grp of action.payload.groups) {
-        var grpObject = { id: grp.id, name: grp.name, roles: [] };
-        for (const role of grp.roles) {
-          grpObject.roles.push({
-            id: role.id,
-            roleId: role.roleId,
-            name: role.name,
-            tier: role.tier
-          });
-        }
-        userRightsObject.groups.push(grpObject);
-      }
-
-      return {
-        ...state,
-        userSettings: userRightsObject
-      };
-    case UPDATE_USER_RIGHTS:
-      return {
-        ...state,
-        usersLoading: true
-      };
-    case UPDATE_USER_RIGHTS_SUCCESS:
-      NotificationManager.success("User Updated");
+    case types.EDIT_USER_FAILURE:
+      NotificationManager.error("Failed to Edit User");
       return {
         ...state,
         usersLoading: false
       };
 
+    // case types.UPDATE_USER_START:
+    //   return {
+    //     ...state,
+    //     userUpdate: action.payload
+    //   };
+    // case types.ON_CHANGE_UPDATE_USER:
+    //   return {
+    //     ...state,
+    //     userUpdate: {
+    //       ...state.userUpdate,
+    //       [action.payload.field]: action.payload.value
+    //     }
+    //   };
+    // case types.UPDATE_USER:
+    //   return {
+    //     ...state,
+    //     profileLoading: true
+    //   };
+    // case types.UPDATE_USER_SUCCESS:
+    //   NotificationManager.success("User Updated");
+    //   return {
+    //     ...state,
+    //     profileLoading: false,
+    //     userUpdate: action.payload
+    //   };
+    // case types.UPDATE_USER_FAILURE:
+    //   NotificationManager.error("Failed to Update User");
+    //   return {
+    //     ...state,
+    //     profileLoading: false
+    //   };
+    // case types.ON_CHANGE_UPDATE_USER_RIGHTS:
+    //   var userRightsObject = {
+    //     userid: action.payload.userid,
+    //     username: action.payload.username,
+    //     groups: []
+    //   };
+    //   for (const grp of action.payload.groups) {
+    //     var grpObject = { id: grp.id, name: grp.name, roles: [] };
+    //     for (const role of grp.roles) {
+    //       grpObject.roles.push({
+    //         id: role.id,
+    //         roleId: role.roleId,
+    //         name: role.name,
+    //         tier: role.tier
+    //       });
+    //     }
+    //     userRightsObject.groups.push(grpObject);
+    //   }
+
+    //   return {
+    //     ...state,
+    //     userSettings: userRightsObject
+    //   };
+    // case types.UPDATE_USER_RIGHTS:
+    //   return {
+    //     ...state,
+    //     usersLoading: true
+    //   };
+    // case types.UPDATE_USER_RIGHTS_SUCCESS:
+    //   NotificationManager.success("User Updated");
+    //   return {
+    //     ...state,
+    //     usersLoading: false
+    //   };
+
     /**
      * GET_USER_FAILURE
      */
-    case GET_USER_FAILURE:
+    case types.GET_USER_FAILURE:
       NotificationManager.warning("Error in fetching User Data");
       return INIT_STATE;
 

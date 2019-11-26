@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { show } from "redux-modal";
 
 // Components
 import UsersList from "./components/UsersList";
@@ -13,47 +14,34 @@ import { getAllUsers } from "Ducks/setting/userManagement";
 class Setting_UserManagement extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      addUserDialog: false,
-      userControlDialog: false,
-      userToEdit: ""
-    };
-    this.openAddUserDialog = this.openAddUserDialog.bind(this);
-    this.openUserControlDialog = this.openUserControlDialog.bind(this);
+    this.newUser = this.newUser.bind(this);
+    this.editUser = this.editUser.bind(this);
   }
 
   componentDidMount() {
     this.props.getAllUsers();
   }
 
-  openAddUserDialog() {
-    this.setState({ addUserDialog: !this.state.addUserDialog });
+  newUser() {
+    this.props.show("add_user");
   }
 
-  openUserControlDialog(id) {
-    this.setState({
-      userControlDialog: !this.state.userControlDialog,
-      userToEdit: id
-    });
+  editUser(id) {
+    const toEdit = this.props.userList.find(user => user.id == id);
+    this.props.show("add_user", { edit: toEdit });
   }
 
   render() {
     const { userList, usersLoading } = this.props;
-    const { addUserDialog, userControlDialog, userToEdit } = this.state;
     return (
       <React.Fragment>
         <UsersList
-          action={{
-            openAddUserDialog: this.openAddUserDialog,
-            openUserControlDialog: this.openUserControlDialog
-          }}
+          editUser={this.editUser}
+          newUser={this.newUser}
           tableData={userList}
           loading={usersLoading}
         />
-        <AddUserDialog
-          show={addUserDialog}
-          handleClose={this.openAddUserDialog}
-        />
+        <AddUserDialog />
       </React.Fragment>
     );
   }
@@ -64,7 +52,6 @@ const mapStateToProps = ({ usersState }) => {
   return { userList, usersLoading };
 };
 
-export default connect(
-  mapStateToProps,
-  { getAllUsers }
-)(Setting_UserManagement);
+export default connect(mapStateToProps, { getAllUsers, show })(
+  Setting_UserManagement
+);

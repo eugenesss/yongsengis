@@ -1,49 +1,64 @@
 import React from "react";
+import AccessComponent from "Auth/AccessComponent";
 
 import BgCard from "Components/BgCard";
 import RecordsList from "Components/RecordsList";
 import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
 import { PersonAdd, Edit } from "@material-ui/icons";
+import Chip from "@material-ui/core/Chip";
 
 import RctSectionLoader from "Components/RctSectionLoader";
 
-const UsersList = ({ tableData, loading, action }) => {
+const UsersList = ({ tableData, loading, editUser, newUser }) => {
   const columns = [
     {
-      label: "Name",
-      name: "name"
+      label: "First Name",
+      name: "first_name"
+    },
+    {
+      label: "Last Name",
+      name: "last_name"
     },
     { label: "Email", name: "email" },
     {
-      label: "Mobile",
-      name: "baseContact",
-      options: { customBodyRender: value => (value ? value.mobile : "") }
+      label: "Is Admin",
+      name: "access",
+      options: {
+        customBodyRender: value =>
+          value == 2 ? (
+            <Chip
+              className="bg-success text-white"
+              size="small"
+              label="Admin"
+            />
+          ) : (
+            " "
+          )
+      }
+    },
+    {
+      label: "Actions",
+      name: "id",
+      options: {
+        filter: false,
+        customBodyRender: value => {
+          return (
+            <AccessComponent>
+              <Tooltip id="tooltip-icon" title="Edit Role">
+                <IconButton
+                  aria-label="More Options"
+                  style={{ padding: 6 }}
+                  onClick={() => editUser(value)}
+                >
+                  <Edit style={{ fontSize: 16 }} />
+                </IconButton>
+              </Tooltip>
+            </AccessComponent>
+          );
+        }
+      }
     }
-    // {
-    //   label: "Actions",
-    //   name: "id",
-    //   options: {
-    //     filter: false,
-    //     customBodyRender: value => {
-    //       return (
-    //         <React.Fragment>
-    //           <Tooltip id="tooltip-icon" title="Edit Role">
-    //             <IconButton
-    //               aria-label="More Options"
-    //               style={{ padding: 6 }}
-    //               onClick={() => {
-    //                 action.openUserControlDialog(value);
-    //               }}
-    //             >
-    //               <Edit style={{ fontSize: 16 }} />
-    //             </IconButton>
-    //           </Tooltip>
-    //         </React.Fragment>
-    //       );
-    //     }
-    //   }
-    // }
   ];
 
   const options = {
@@ -62,7 +77,7 @@ const UsersList = ({ tableData, loading, action }) => {
         <IconButton
           className="mr-2"
           aria-label="Add User"
-          onClick={action.openAddUserDialog}
+          onClick={() => newUser()}
         >
           <PersonAdd />
         </IconButton>

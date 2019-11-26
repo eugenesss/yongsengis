@@ -1,4 +1,4 @@
-import { all, call, fork, put, takeEvery, select } from "redux-saga/effects";
+import { all, call, fork, put, takeEvery } from "redux-saga/effects";
 import {
   GET_ALL_CATEGORIES,
   NEW_CATEGORIES,
@@ -21,14 +21,16 @@ import api from "Api";
 // REQUESTS
 //=========================
 const getAllCategoriesRequest = async () => {
-  // const result = await api.get("/users");
-  // return result.data;
-  return [];
+  const result = await api.get("/show_category");
+  return result.data;
 };
 const newCategoriesRequest = async data => {
   return {};
 };
 const editCategoriesRequest = async data => {
+  return {};
+};
+const deleteCategoriesRequest = async id => {
   return {};
 };
 
@@ -59,6 +61,14 @@ function* editCategories({ payload }) {
     yield put(editCategoriesFailure(error));
   }
 }
+function* deleteCategories({ payload }) {
+  try {
+    yield call(deleteCategoriesRequest, payload);
+    yield put(deleteCategoriesSuccess(payload));
+  } catch (error) {
+    yield put(deleteCategoriesFailure(error));
+  }
+}
 
 //=======================
 // WATCHER FUNCTIONS
@@ -72,6 +82,9 @@ export function* newCategoriesWatcher() {
 export function* editCategoriesWatcher() {
   yield takeEvery(EDIT_CATEGORIES, editCategories);
 }
+export function* deleteCategoryWatcher() {
+  yield takeEvery(DELETE_CATEGORIES, deleteCategories);
+}
 
 //=======================
 // FORK SAGAS TO STORE
@@ -80,6 +93,7 @@ export default function* rootSaga() {
   yield all([
     fork(getCategoriesWatcher),
     fork(newCategoriesWatcher),
-    fork(editCategoriesWatcher)
+    fork(editCategoriesWatcher),
+    fork(deleteCategoryWatcher)
   ]);
 }

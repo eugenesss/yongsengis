@@ -7,25 +7,8 @@ import { reducer as modal } from "redux-modal";
 // session
 import { AuthReducer } from "Ducks/session/auth";
 
-// // account
-// import {
-//   CreditNoteReducer,
-//   InvoiceReducer,
-//   PaymentReducer,
-//   QuotationReducer
-// } from "Ducks/accounting";
-
-// // crm
-// import {
-//   LeadReducer,
-//   CustomerReducer,
-//   AccountReducer,
-//   DealReducer,
-//   CrmFieldReducer
-// } from "Ducks/crm";
-
 //settings
-import { UserManagementReducer } from "Ducks/setting";
+import { UserManagementReducer, CategoryReducer } from "Ducks/setting";
 
 // system
 import { ReportReducer } from "Ducks/report";
@@ -51,12 +34,9 @@ const reducers = combineReducers({
     loctiteState: LoctiteReducer,
     imsField: ImsFieldReducer
   }),
-  // accountingState: combineReducers({
-  //   quotationState: QuotationReducer,
-  //   invoiceState: InvoiceReducer,
-  //   creditNoteState: CreditNoteReducer,
-  //   paymentState: PaymentReducer
-  // }),
+  settingState: combineReducers({
+    categoryState: CategoryReducer
+  }),
   widgetState: WidgetReducer,
   reportState: ReportReducer,
   calendarState: CalendarReducer,
