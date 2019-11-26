@@ -160,7 +160,7 @@ class AddUserForm extends Component {
             }
             disabled={this.checkDisable()}
           >
-            Create
+            Save
           </Button>
         </div>
       </form>

@@ -9,13 +9,14 @@ import UsersList from "./components/UsersList";
 import AddUserDialog from "./components/dialogs/AddUserDialog";
 
 // Actions
-import { getAllUsers } from "Ducks/setting/userManagement";
+import { getAllUsers, deleteUser } from "Ducks/setting/userManagement";
 
 class Setting_UserManagement extends Component {
   constructor(props) {
     super(props);
     this.newUser = this.newUser.bind(this);
     this.editUser = this.editUser.bind(this);
+    this.deleteUserDialog = this.deleteUserDialog.bind(this);
   }
 
   componentDidMount() {
@@ -31,6 +32,12 @@ class Setting_UserManagement extends Component {
     this.props.show("add_user", { edit: toEdit });
   }
 
+  deleteUserDialog(id) {
+    this.props.show("alert_delete", {
+      action: () => this.props.deleteUser(id)
+    });
+  }
+
   render() {
     const { userList, usersLoading } = this.props;
     return (
@@ -38,6 +45,7 @@ class Setting_UserManagement extends Component {
         <UsersList
           editUser={this.editUser}
           newUser={this.newUser}
+          deleteUser={this.deleteUserDialog}
           tableData={userList}
           loading={usersLoading}
         />
@@ -52,6 +60,6 @@ const mapStateToProps = ({ usersState }) => {
   return { userList, usersLoading };
 };
 
-export default connect(mapStateToProps, { getAllUsers, show })(
+export default connect(mapStateToProps, { getAllUsers, show, deleteUser })(
   Setting_UserManagement
 );

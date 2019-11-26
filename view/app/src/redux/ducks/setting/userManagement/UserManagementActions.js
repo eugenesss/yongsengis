@@ -57,3 +57,19 @@ export const getUserFailure = err => ({
   type: types.GET_USER_FAILURE,
   payload: err
 });
+
+/**
+ * DELETE User
+ */
+export const deleteUser = id => ({
+  type: types.DELETE_USER,
+  payload: id
+});
+export const deleteUserSuccess = id => ({
+  type: types.DELETE_USER_SUCCESS,
+  payload: id
+});
+export const deleteUserFailure = error => ({
+  type: types.DELETE_USER_FAILURE,
+  payload: error
+});

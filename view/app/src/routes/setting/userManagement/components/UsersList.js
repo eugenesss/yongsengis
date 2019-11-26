@@ -5,12 +5,12 @@ import BgCard from "Components/BgCard";
 import RecordsList from "Components/RecordsList";
 import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
-import { PersonAdd, Edit } from "@material-ui/icons";
+import { PersonAdd, Edit, Delete } from "@material-ui/icons";
 import Chip from "@material-ui/core/Chip";
 
 import RctSectionLoader from "Components/RctSectionLoader";
 
-const UsersList = ({ tableData, loading, editUser, newUser }) => {
+const UsersList = ({ tableData, loading, editUser, newUser, deleteUser }) => {
   const columns = [
     {
       label: "First Name",
@@ -54,6 +54,15 @@ const UsersList = ({ tableData, loading, editUser, newUser }) => {
                   <Edit style={{ fontSize: 16 }} />
                 </IconButton>
               </Tooltip>
+              <Tooltip id="tooltip-icon" title="Edit Role">
+                <IconButton
+                  aria-label="More Options"
+                  style={{ padding: 6, marginLeft: 10 }}
+                  onClick={() => deleteUser(value)}
+                >
+                  <Delete className="text-danger" style={{ fontSize: 16 }} />
+                </IconButton>
+              </Tooltip>
             </AccessComponent>
           );
         }
@@ -73,15 +82,17 @@ const UsersList = ({ tableData, loading, editUser, newUser }) => {
     rowsPerPageOptions: [15, 30, 60, 100],
     textLabels: { body: { noMatch: "No data to display" } },
     customToolbar: () => (
-      <Tooltip id="tooltip-icon" title="Add User">
-        <IconButton
-          className="mr-2"
-          aria-label="Add User"
-          onClick={() => newUser()}
-        >
-          <PersonAdd />
-        </IconButton>
-      </Tooltip>
+      <AccessComponent>
+        <Tooltip id="tooltip-icon" title="Add User">
+          <IconButton
+            className="mr-2"
+            aria-label="Add User"
+            onClick={() => newUser()}
+          >
+            <PersonAdd />
+          </IconButton>
+        </Tooltip>
+      </AccessComponent>
     )
   };
 

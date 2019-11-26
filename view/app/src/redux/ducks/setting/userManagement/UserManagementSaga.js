@@ -3,7 +3,8 @@ import {
   GET_ALL_USERS,
   ADD_USER,
   EDIT_USER,
-  GET_USER_PROFILE
+  GET_USER_PROFILE,
+  DELETE_USER
 } from "./UserManagementTypes";
 import {
   getAllUsersSuccess,
@@ -12,35 +13,35 @@ import {
   editUserSuccess,
   editUserFailure,
   getUserProfileSuccess,
-  getUserFailure
+  getUserFailure,
+  deleteUserSuccess,
+  deleteUserFailure
 } from "./UserManagementActions";
 import api from "Api";
-
-import { user } from "./dummydata";
 
 //=========================
 // REQUESTS
 //=========================
 const getAllUsersRequest = async () => {
-  // const result = await api.get("/users");
-  // return result.data;
-  return [user];
+  const result = await api.get("/show_users");
+  return result.data;
 };
 
 const addUserRequest = async newUser => {
-  // const result = await api.post("/users", newUser);
-  console.log(newUser);
-  const result = newUser;
-  return result;
+  const result = await api.post("/create_user", newUser);
+  return newUser;
 };
 const updateUserRequest = async data => {
-  console.log(data);
-  const result = data;
-  return result;
+  const result = await api.post(`/update_user/${data.id}`, data);
+  return result.data;
 };
 const getUserProfileRequest = async userID => {
   const result = await api.get(`/users/${userID}`, userID);
   return result.data;
+};
+const deleteUserRequest = async id => {
+  const result = await api.post(`/delete_user/${id}`);
+  return result;
 };
 
 //=========================
@@ -78,6 +79,14 @@ function* getUserProfileFromDB({ payload }) {
     yield put(getUserFailure(err));
   }
 }
+function* deleteUser({ payload }) {
+  try {
+    yield call(deleteUserRequest, payload);
+    yield put(deleteUserSuccess(payload));
+  } catch (error) {
+    yield put(deleteUserFailure(error));
+  }
+}
 
 //=======================
 // WATCHER FUNCTIONS
@@ -94,6 +103,9 @@ export function* editUserWatcher() {
 export function* getUserProfileWatcher() {
   yield takeEvery(GET_USER_PROFILE, getUserProfileFromDB);
 }
+export function* deleteUserWatcher() {
+  yield takeEvery(DELETE_USER, deleteUser);
+}
 
 //=======================
 // FORK SAGAS TO STORE
@@ -103,6 +115,7 @@ export default function* rootSaga() {
     fork(getAllUsersWatcher),
     fork(addUserWatcher),
     fork(editUserWatcher),
-    fork(getUserProfileWatcher)
+    fork(getUserProfileWatcher),
+    fork(deleteUserWatcher)
   ]);
 }

@@ -17,32 +17,34 @@ const INIT_STATE = {
 export default (state = INIT_STATE, action) => {
   switch (action.type) {
     /**
-     * GET All Users
+     * Init loading state
      */
     case types.GET_ALL_USERS:
-      return {
-        ...state,
-        usersLoading: true
-      };
+    case types.ADD_USER:
+    case types.EDIT_USER:
+    case types.DELETE_USER:
+      return { ...state, usersLoading: true };
 
+    /**
+     * GET All Users
+     */
     case types.GET_ALL_USERS_SUCCESS:
       return {
         ...state,
         usersLoading: false,
         userList: action.payload
       };
+    case types.GET_USER_FAILURE:
+      NotificationManager.warning("Error in fetching User Data");
+      return INIT_STATE;
 
     /**
      * ADD User
      */
-    case types.ADD_USER:
-      return {
-        ...state,
-        usersLoading: true
-      };
+
     case types.ADD_USER_SUCCESS:
       var allUsers = Object.assign([], state.userList);
-      allUsers.unshift(action.payload);
+      allUsers.push(action.payload);
       NotificationManager.success("User Added");
       return {
         ...state,
@@ -60,8 +62,6 @@ export default (state = INIT_STATE, action) => {
     /**
      * UPDATE User
      */
-    case types.EDIT_USER:
-      return { ...state, usersLoading: true };
     case types.EDIT_USER_SUCCESS:
       var editUser = Object.assign([], state.userList);
       var editIndex = editUser.findIndex(user => user.id == action.payload.id);
@@ -79,78 +79,20 @@ export default (state = INIT_STATE, action) => {
         usersLoading: false
       };
 
-    // case types.UPDATE_USER_START:
-    //   return {
-    //     ...state,
-    //     userUpdate: action.payload
-    //   };
-    // case types.ON_CHANGE_UPDATE_USER:
-    //   return {
-    //     ...state,
-    //     userUpdate: {
-    //       ...state.userUpdate,
-    //       [action.payload.field]: action.payload.value
-    //     }
-    //   };
-    // case types.UPDATE_USER:
-    //   return {
-    //     ...state,
-    //     profileLoading: true
-    //   };
-    // case types.UPDATE_USER_SUCCESS:
-    //   NotificationManager.success("User Updated");
-    //   return {
-    //     ...state,
-    //     profileLoading: false,
-    //     userUpdate: action.payload
-    //   };
-    // case types.UPDATE_USER_FAILURE:
-    //   NotificationManager.error("Failed to Update User");
-    //   return {
-    //     ...state,
-    //     profileLoading: false
-    //   };
-    // case types.ON_CHANGE_UPDATE_USER_RIGHTS:
-    //   var userRightsObject = {
-    //     userid: action.payload.userid,
-    //     username: action.payload.username,
-    //     groups: []
-    //   };
-    //   for (const grp of action.payload.groups) {
-    //     var grpObject = { id: grp.id, name: grp.name, roles: [] };
-    //     for (const role of grp.roles) {
-    //       grpObject.roles.push({
-    //         id: role.id,
-    //         roleId: role.roleId,
-    //         name: role.name,
-    //         tier: role.tier
-    //       });
-    //     }
-    //     userRightsObject.groups.push(grpObject);
-    //   }
-
-    //   return {
-    //     ...state,
-    //     userSettings: userRightsObject
-    //   };
-    // case types.UPDATE_USER_RIGHTS:
-    //   return {
-    //     ...state,
-    //     usersLoading: true
-    //   };
-    // case types.UPDATE_USER_RIGHTS_SUCCESS:
-    //   NotificationManager.success("User Updated");
-    //   return {
-    //     ...state,
-    //     usersLoading: false
-    //   };
-
     /**
-     * GET_USER_FAILURE
+     * DELETE user
      */
-    case types.GET_USER_FAILURE:
-      NotificationManager.warning("Error in fetching User Data");
-      return INIT_STATE;
+    case types.DELETE_USER_SUCCESS:
+      const deleteUser = Object.assign([], state.userList).filter(
+        user => user.id !== action.payload
+      );
+      console.log(action.payload);
+      NotificationManager.success("User Deleted");
+      console.log(deleteUser);
+      return { usersLoading: false, userList: deleteUser };
+    case types.DELETE_USER_FAILURE:
+      NotificationManager.error("Failed to Delete User");
+      return { ...state, usersLoading: false };
 
     default:
       return { ...state };

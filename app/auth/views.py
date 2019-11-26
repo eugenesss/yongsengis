@@ -65,7 +65,7 @@ def update_user(uid):
         username = data_js.get('username')
         first_name = data_js.get('first_name')
         last_name = data_js.get('last_name')
-        password = data_js.get('password')
+        # password = data_js.get('password')
         access = data_js.get('access')
 
         # Update the changes
@@ -73,7 +73,7 @@ def update_user(uid):
         user.username = username
         user.first_name = first_name
         user.last_name = last_name
-        user.password = password
+        # user.password = password
         user.access = access
         db.session.commit()
 
