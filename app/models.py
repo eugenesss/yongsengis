@@ -46,11 +46,12 @@ class Employee(UserMixin, db.Model, Serializer):
     is_admin = db.Column(db.Boolean, default=False)
     access = db.Column(db.Integer, index=True)
 
-    def __init__(self, email, username, first_name, last_name, access=ACCESS['user']):
+    def __init__(self, email, username, first_name, last_name, password, access=ACCESS['user']):
         self.email = email
         self.username = username
         self.first_name = first_name
         self.last_name = last_name
+        self.password = password
         self.access = access
 
     def is_user_admin(self):
@@ -71,14 +72,12 @@ class Employee(UserMixin, db.Model, Serializer):
         """
         Set password to a hashed password
         """
-        #self.password_hash = generate_password_hash(password)
         self.password_hash = pwd_context.encrypt(password)
 
     def verify_password(self, password):
         """
         Check if hashed password matches actual password
         """
-        #return check_password_hash(self.password_hash, password)
         return pwd_context.verify(password, self.password_hash)
 
     def admin_or_user(self):
@@ -93,8 +92,16 @@ class Employee(UserMixin, db.Model, Serializer):
     # Set up user_loader
     @login_manager.user_loader
     def load_user(user_id):
-        #return Employee.query.get(int(user_id))
         return Employee.query.get(int(user_id))
+
+
+class UserSchema(Schema):
+    """
+    User Schema
+    """
+    class Meta:
+        # Fields to expose
+        fields = ("id", "email", "username", "first_name", "last_name", "access")
 
 
 class Warehouse(db.Model, Serializer):
@@ -124,9 +131,6 @@ class WarehouseSchema(Schema):
     class Meta:
         # Fields to expose
         fields = ("wid", "wh_name", "location")
-    # wid = fields.Int(dump_only=True)
-    # wh_name = fields.String(dump_only=True)
-    # location = fields.Str(dump_only=True)
 
 
 class Category(db.Model, Serializer):
@@ -215,17 +219,6 @@ class UpdateInventorySchema(Schema):
         # Fields to expose
         fields = ("wid", "wh_name", "pid", "name", "quantity", "description", "code", "price", "material", "perbox",
                   "location", "cid", "cat_name", "rack", "unit_code")
-
-    # wid = fields.Int(dump_only=True)
-    # wh_name = fields.String(dump_only=True)
-    # name = fields.Str(dump_only=True)
-    # quantity = fields.Int(dump_only=True)
-    # description = fields.Str(dump_only=True)
-    # code = fields.Str(dump_only=True)
-    # price = fields.Int(dump_only=True)
-    # material = fields.String(dump_only=True)
-    # perbox = fields.Int(dump_only=True)
-    # location = fields.Str(dump_only=True)
 
 
 class Loctite(db.Model, Serializer):
@@ -324,8 +317,3 @@ def get_item_by_warehouse(wid):
                             Category.cat_name).filter(Inventory.wid == wid).filter(Category.cid == Inventory.cid).filter(Inventory.wid == Warehouse.wid).all()
     return items
 
-# def get_all_items():
-#     all_items = db.session.query(Warehouse.wid, Warehouse.wh_name, Inventory.name, Inventory.quantity,
-#                                  Inventory.description, Inventory.code, Inventory.price, Inventory.material,
-#                                  Inventory.perbox, Inventory.location).all()
-#     return all_items

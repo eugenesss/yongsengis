@@ -3,36 +3,97 @@ from flask_login import login_required, login_user, logout_user
 
 from . import auth
 from .. import db, http_auth
-from ..models import Employee
+from ..models import Employee, UserSchema
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
 from functools import wraps
 
 
-@auth.route('/register', methods=['GET', 'POST'])
-def register():
+@auth.route('/create_user', methods=['POST'])
+@jwt_required
+def create_user():
     """
     Handle requests to the /register route
     Add an employee to the database through the registration form
     """
-    form = RegistrationForm()
-    if form.validate_on_submit():
-        employee = Employee(email=form.email.data,
-                            username=form.username.data,
-                            first_name=form.first_name.data,
-                            last_name=form.last_name.data,
-                            password=form.password.data,
-                            access=form.acccess.data)
+    user = get_jwt_identity()
+    if user["access"] == 1:
+        return jsonify("Forbidden"), 403
 
-        # add employee to the database
-        db.session.add(employee)
+    # Retrieve the data from request
+    data = request.data
+    data_js = json.loads(data)
+
+    # Get the individual values
+    email = data_js.get('email')
+    username = data_js.get('username')
+    first_name = data_js.get('first_name')
+    last_name = data_js.get('last_name')
+    password = data_js.get('password')
+    access = data_js.get('access')
+    employee = Employee(email=email, username=username, first_name=first_name, last_name=last_name, password=password, access=access)
+
+    db.session.add(employee)
+    db.session.commit()
+
+    # redirect to the login page
+    return jsonify('successfully registered'), 200
+
+
+@auth.route('/show_users', methods=['GET'])
+@jwt_required
+def show_users():
+    """
+        Display all users
+        """
+    users = Employee.query.all()
+    user_schema = UserSchema(many=True)
+    return user_schema.jsonify(users)
+
+
+@auth.route("/update_user/<int:uid>", methods=['GET', 'POST'])
+def update_user(uid):
+    # Retrieve user from database
+    user = Employee.query.get_or_404(uid)
+
+    if request.method == 'POST':
+        # Retrieve the data from request
+        data = request.data
+        data_js = json.loads(data)
+
+        # retrieve the individual values
+        email = data_js.get('email')
+        username = data_js.get('username')
+        first_name = data_js.get('first_name')
+        last_name = data_js.get('last_name')
+        password = data_js.get('password')
+        access = data_js.get('access')
+
+        # Update the changes
+        user.email = email
+        user.username = username
+        user.first_name = first_name
+        user.last_name = last_name
+        user.password = password
+        user.access = access
         db.session.commit()
-        flash('You have successfully registered! You may now login.')
 
-        # redirect to the login page
-        return jsonify('successfully registered'), 200
+    user_schema = UserSchema()
+    return user_schema.jsonify(user)
 
-    # load registration template
-    return render_template('auth/register.html', form=form, title='Register')
+
+@auth.route("/delete_user/<int:uid>", methods=['POST'])
+@jwt_required
+def delete_items(uid):
+    user = get_jwt_identity()
+    if user["access"] == 1:
+        return jsonify("Forbidden"), 403
+    """
+    Delete inventory
+    """
+    user = Employee.query.get_or_404(uid)
+    db.session.delete(user)
+    db.session.commit()
+    return jsonify("User deleted"), 200
 
 
 @auth.route('/login', methods=['GET', 'POST'])
@@ -98,13 +159,13 @@ def get_current_user():
     return make_response(jsonify(logged_in_as=current_user)), 200
 
 
-def requires_access_level():
+def requires_access_level(access_level):
     def decorator(f):
         @wraps(f)
         def decorated_function(*args, **kwargs):
             user = get_jwt_identity()
-            if user["access"] == 2:
-                return jsonify("Forbidden!"), 403
+            if user.allowed(access_level):
+                return redirect(url_for('users.profile', message="You do not have access to that page. Sorry!"))
             return f(*args, **kwargs)
         return decorated_function
     return decorator
