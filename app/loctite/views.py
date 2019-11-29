@@ -122,8 +122,8 @@ def update_multiple_items():
     data = request.data
     data_js = json.loads(data)
     for items in data_js:
-        inn = items["name"]
-        item = Loctite.query.filter_by(name=inn).first()
+        pid = items["pid"]
+        item = Loctite.query.filter_by(pid=pid).first()
 
         # get the individual values
         name = items['name']

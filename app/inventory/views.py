@@ -159,8 +159,8 @@ def update_multiple_items():
     data = request.data
     data_js = json.loads(data)
     for items in data_js:
-        inn = items["code"]
-        item = Inventory.query.filter_by(code=inn).first()
+        pid = items["pid"]
+        item = Inventory.query.filter_by(pid=pid).first()
         # Get the individual values
 
         name = items['name']
