@@ -22,13 +22,6 @@ const reducers = combineReducers({
   sessionState: combineReducers({
     authState: AuthReducer
   }),
-  // crmState: combineReducers({
-  //   leadState: LeadReducer,
-  //   customerState: CustomerReducer,
-  //   accountState: AccountReducer,
-  //   dealState: DealReducer,
-  //   crmField: CrmFieldReducer
-  // }),
   imsState: combineReducers({
     inventoryState: InventoryReducer,
     loctiteState: LoctiteReducer,
