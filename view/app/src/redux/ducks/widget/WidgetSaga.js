@@ -1,60 +1,106 @@
-import { all, call, fork, put, takeEvery, delay } from "redux-saga/effects";
-import { GET_CRM_SUMMARY, GET_UNTOUCHED_LEADS } from "./WidgetTypes";
+import { all, call, fork, put, takeEvery } from "redux-saga/effects";
 import {
-  getCrmSummarySuccess,
-  getCrmSummaryFailure,
-  getUntouchedLeadsSuccess,
-  getUntouchedLeadsFailure
+  GET_TO_DO,
+  NEW_TO_DO,
+  UPDATE_TO_DO,
+  DELETE_TO_DO
+} from "./WidgetTypes";
+import {
+  getToDoSuccess,
+  getToDoFailure,
+  newToDoSuccess,
+  newToDoFailure,
+  updateToDoSuccess,
+  updateToDoFailure,
+  deleteToDoSuccess,
+  deleteToDoFailure
 } from "./WidgetActions";
 
 import api from "Api";
 
 //=========================
-// REQUESTS
+// To Do
 //=========================
-const getCrmSummaryRequest = async () => {
-  const result = await api.get("/widgets/crmsummary");
-  return result.data.data;
+const getToDoRequest = async () => {
+  // const result = await api.get("/widgets/crmsummary");
+  // return result.data.data;
+  return {};
 };
-const getUntouchedLeadsRequest = async date => {
-  const result = await api.post("/widgets/untouchedleads", { date });
-  return result.data.data;
-};
-
-//=========================
-// CALL(GENERATOR) ACTIONS
-//=========================
-function* getCrmSummary() {
+function* getToDo() {
   try {
-    const data = yield call(getCrmSummaryRequest);
-    yield put(getCrmSummarySuccess(data));
+    const data = yield call(getToDoRequest);
+    yield put(getToDoSuccess(data));
   } catch (error) {
-    yield put(getCrmSummaryFailure(error));
+    yield put(getToDoFailure(error));
   }
 }
-function* getUntouchedLeads({ payload }) {
+// New To Do
+const newToDoRequest = async data => {
+  // const result = await api.get("/widgets/crmsummary");
+  // return result.data.data;
+  return {};
+};
+function* newToDo({ payload }) {
   try {
-    const data = yield call(getUntouchedLeadsRequest, payload);
-    yield delay(500);
-    yield put(getUntouchedLeadsSuccess(data));
+    const data = yield call(newToDoRequest, payload);
+    yield put(newToDoSuccess(data));
   } catch (error) {
-    yield put(getUntouchedLeadsFailure(error));
+    yield put(newToDoFailure(error));
+  }
+}
+// Update To do
+const updateToDoRequest = async data => {
+  // const result = await api.get("/widgets/crmsummary");
+  // return result.data.data;
+  return {};
+};
+function* updateToDo({ payload }) {
+  try {
+    const data = yield call(updateToDoRequest, payload);
+    yield put(updateToDoSuccess(data));
+  } catch (error) {
+    yield put(updateToDoFailure(error));
+  }
+}
+// Delete To Do
+const deleteToDoRequest = async data => {
+  // const result = await api.get("/widgets/crmsummary");
+  // return result.data.data;
+  return {};
+};
+function* deleteToDo() {
+  try {
+    const data = yield call(deleteToDoRequest, data);
+    yield put(deleteToDoSuccess(data));
+  } catch (error) {
+    yield put(deleteToDoFailure(error));
   }
 }
 
 //=======================
 // WATCHER FUNCTIONS
 //=======================
-export function* getCrmSummaryWatcher() {
-  yield takeEvery(GET_CRM_SUMMARY, getCrmSummary);
+export function* getToDoWatcher() {
+  yield takeEvery(GET_TO_DO, getToDo);
 }
-export function* getUntouchedLeadsWatcher() {
-  yield takeEvery(GET_UNTOUCHED_LEADS, getUntouchedLeads);
+export function* newToDoWatcher() {
+  yield takeEvery(NEW_TO_DO, newToDo);
+}
+export function* updateToDoWatcher() {
+  yield takeEvery(UPDATE_TO_DO, updateToDo);
+}
+export function* deleteToDoWatcher() {
+  yield takeEvery(DELETE_TO_DO, deleteToDo);
 }
 
 //=======================
 // FORK SAGAS TO STORE
 //=======================
 export default function* rootSaga() {
-  yield all([fork(getCrmSummaryWatcher), fork(getUntouchedLeadsWatcher)]);
+  yield all([
+    fork(getToDoWatcher),
+    fork(newToDoWatcher),
+    fork(updateToDoWatcher),
+    fork(deleteToDoWatcher)
+  ]);
 }

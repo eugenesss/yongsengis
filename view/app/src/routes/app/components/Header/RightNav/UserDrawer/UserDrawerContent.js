@@ -13,9 +13,6 @@ import Avatar from "Components/Everyday/Avatar";
 import { logoutUser } from "Ducks/session/auth";
 import Auth from "Auth";
 
-// Calendar widget
-import Calendar from "Components/Widgets/Calendar/CalendarLayout";
-
 function UserDrawerContent(props) {
   const toggleDrawer = props.toggleDrawer;
   const { loggedInUser, history } = props;
@@ -82,8 +79,5 @@ const mapStateToProps = ({ sessionState }) => {
 };
 
 export default withRouter(
-  connect(
-    mapStateToProps,
-    { logoutUser }
-  )(UserDrawerContent)
+  connect(mapStateToProps, { logoutUser })(UserDrawerContent)
 );

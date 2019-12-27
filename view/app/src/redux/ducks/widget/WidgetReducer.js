@@ -1,58 +1,62 @@
+import { NotificationManager } from "react-notifications";
 import * as types from "./WidgetTypes";
 
 const INIT_STATE = {
-  crmSummary: {
+  todoList: {
     loading: false,
-    data: {
-      totalLeads: 0,
-      totalOpenDeals: 0,
-      openDealsAmount: 0,
-      dealsWonAmount: 0
-    }
-  },
-  untouchedLeads: { loading: false, data: [] }
+    list: []
+  }
 };
 
 export default (state = INIT_STATE, action) => {
   switch (action.type) {
     /**
-     * CRM Summary
+     * To Do List
      */
-    case types.GET_CRM_SUMMARY:
-      return { ...state, crmSummary: { ...state.crmSummary, loading: true } };
-    case types.GET_CRM_SUMMARY_SUCCESS:
-      return {
-        ...state,
-        crmSummary: {
-          ...state.crmSummary,
-          loading: false,
-          data: action.payload
-        }
-      };
-    case types.GET_CRM_SUMMARY_FAILURE:
-      return { ...state, crmSummary: { ...state.crmSummary, loading: false } };
+    case types.GET_TO_DO:
+    case types.NEW_TO_DO:
+    case types.UPDATE_TO_DO:
+    case types.DELETE_TO_DO:
+      return { ...state, todoList: { ...state.todoList, loading: true } };
 
-    /**
-     * Untouched Leads
-     */
-    case types.GET_UNTOUCHED_LEADS:
+    case types.GET_TO_DO_FAILURE:
+    case types.NEW_TO_DO_FAILURE:
+    case types.UPDATE_TO_DO_FAILURE:
+    case types.DELETE_TO_DO_FAILURE:
+      NotificationManager.error("Error in To do");
+      return { ...state, todoList: { ...state.todoList, loading: false } };
+
+    // Get Todo
+    case types.GET_TO_DO_SUCCESS:
       return {
         ...state,
-        untouchedLeads: { ...state.untouchedLeads, loading: true }
+        todoList: { ...state.todoList, loading: false, list: action.payload }
       };
-    case types.GET_UNTOUCHED_LEADS_SUCCESS:
+    // New Todo
+    case types.NEW_TO_DO_SUCCESS:
+      var newTodo = Object.assign([], state.todoList.list);
+      newTodo.push(action.payload);
       return {
         ...state,
-        untouchedLeads: {
-          ...state.untouchedLeads,
-          loading: false,
-          data: action.payload
-        }
+        todoList: { ...state.todoList, loading: false, list: newTodo }
       };
-    case types.GET_UNTOUCHED_LEADS:
+    // Update Todo
+    case types.UPDATE_TO_DO_SUCCESS:
+      var updateTodo = Object.assign([], state.todoList.list);
+      updateTodo.map(todo =>
+        todo.id == action.payload.id ? action.payload : todo
+      );
       return {
         ...state,
-        untouchedLeads: { ...state.untouchedLeads, loading: false }
+        todoList: { ...state.todoList, loading: false, list: updateTodo }
+      };
+    // Delete Todo
+    case types.DELETE_TO_DO_SUCCESS:
+      var deleteTodo = Object.assign([], state.todoList.list);
+      deleteTodo.filter(todo => todo.id !== action.payload.id);
+      return {
+        ...state,
+        todoList: { ...state.todoList, loading: false, list: deleteTodo }
       };
 
     default:

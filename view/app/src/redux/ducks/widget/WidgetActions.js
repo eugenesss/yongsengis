@@ -1,26 +1,55 @@
 import * as types from "./WidgetTypes";
 
-export const getCrmSummary = () => ({
-  type: types.GET_CRM_SUMMARY
+/**
+ * To Do List
+ */
+export const getToDo = () => ({
+  type: types.GET_TO_DO
 });
-export const getCrmSummarySuccess = data => ({
-  type: types.GET_CRM_SUMMARY_SUCCESS,
+export const getToDoSuccess = data => ({
+  type: types.GET_TO_DO_SUCCESS,
   payload: data
 });
-export const getCrmSummaryFailure = error => ({
-  type: types.GET_CRM_SUMMARY_FAILURE,
+export const getToDoFailure = error => ({
+  type: types.GET_TO_DO_FAILURE,
   payload: error
 });
 
-export const getUntouchedLeads = date => ({
-  type: types.GET_UNTOUCHED_LEADS,
-  payload: date
-});
-export const getUntouchedLeadsSuccess = data => ({
-  type: types.GET_UNTOUCHED_LEADS_SUCCESS,
+export const newToDo = data => ({
+  type: types.NEW_TO_DO,
   payload: data
 });
-export const getUntouchedLeadsFailure = error => ({
-  type: types.GET_UNTOUCHED_LEADS_FAILURE,
+export const newToDoSuccess = data => ({
+  type: types.NEW_TO_DO_SUCCESS,
+  payload: data
+});
+export const newToDoFailure = error => ({
+  type: types.NEW_TO_DO_FAILURE,
+  payload: error
+});
+
+export const updateToDo = data => ({
+  type: types.UPDATE_TO_DO,
+  payload: data
+});
+export const updateToDoSuccess = data => ({
+  type: types.UPDATE_TO_DO_SUCCESS,
+  payload: data
+});
+export const updateToDoFailure = error => ({
+  type: types.UPDATE_TO_DO_FAILURE,
+  payload: error
+});
+
+export const deleteToDo = data => ({
+  type: types.DELETE_TO_DO,
+  payload: data
+});
+export const deleteToDoSuccess = data => ({
+  type: types.DELETE_TO_DO_SUCCESS,
+  payload: data
+});
+export const deleteToDoFailure = error => ({
+  type: types.DELETE_TO_DO_FAILURE,
   payload: error
 });

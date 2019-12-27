@@ -5,6 +5,9 @@ import { ArrowBack } from "@material-ui/icons";
 import ActionButtonGroup from "./ActionButtons/ActionButtonGroup";
 import { makeStyles } from "@material-ui/core/styles";
 
+// Auth
+import AccessComponent from "Auth/AccessComponent";
+
 const useStyles = makeStyles(theme => ({
   actionButton: {
     marginLeft: theme.spacing(3),
@@ -40,21 +43,23 @@ const PageTitleBar = ({
         <h2 className="">{title && title}</h2>
       </div>
       <div className="d-flex title-action-buttons">
-        <div className="extra-action-buttons">
-          {customButton && customButton}
-          {actionButton &&
-            actionButton.map((button, key) => (
-              <Button
-                key={key}
-                variant="contained"
-                className={`${button.classes} ${classes.actionButton}`}
-                onClick={button.onClick}
-              >
-                {button.label}
-              </Button>
-            ))}
-        </div>
-        {actionGroup && <ActionButtonGroup buttons={actionGroup} />}
+        <AccessComponent>
+          <div className="extra-action-buttons">
+            {customButton && customButton}
+            {actionButton &&
+              actionButton.map((button, key) => (
+                <Button
+                  key={key}
+                  variant="contained"
+                  className={`${button.classes} ${classes.actionButton}`}
+                  onClick={button.onClick}
+                >
+                  {button.label}
+                </Button>
+              ))}
+          </div>
+          {actionGroup && <ActionButtonGroup buttons={actionGroup} />}
+        </AccessComponent>
       </div>
     </div>
   );

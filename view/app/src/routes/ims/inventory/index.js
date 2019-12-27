@@ -105,12 +105,9 @@ const mapStateToProps = ({ imsState }) => {
   return { inventoryList };
 };
 
-export default connect(
-  mapStateToProps,
-  {
-    getAllInventory,
-    show,
-    changeInvList,
-    deleteInventory
-  }
-)(ims_inventory_list);
+export default connect(mapStateToProps, {
+  getAllInventory,
+  show,
+  changeInvList,
+  deleteInventory
+})(ims_inventory_list);
