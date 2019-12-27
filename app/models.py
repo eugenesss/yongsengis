@@ -291,6 +291,33 @@ class AuditLogSchema(Schema):
         fields = ("name", "field", "old_value", "new_value", "date_time", "user", "action")
 
 
+class TodoList(db.Model, Serializer):
+    """
+    Create an Audit Log table
+    """
+    __tablename__ = 'todolist'
+    uid = db.Column("uid", db.Integer, primary_key=True)
+    title = db.Column("title", db.String(255))
+    description = db.Column("description", db.Text)
+    created_date = db.Column("created_date", db.DateTime, default=datetime.datetime.now())
+    done = db.Column(db.Boolean, default=False)
+    author = db.Column("author", db.String(255))
+    due_date = db.Column("due_date", db.DateTime)
+
+    def __init__(self, title, description, author, due_date):
+        self.title = title
+        self.description = description
+        self.author = author
+        self.due_date = due_date
+
+
+class TodoListSchema(Schema):
+    """
+    AuditLog Schema
+    """
+    class Meta:
+        # Fields to expose
+        fields = ("uid", "title", "description", "created_date", "done", "author", "due_date")
 
 
 def get_all_items():

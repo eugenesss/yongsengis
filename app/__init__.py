@@ -57,4 +57,7 @@ def create_app(config_name):
     from .category import category as category_blueprint
     app.register_blueprint(category_blueprint)
 
+    from .todolist import todolist as todolist_blueprint
+    app.register_blueprint(todolist_blueprint)
+
     return app
