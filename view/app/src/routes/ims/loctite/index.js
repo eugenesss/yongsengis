@@ -65,7 +65,6 @@ class ims_loctite extends Component {
             more: [{ label: "Refresh List", onClick: this.refresh }]
           }}
         />
-        {console.log(tableData)}
         <LoctiteList
           tableData={tableData}
           loading={loading}
@@ -86,7 +85,6 @@ const mapStateToProps = ({ imsState }) => {
   return { loctiteList };
 };
 
-export default connect(
-  mapStateToProps,
-  { getAllLoctite, show, deleteLoctite }
-)(ims_loctite);
+export default connect(mapStateToProps, { getAllLoctite, show, deleteLoctite })(
+  ims_loctite
+);

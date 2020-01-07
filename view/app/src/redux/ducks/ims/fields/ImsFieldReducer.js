@@ -2,9 +2,9 @@ import {
   GET_CATEGORIES,
   GET_CATEGORIES_SUCCESS,
   GET_CATEGORIES_FAILURE,
-  GET_WAREHOUSE,
-  GET_WAREHOUSE_SUCCESS,
-  GET_WAREHOUSE_FAILURE
+  GET_WAREHOUSE_FIELD,
+  GET_WAREHOUSE_FIELD_SUCCESS,
+  GET_WAREHOUSE_FIELD_FAILURE
 } from "./ImsFieldTypes";
 import { NotificationManager } from "react-notifications";
 
@@ -25,11 +25,11 @@ export default (state = INIT_STATE, action) => {
       return { ...state };
 
     // Get Warehouse
-    case GET_WAREHOUSE:
+    case GET_WAREHOUSE_FIELD:
       return { ...state };
-    case GET_WAREHOUSE_SUCCESS:
+    case GET_WAREHOUSE_FIELD_SUCCESS:
       return { ...state, warehouse: action.payload };
-    case GET_WAREHOUSE_FAILURE:
+    case GET_WAREHOUSE_FIELD_FAILURE:
       NotificationManager.error("Error in getting warehouse");
       console.log(action.payload);
       return { ...state };

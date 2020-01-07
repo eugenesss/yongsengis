@@ -15,7 +15,8 @@ const DialogRoot = ({
   close,
   dialogAction,
   dialogActionLabel,
-  fullBlock
+  fullBlock,
+  dialogActionDisable
 }) => {
   return (
     <Dialog
@@ -34,6 +35,7 @@ const DialogRoot = ({
           {close ? <Button onClick={handleHide}>Cancel</Button> : null}
           {dialogAction && (
             <Button
+              disabled={dialogActionDisable}
               onClick={dialogAction}
               className="ml-20 btn-success text-white"
               variant="contained"

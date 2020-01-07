@@ -11,7 +11,7 @@ function ListViewSelector(props) {
   function toggle() {
     setdropdownOpen(!dropdownOpen);
   }
-  const { options, nowShowing, onChangeValue } = props;
+  const { options, nowShowing, onChangeValue, optLabel } = props;
   return (
     <Dropdown isOpen={dropdownOpen} toggle={() => toggle()}>
       <DropdownToggle color="info" className="text-white mr-15" caret>
@@ -25,7 +25,7 @@ function ListViewSelector(props) {
               onClick={() => onChangeValue(opt)}
               key={key}
             >
-              {opt}
+              {opt[optLabel]}
             </DropdownItem>
           );
         })}

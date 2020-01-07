@@ -19,7 +19,13 @@ import {
 const INIT_STATE = {
   user: localStorage.getItem("ysis_token"),
   loading: false,
-  loggedInUser: {}
+  loggedInUser: {
+    access: "",
+    email: "",
+    first_name: "",
+    is_admin: false,
+    last_name: ""
+  }
 };
 
 export default (state = INIT_STATE, action) => {
@@ -51,7 +57,7 @@ export default (state = INIT_STATE, action) => {
     // Get Current User
     //======================
     case GET_CURRENT_USER_SUCCESS:
-      return { ...state, loggedInUser: action.payload };
+      return { ...state, loggedInUser: { ...action.payload } };
     case GET_CURRENT_USER_FAILURE:
       NotificationManager.error("Error in retrieving logged in user");
       return { ...state };

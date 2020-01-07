@@ -4,7 +4,7 @@ import {
   NEW_TO_DO,
   UPDATE_TO_DO,
   DELETE_TO_DO
-} from "./WidgetTypes";
+} from "./TodoListTypes";
 import {
   getToDoSuccess,
   getToDoFailure,
@@ -14,7 +14,7 @@ import {
   updateToDoFailure,
   deleteToDoSuccess,
   deleteToDoFailure
-} from "./WidgetActions";
+} from "./TodoListActions";
 
 import api from "Api";
 
@@ -22,9 +22,8 @@ import api from "Api";
 // To Do
 //=========================
 const getToDoRequest = async () => {
-  // const result = await api.get("/widgets/crmsummary");
-  // return result.data.data;
-  return {};
+  const result = await api.get("/todolist/show");
+  return result.data;
 };
 function* getToDo() {
   try {
@@ -36,9 +35,8 @@ function* getToDo() {
 }
 // New To Do
 const newToDoRequest = async data => {
-  // const result = await api.get("/widgets/crmsummary");
-  // return result.data.data;
-  return {};
+  const result = await api.post("/todolist/save", data);
+  return result.data;
 };
 function* newToDo({ payload }) {
   try {
@@ -50,28 +48,29 @@ function* newToDo({ payload }) {
 }
 // Update To do
 const updateToDoRequest = async data => {
-  // const result = await api.get("/widgets/crmsummary");
+  const result = await api.post(`/todolist/update/${data.uid}`, data);
   // return result.data.data;
+  console.log(result);
   return {};
 };
 function* updateToDo({ payload }) {
   try {
     const data = yield call(updateToDoRequest, payload);
-    yield put(updateToDoSuccess(data));
+    yield put(updateToDoSuccess(payload));
   } catch (error) {
     yield put(updateToDoFailure(error));
   }
 }
 // Delete To Do
-const deleteToDoRequest = async data => {
+const deleteToDoRequest = async id => {
   // const result = await api.get("/widgets/crmsummary");
   // return result.data.data;
   return {};
 };
-function* deleteToDo() {
+function* deleteToDo({ payload }) {
   try {
-    const data = yield call(deleteToDoRequest, data);
-    yield put(deleteToDoSuccess(data));
+    yield call(deleteToDoRequest, payload);
+    yield put(deleteToDoSuccess(payload));
   } catch (error) {
     yield put(deleteToDoFailure(error));
   }

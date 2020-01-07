@@ -18,6 +18,8 @@ import {
   changeInvList,
   deleteInventory
 } from "Ducks/ims/inventory";
+// get warehouse
+import { getWarehouse } from "Ducks/ims/fields";
 
 class ims_inventory_list extends Component {
   constructor(props) {
@@ -27,9 +29,11 @@ class ims_inventory_list extends Component {
     this.handleDelete = this.handleDelete.bind(this);
     this.newInv = this.newInv.bind(this);
     this.massUpdate = this.massUpdate.bind(this);
+    this.renderOptions = this.renderOptions.bind(this);
   }
   componentWillMount() {
     this.props.getAllInventory();
+    this.props.getWarehouse();
   }
   handleEdit(itemToEdit) {
     this.props.show("edit_inventory", { itemToEdit });
@@ -57,6 +61,15 @@ class ims_inventory_list extends Component {
     console.log("refresh");
   }
 
+  renderOptions() {
+    let options = [
+      { wh_name: "All Inventory", wid: "" },
+      ...this.props.warehouse
+    ];
+
+    return options;
+  }
+
   render() {
     const {
       options,
@@ -64,6 +77,7 @@ class ims_inventory_list extends Component {
       tableData,
       loading
     } = this.props.inventoryList;
+    const { warehouse } = this.props;
     return (
       <React.Fragment>
         <Helmet>
@@ -81,10 +95,12 @@ class ims_inventory_list extends Component {
         <InventoryList
           title={
             <ListViewSelector
-              options={options}
+              options={this.renderOptions()}
               nowShowing={nowShowing}
               onChangeValue={this.props.changeInvList}
-            />
+              optValue="wid"
+              optLabel="wh_name"
+            ></ListViewSelector>
           }
           tableData={tableData}
           loading={loading}
@@ -100,14 +116,16 @@ class ims_inventory_list extends Component {
 }
 
 const mapStateToProps = ({ imsState }) => {
-  const { inventoryState } = imsState;
+  const { inventoryState, imsField } = imsState;
   const { inventoryList } = inventoryState;
-  return { inventoryList };
+  const { warehouse } = imsField;
+  return { inventoryList, warehouse };
 };
 
 export default connect(mapStateToProps, {
   getAllInventory,
   show,
   changeInvList,
-  deleteInventory
+  deleteInventory,
+  getWarehouse
 })(ims_inventory_list);

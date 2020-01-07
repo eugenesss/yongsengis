@@ -47,16 +47,8 @@ const getAllInventoryReq = async () => {
   const result = await api.get("/show_items");
   return result.data;
 };
-const getAMKInventory = async () => {
-  const result = await api.get("/warehouse/1");
-  return result.data;
-};
-const getJSInventory = async () => {
-  const result = await api.get("/warehouse/3");
-  return result.data;
-};
-const getAICInventory = async () => {
-  const result = await api.get("/warehouse/2");
+const getWarehouseInventory = async wid => {
+  const result = await api.get(`/warehouse/${wid}`);
   return result.data;
 };
 const postInventoryReq = async data => {
@@ -77,7 +69,6 @@ const deleteInvReq = async id => {
 };
 const massUpdateInvRequest = async data => {
   const result = await api.post("/update_items", data);
-  console.log(result);
   return result.data;
 };
 
@@ -95,27 +86,16 @@ function* getAllInventoryFromDB() {
 }
 function* changeInvList({ payload }) {
   let data;
+  const { wid } = payload;
   try {
-    if (payload == "All Inventory") {
+    if (wid == "") {
       // All Leads
       data = yield call(getAllInventoryReq);
       yield delay(500);
       yield put(getAllInventorySuccess(data));
-    } else if (payload == "JOOSENG #1") {
-      data = yield call(getJSInventory);
-      yield delay(500);
-      yield put(getAllInventorySuccess(data));
-    } else if (payload == "AIC #2") {
-      data = yield call(getAICInventory);
-      yield delay(500);
-      yield put(getAllInventorySuccess(data));
-    } else if (payload == "AMK #3") {
-      data = yield call(getAMKInventory);
-      yield delay(500);
-      yield put(getAllInventorySuccess(data));
     } else {
+      data = yield call(getWarehouseInventory, wid);
       yield delay(500);
-      data = yield call(getAllInventoryReq);
       yield put(getAllInventorySuccess(data));
     }
   } catch (error) {

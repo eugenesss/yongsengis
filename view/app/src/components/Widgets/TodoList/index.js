@@ -1,25 +1,34 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { show } from "redux-modal";
+import classnames from "classnames";
+import moment from "moment";
+import { getTheDate } from "Helpers/helpers";
 
 import BgCard from "Components/BgCard";
+import RctSectionLoader from "Components/RctSectionLoader";
 
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import classnames from "classnames";
-import Button from "@material-ui/core/Button";
+import { Scrollbars } from "react-custom-scrollbars";
+import { Delete, Edit } from "@material-ui/icons";
+import {
+  Fab,
+  Button,
+  List,
+  ListItem,
+  FormControlLabel,
+  Checkbox
+} from "@material-ui/core";
 
 // Dialog new todo
 import NewTodo from "./NewTodo";
 
-import { Scrollbars } from "react-custom-scrollbars";
-
-// rct section loader
-import RctSectionLoader from "Components/RctSectionLoader";
-import { Delete } from "@material-ui/icons";
-import { Fab } from "@material-ui/core";
+// Action
+import {
+  getToDo,
+  updateToDo,
+  deleteToDo,
+  newToDo
+} from "Ducks/widget/TodoList";
 
 class TodoList extends Component {
   constructor(props) {
@@ -27,14 +36,34 @@ class TodoList extends Component {
     this.openNewTodoDialog = this.openNewTodoDialog.bind(this);
   }
 
+  componentDidMount() {
+    this.props.getToDo();
+  }
+
   // open new todo dialog
   openNewTodoDialog() {
-    this.props.show("new_todo");
+    this.props.show("new_todo", { submitToDo: this.props.newToDo });
+  }
+
+  // edit todo dialog
+  editTodoDialog(edit) {
+    this.props.show("new_todo", { submitToDo: this.props.updateToDo, edit });
+  }
+
+  // open delete todo dialog
+  handleDelete(itemID, name) {
+    this.props.show("alert_delete", {
+      name: name,
+      action: () => this.props.deleteToDo(itemID)
+    });
   }
 
   // handle complete todo
   handleComplete(value, todo) {
-    console.log(value, todo);
+    const completeTodo = Object.assign({}, todo);
+    completeTodo.done = value;
+    completeTodo.due_date = moment(todo.due_date).format("YYYY-MM-DD");
+    this.props.updateToDo(completeTodo);
   }
 
   // handle delete todo
@@ -44,26 +73,26 @@ class TodoList extends Component {
     return (
       <React.Fragment>
         <BgCard fullBlock heading="To Do List">
+          {loading && <RctSectionLoader />}
           <Scrollbars
-            className="rct-scroll"
+            className="rct-scroll to-do-list"
             autoHeight
             autoHeightMin={100}
             autoHeightMax={420}
             autoHide
           >
             <List className="p-0">
-              {list.length > 0 &&
+              {list.length > 0 ? (
                 list.map((data, key) => (
                   <ListItem
-                    className="border-bottom"
                     button
                     key={key}
-                    onClick={() => this.handleComplete(!data.completed, data)}
+                    // onClick={() => this.handleComplete(!data.done, data)}
                   >
                     <div
                       className={classnames(
                         "d-flex justify-content-between align-items-center w-100",
-                        { strike: data.completed }
+                        { strike: data.done }
                       )}
                     >
                       <div className="d-flex align-items-center clearfix">
@@ -72,7 +101,7 @@ class TodoList extends Component {
                             className="mb-0"
                             control={
                               <Checkbox
-                                checked={data.completed}
+                                checked={data.done}
                                 color="primary"
                                 onChange={event =>
                                   this.handleComplete(
@@ -86,9 +115,15 @@ class TodoList extends Component {
                         </div>
                         <div className="float-left">
                           <p className="mb-0">{data.title}</p>
-                          {data.date && (
+                          <span className="text-muted">{data.description}</span>
+                          {data.due_date && (
                             <span className="d-block fs-12 text-muted">
-                              {data.date}
+                              Due: {getTheDate(data.due_date)}
+                            </span>
+                          )}
+                          {data.author && (
+                            <span className="d-block fs-12 text-muted">
+                              Created by: {data.author}
                             </span>
                           )}
                         </div>
@@ -97,15 +132,30 @@ class TodoList extends Component {
                         <Fab
                           variant="round"
                           size="small"
-                          className="btn-danger text-white"
-                          // onClick={e => this.onDeleteTask(e, data)}
+                          className="btn-primary text-white mx-5"
+                          onClick={() => this.editTodoDialog(data)}
                         >
-                          <Delete style={{ fontStyle: 16 }} />
+                          <Edit fontSize="inherit" />
+                        </Fab>
+                        <Fab
+                          variant="round"
+                          size="small"
+                          className="btn-danger text-white mx-5"
+                          onClick={() =>
+                            this.handleDelete(data.uid, data.title)
+                          }
+                        >
+                          <Delete fontSize="inherit" />
                         </Fab>
                       </div>
                     </div>
                   </ListItem>
-                ))}
+                ))
+              ) : (
+                <ListItem>
+                  <p className="w-100 text-center">No To Dos</p>
+                </ListItem>
+              )}
             </List>
           </Scrollbars>
           <div className="d-flex p-3">
@@ -131,4 +181,10 @@ const mapStateToProp = ({ widgetState }) => {
   return { loading, list };
 };
 
-export default connect(mapStateToProp, { show })(TodoList);
+export default connect(mapStateToProp, {
+  show,
+  getToDo,
+  updateToDo,
+  deleteToDo,
+  newToDo
+})(TodoList);

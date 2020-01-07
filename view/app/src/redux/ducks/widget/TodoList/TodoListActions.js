@@ -1,4 +1,4 @@
-import * as types from "./WidgetTypes";
+import * as types from "./TodoListTypes";
 
 /**
  * To Do List

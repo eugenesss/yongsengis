@@ -2,14 +2,14 @@ import * as types from "./ImsFieldTypes";
 
 // Warehouse
 export const getWarehouse = () => ({
-  type: types.GET_WAREHOUSE
+  type: types.GET_WAREHOUSE_FIELD
 });
 export const getWarehouseSuccess = data => ({
-  type: types.GET_WAREHOUSE_SUCCESS,
+  type: types.GET_WAREHOUSE_FIELD_SUCCESS,
   payload: data
 });
 export const getWarehouseFailure = error => ({
-  type: types.GET_WAREHOUSE_FAILURE,
+  type: types.GET_WAREHOUSE_FIELD_FAILURE,
   payload: error
 });
 

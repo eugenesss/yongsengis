@@ -21,7 +21,9 @@ def save_todo():
     title = data_js.get('title')
     description = data_js.get('description')
     author = data_js.get('author')
+    current_user = get_jwt_identity()
     due_date = data_js.get('due_date')
+    author = str(current_user["first_name"]) + " " + str(current_user["last_name"])
 
     todoitem = TodoList(title=title, description=description, author=author, due_date=due_date)
     db.session.add(todoitem)

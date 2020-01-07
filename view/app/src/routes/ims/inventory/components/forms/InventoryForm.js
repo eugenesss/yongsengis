@@ -11,7 +11,7 @@ import { InventoryInformation } from "./Layout";
 import FormInput from "Components/Form/FormInput";
 
 // Actions
-import { getWarehouse, getCategories } from "Ducks/ims/imsField";
+import { getWarehouse, getCategories } from "Ducks/ims/fields";
 
 const initialState = {
   item: {
@@ -192,11 +192,8 @@ const mapStateToProps = ({ imsState }) => {
 };
 
 export default withRouter(
-  connect(
-    mapStateToProps,
-    {
-      getWarehouse,
-      getCategories
-    }
-  )(InventoryForm)
+  connect(mapStateToProps, {
+    getWarehouse,
+    getCategories
+  })(InventoryForm)
 );

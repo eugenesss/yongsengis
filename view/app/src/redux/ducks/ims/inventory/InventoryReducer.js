@@ -74,7 +74,7 @@ export default (state = INIT_STATE, action) => {
         ...state,
         inventoryList: {
           ...state.inventoryList,
-          nowShowing: action.payload,
+          nowShowing: action.payload.wh_name,
           loading: true
         }
       };

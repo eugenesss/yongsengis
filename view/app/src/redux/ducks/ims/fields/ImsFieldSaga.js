@@ -1,5 +1,5 @@
 import { all, call, fork, put, takeEvery } from "redux-saga/effects";
-import { GET_WAREHOUSE, GET_CATEGORIES } from "./ImsFieldTypes";
+import { GET_WAREHOUSE_FIELD, GET_CATEGORIES } from "./ImsFieldTypes";
 import {
   getWarehouseFailure,
   getWarehouseSuccess,
@@ -44,7 +44,7 @@ function* getCategories() {
 // WATCHERS
 //=========================
 export function* getWarehouseWatcher() {
-  yield takeEvery(GET_WAREHOUSE, getWarehouse);
+  yield takeEvery(GET_WAREHOUSE_FIELD, getWarehouse);
 }
 export function* getCategoriesWatcher() {
   yield takeEvery(GET_CATEGORIES, getCategories);

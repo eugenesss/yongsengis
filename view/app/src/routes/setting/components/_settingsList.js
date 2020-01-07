@@ -1,4 +1,8 @@
-import { userManagement, categoriesManagement } from "../AsyncRoutes";
+import {
+  userManagement,
+  categoriesManagement,
+  warehouseManagement
+} from "../AsyncRoutes";
 
 export default [
   {
@@ -9,6 +13,11 @@ export default [
         title: "Categories",
         asyncComponent: categoriesManagement,
         path: "/inventory/categories"
+      },
+      {
+        title: "Warehouses",
+        asyncComponent: warehouseManagement,
+        path: "/inventory/warehouse"
       }
     ]
   },
