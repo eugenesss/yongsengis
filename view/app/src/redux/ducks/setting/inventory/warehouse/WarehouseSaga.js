@@ -21,17 +21,21 @@ import api from "Api";
 // REQUESTS
 //=========================
 const getAllWarehouseRequest = async () => {
-  const result = await api.get("/show_category");
+  const result = await api.get("/show_warehouse");
   return result.data;
 };
 const newWarehouseRequest = async data => {
-  return {};
+  const result = await api.post("/add_warehouse", data);
+  return result.data;
 };
 const editWarehouseRequest = async data => {
-  return {};
+  // const result = await api.post(`/update_warehouse/${data.wid}`, data);
+  return result.data;
 };
-const deleteWarehouseRequest = async id => {
-  return {};
+const deleteWarehouseRequest = async wid => {
+  const result = await api.delete("/delete_warehouse", { wid });
+  console.log(result);
+  return result;
 };
 
 //=========================
@@ -82,7 +86,7 @@ export function* newWarehouseWatcher() {
 export function* editWarehouseWatcher() {
   yield takeEvery(EDIT_WAREHOUSE, editWarehouse);
 }
-export function* deleteCategoryWatcher() {
+export function* deleteWarehouseWatcher() {
   yield takeEvery(DELETE_WAREHOUSE, deleteWarehouse);
 }
 
@@ -94,6 +98,6 @@ export default function* rootSaga() {
     fork(getWarehouseWatcher),
     fork(newWarehouseWatcher),
     fork(editWarehouseWatcher),
-    fork(deleteCategoryWatcher)
+    fork(deleteWarehouseWatcher)
   ]);
 }

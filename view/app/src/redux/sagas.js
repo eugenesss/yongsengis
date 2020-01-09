@@ -7,7 +7,7 @@ import { all } from "redux-saga/effects";
 import { InventorySaga, LoctiteSaga, ImsFieldSaga } from "Ducks/ims";
 
 // settings
-import { UserManagementSaga, CategorySaga } from "Ducks/setting";
+import { UserManagementSaga, CategorySaga, WarehouseSaga } from "Ducks/setting";
 
 // session
 import AuthSaga from "Ducks/session/auth/AuthSaga";
@@ -36,6 +36,7 @@ export default function* rootSaga() {
 
     // Settings
     UserManagementSaga(),
-    CategorySaga()
+    CategorySaga(),
+    WarehouseSaga()
   ]);
 }

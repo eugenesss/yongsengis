@@ -25,13 +25,15 @@ const getAllCategoriesRequest = async () => {
   return result.data;
 };
 const newCategoriesRequest = async data => {
-  return {};
+  const result = await api.post("/add_category", data);
+  return result.data;
 };
 const editCategoriesRequest = async data => {
   return {};
 };
-const deleteCategoriesRequest = async id => {
-  return {};
+const deleteCategoriesRequest = async cid => {
+  const result = await api.delete("/delete_category", { cid });
+  return result;
 };
 
 //=========================

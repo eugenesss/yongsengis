@@ -9,7 +9,7 @@ const INIT_STATE = {
 export default (state = INIT_STATE, action) => {
   switch (action.type) {
     /**
-     * Get all Categories
+     * Get all Warehouse
      */
     case types.GET_ALL_WAREHOUSE:
       return { ...state, loading: true };
@@ -20,7 +20,7 @@ export default (state = INIT_STATE, action) => {
       return { ...state, loading: false };
 
     /**
-     * New Categories
+     * New Warehouse
      */
     case types.NEW_WAREHOUSE:
       return { ...state, loading: true };
@@ -33,7 +33,7 @@ export default (state = INIT_STATE, action) => {
       return { ...state, loading: false };
 
     /**
-     * Edit Categories
+     * Edit Warehouse
      */
     case types.EDIT_WAREHOUSE:
       return { ...state, loading: true };
@@ -48,7 +48,7 @@ export default (state = INIT_STATE, action) => {
       return { ...state, loading: false };
 
     /**
-     * Delete Categories
+     * Delete Warehouse
      */
     case types.DELETE_WAREHOUSE:
       return { ...state, loading: true };
@@ -58,7 +58,8 @@ export default (state = INIT_STATE, action) => {
       );
       return { ...state, loading: false, allWarehouse: deleteCat };
     case types.DELETE_WAREHOUSE_FAILURE:
-      NotificationManager.error("Error in editing Warehouse");
+      NotificationManager.error("Error in deleting Warehouse");
+      console.log(action.payload);
       return { ...state, loading: false };
 
     default:

@@ -8,7 +8,11 @@ import { reducer as modal } from "redux-modal";
 import { AuthReducer } from "Ducks/session/auth";
 
 //settings
-import { UserManagementReducer, CategoryReducer } from "Ducks/setting";
+import {
+  UserManagementReducer,
+  CategoryReducer,
+  WarehouseReducer
+} from "Ducks/setting";
 
 // system
 import { ReportReducer } from "Ducks/report";
@@ -28,7 +32,8 @@ const reducers = combineReducers({
     imsField: ImsFieldReducer
   }),
   settingState: combineReducers({
-    categoryState: CategoryReducer
+    categoryState: CategoryReducer,
+    warehouseState: WarehouseReducer
   }),
   widgetState: combineReducers({
     todoList: TodoListReducer

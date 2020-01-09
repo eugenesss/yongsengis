@@ -42,15 +42,15 @@ export const editWarehouseFailure = error => ({
 });
 
 // delete
-export const deleteWarehouse = cat_id => ({
-  type: types.EDIT_WAREHOUSE,
-  payload: cat_id
+export const deleteWarehouse = wh_id => ({
+  type: types.DELETE_WAREHOUSE,
+  payload: wh_id
 });
-export const deleteWarehouseSuccess = cat_id => ({
-  type: types.EDIT_WAREHOUSE_SUCCESS,
-  payload: cat_id
+export const deleteWarehouseSuccess = wh_id => ({
+  type: types.DELETE_WAREHOUSE_SUCCESS,
+  payload: wh_id
 });
 export const deleteWarehouseFailure = error => ({
-  type: types.EDIT_WAREHOUSE_FAILURE,
+  type: types.DELETE_WAREHOUSE_FAILURE,
   payload: error
 });

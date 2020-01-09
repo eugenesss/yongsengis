@@ -12,13 +12,13 @@ function CategoriesTable({ data, editCat, newCat, deleteCat }) {
       options: {
         customBodyRender: value => (
           <React.Fragment>
-            <IconButton size="small" /* onClick={() => editCat(value)} */>
+            <IconButton size="small" onClick={() => editCat(value)}>
               <Edit style={{ fontSize: "1rem" }} />
             </IconButton>
             <IconButton
               className="ml-10 text-danger"
               size="small"
-              // onClick={() => deleteCat(value)}
+              onClick={() => deleteCat(value)}
             >
               <Delete style={{ fontSize: "1rem" }} />
             </IconButton>
@@ -38,13 +38,13 @@ function CategoriesTable({ data, editCat, newCat, deleteCat }) {
     viewColumns: false,
     elevation: 0,
     selectableRows: "none",
-    rowsPerPage: 10,
-    rowsPerPageOptions: [10, 30, 50],
-    textLabels: { body: { noMatch: "No Circulars" } },
+    rowsPerPage: 15,
+    rowsPerPageOptions: [15, 30, 50],
+    textLabels: { body: { noMatch: "No Categories" } },
     customToolbar: () => {
       return (
         <Button onClick={newCat} variant="contained">
-          New Category
+          New Categories
         </Button>
       );
     }

@@ -64,7 +64,8 @@ class InventoryForm extends Component {
   }
 
   checkDisabled() {
-    const disabled = this.state.item.name && this.state.item.quantity;
+    const disabled =
+      this.state.item.name && this.state.item.quantity && this.state.item.cid;
     return disabled;
   }
 
@@ -137,6 +138,7 @@ class InventoryForm extends Component {
                 selectObjProp="cid"
                 selectObjLabel="cat_name"
                 handleChange={this.handleInv}
+                required={!item.cid}
               />
             }
             quantity={
