@@ -24,14 +24,13 @@ def add_warehouse():
     return warehouse_schema.jsonify(Warehouse.query.get(wh.wid))
 
 
-@warehouse.route('/update_warehouse', methods=['POST', 'GET'])
+@warehouse.route('/update_warehouse/<int:wid>', methods=['POST', 'GET'])
 @jwt_required
-def update_warehouse():
-    data = request.data
-    data_js = json.loads(data)
-    wid = data_js.get('wid')
-    # Read the JSON data
+def update_warehouse(wid):
     if request.method == 'POST':
+        # Read the JSON data
+        data = request.data
+        data_js = json.loads(data)
         name = data_js.get('name')
         location = data_js.get('location')
 
@@ -50,19 +49,14 @@ def update_warehouse():
         return warehouse_schema.jsonify(Warehouse.query.get(wid))
 
 
-@warehouse.route('/delete_warehouse', methods=['DELETE'])
+@warehouse.route('/delete_warehouse/<int:wid>', methods=['DELETE'])
 @jwt_required
-def delete_warehouse():
-    # Read the JSON data
-    data = request.data
-    data_js = json.loads(data)
-    wid = data_js.get('wid')
-
+def delete_warehouse(wid):
     # Get the warehouse from database
     wh = Warehouse.query.get_or_404(wid)
     db.session.delete(wh)
     db.session.commit()
-    return jsonify("warehouse deleted"), 200
+    return jsonify("Warehouse deleted"), 200
 
 
 @warehouse.route('/show_warehouse', methods=['GET'])

@@ -11,7 +11,7 @@ category_schema = CategorySchema()
 
 @category.route('/add_category', methods=['POST'])
 @jwt_required
-def add_warehouse():
+def add_category():
     data = request.data
     data_js = json.loads(data)
     cid = data_js.get('cid')
@@ -23,22 +23,19 @@ def add_warehouse():
     return category_schema.jsonify(Category.query.get(cat.cid))
 
 
-@category.route('/update_category', methods=['POST', 'GET'])
+@category.route('/update_category/<int:cid>', methods=['POST', 'GET'])
 @jwt_required
-def update_warehouse():
-    data = request.data
-    data_js = json.loads(data)
-    wid = data_js.get('wid')
-    # Read the JSON data
+def update_category(cid):
     if request.method == 'POST':
-        cid = data_js.get('cid')
+        # Read the JSON data
+        data = request.data
+        data_js = json.loads(data)
         cat_name = data_js.get('cat_name')
 
         # Get the warehouse from database
         cat = Category.query.get_or_404(cid)
 
         # Update the values
-        cat.cid = cid
         cat.cat_name = cat_name
 
         # Store in database
@@ -48,19 +45,14 @@ def update_warehouse():
         return category_schema.jsonify(Category.query.get(cid))
 
 
-@category.route('/delete_category', methods=['DELETE'])
+@category.route('/delete_category/<int:cid>', methods=['DELETE'])
 @jwt_required
-def delete_warehouse():
-    # Read the JSON data
-    data = request.data
-    data_js = json.loads(data)
-    cid = data_js.get('cid')
-
+def delete_warehouse(cid):
     # Get the warehouse from database
     cat = Category.query.get_or_404(cid)
     db.session.delete(cat)
     db.session.commit()
-    return jsonify("warehouse deleted"), 200
+    return jsonify("Category deleted"), 200
 
 
 @category.route('/show_category', methods=['GET'])
