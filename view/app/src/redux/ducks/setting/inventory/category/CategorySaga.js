@@ -29,10 +29,12 @@ const newCategoriesRequest = async data => {
   return result.data;
 };
 const editCategoriesRequest = async data => {
-  return {};
+  const result = await api.post(`/update_category/${data.cid}`, data);
+  return result.data;
 };
 const deleteCategoriesRequest = async cid => {
-  const result = await api.delete("/delete_category", { cid });
+  console.log(cid);
+  const result = await api.delete(`/delete_category/${cid}`);
   return result;
 };
 

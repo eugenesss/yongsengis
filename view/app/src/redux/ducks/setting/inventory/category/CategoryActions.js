@@ -43,14 +43,14 @@ export const editCategoriesFailure = error => ({
 
 // delete
 export const deleteCategories = cat_id => ({
-  type: types.EDIT_CATEGORIES,
+  type: types.DELETE_CATEGORIES,
   payload: cat_id
 });
 export const deleteCategoriesSuccess = cat_id => ({
-  type: types.EDIT_CATEGORIES_SUCCESS,
+  type: types.DELETE_CATEGORIES_SUCCESS,
   payload: cat_id
 });
 export const deleteCategoriesFailure = error => ({
-  type: types.EDIT_CATEGORIES_FAILURE,
+  type: types.DELETE_CATEGORIES_FAILURE,
   payload: error
 });

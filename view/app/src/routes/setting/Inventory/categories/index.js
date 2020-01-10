@@ -19,6 +19,7 @@ class Setting_Categories extends Component {
     super(props);
     this.openNewDialog = this.openNewDialog.bind(this);
     this.openEditDialog = this.openEditDialog.bind(this);
+    this.deleteDialog = this.deleteDialog.bind(this);
   }
   componentDidMount() {
     this.props.getAllCategories();

@@ -29,12 +29,11 @@ const newWarehouseRequest = async data => {
   return result.data;
 };
 const editWarehouseRequest = async data => {
-  // const result = await api.post(`/update_warehouse/${data.wid}`, data);
+  const result = await api.post(`/update_warehouse/${data.wid}`, data);
   return result.data;
 };
 const deleteWarehouseRequest = async wid => {
-  const result = await api.delete("/delete_warehouse", { wid });
-  console.log(result);
+  const result = await api.delete(`/delete_warehouse/${wid}`);
   return result;
 };
 

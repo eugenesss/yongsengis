@@ -13,7 +13,7 @@ class CategoryForm extends Component {
   }
 
   componentDidMount() {
-    this.props.edit && this.setState({ cat_name: this.props.edit.cat_name });
+    this.props.edit && this.setState({ ...this.props.edit });
   }
 
   handleChange(field, val) {

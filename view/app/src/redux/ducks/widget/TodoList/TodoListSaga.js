@@ -49,23 +49,21 @@ function* newToDo({ payload }) {
 // Update To do
 const updateToDoRequest = async data => {
   const result = await api.post(`/todolist/update/${data.uid}`, data);
-  // return result.data.data;
-  console.log(result);
-  return {};
+  return result.data;
 };
 function* updateToDo({ payload }) {
   try {
     const data = yield call(updateToDoRequest, payload);
-    yield put(updateToDoSuccess(payload));
+    yield put(updateToDoSuccess(data));
   } catch (error) {
     yield put(updateToDoFailure(error));
   }
 }
 // Delete To Do
 const deleteToDoRequest = async id => {
-  // const result = await api.get("/widgets/crmsummary");
+  const result = await api.post(`/todolist/delete/${id}`);
   // return result.data.data;
-  return {};
+  return result;
 };
 function* deleteToDo({ payload }) {
   try {

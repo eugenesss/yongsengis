@@ -31,7 +31,7 @@ def update_warehouse(wid):
         # Read the JSON data
         data = request.data
         data_js = json.loads(data)
-        name = data_js.get('name')
+        name = data_js.get('wh_name')
         location = data_js.get('location')
 
         # Get the warehouse from database
@@ -39,7 +39,7 @@ def update_warehouse(wid):
 
         # Update the values
         wh.wid = wid
-        wh.name = name
+        wh.wh_name = name
         wh.location = location
 
         # Store in database

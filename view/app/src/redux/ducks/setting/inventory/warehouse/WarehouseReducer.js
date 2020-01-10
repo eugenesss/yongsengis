@@ -25,6 +25,7 @@ export default (state = INIT_STATE, action) => {
     case types.NEW_WAREHOUSE:
       return { ...state, loading: true };
     case types.NEW_WAREHOUSE_SUCCESS:
+      NotificationManager.success("Added Warehouse Successfully");
       var newCat = Object.assign([], state.allWarehouse);
       newCat.push(action.payload);
       return { ...state, loading: false, allWarehouse: newCat };
@@ -38,9 +39,9 @@ export default (state = INIT_STATE, action) => {
     case types.EDIT_WAREHOUSE:
       return { ...state, loading: true };
     case types.EDIT_WAREHOUSE_SUCCESS:
-      var editCat = Object.assign([], state.allWarehouse);
-      editCat.map(cat =>
-        cat.id == action.payload.id ? (cat = action.payload) : cat
+      NotificationManager.success("Edited Warehouse Successfully");
+      var editCat = Object.assign([], state.allWarehouse).map(cat =>
+        cat.wid == action.payload.wid ? action.payload : cat
       );
       return { ...state, loading: false, allWarehouse: editCat };
     case types.EDIT_WAREHOUSE_FAILURE:
@@ -53,8 +54,9 @@ export default (state = INIT_STATE, action) => {
     case types.DELETE_WAREHOUSE:
       return { ...state, loading: true };
     case types.DELETE_WAREHOUSE_SUCCESS:
+      NotificationManager.success("Deleted Warehouse Successfully");
       var deleteCat = Object.assign([], state.allWarehouse).filter(
-        cat => cat.pid !== action.payload
+        cat => cat.wid !== action.payload
       );
       return { ...state, loading: false, allWarehouse: deleteCat };
     case types.DELETE_WAREHOUSE_FAILURE:

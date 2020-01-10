@@ -8,7 +8,7 @@ import FormInput from "Components/Form/FormInput";
 class WarehouseForm extends Component {
   constructor(props) {
     super(props);
-    this.state = { name: "", location: "" };
+    this.state = { wh_name: "", location: "" };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -16,7 +16,7 @@ class WarehouseForm extends Component {
   componentDidMount() {
     this.props.edit &&
       this.setState({
-        name: this.props.edit.wh_name,
+        // name: this.props.edit.wh_name,
         ...this.props.edit
       });
   }
@@ -43,10 +43,10 @@ class WarehouseForm extends Component {
       >
         <FormInput
           label="Name"
-          value={this.state.name}
-          target="name"
+          value={this.state.wh_name}
+          target="wh_name"
           handleChange={this.handleChange}
-          required={!this.state.name}
+          required={!this.state.wh_name}
         />
         <FormInput
           label="Location"
