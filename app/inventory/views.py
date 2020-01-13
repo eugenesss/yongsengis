@@ -1,5 +1,6 @@
 from flask import request, json, jsonify
 from flask_jwt_extended import jwt_required, get_jwt_identity
+from sqlalchemy import asc
 from . import inventory
 from functools import wraps
 
@@ -272,7 +273,7 @@ def show_auditlog():
     """
     Display all inventory
     """
-    logs = AuditLog.query.all()
+    logs = AuditLog.query.order_by(asc(AuditLog.date_time)).all()
     audit_schema = AuditLogSchema(many=True)
     return audit_schema.jsonify(logs)
 
