@@ -279,6 +279,7 @@ export default (state = INIT_STATE, action) => {
         }
       };
     case types.GET_EDIT_HISTORY_INV_SUCCESS:
+      console.log(action.payload);
       return {
         ...state,
         editHistory: {

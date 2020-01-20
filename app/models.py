@@ -173,12 +173,12 @@ class Inventory(db.Model, Serializer):
     rack = db.Column("rack", db.String(50))
     unit_code = db.Column("unit_code", db.String(50))
     file = db.Column("file", db.String(150))
-    created_date = db.Column("created_date", db.DateTime, default=datetime.datetime.now())
+    created_date = db.Column("created_date", db.DateTime, default=datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
     updated_date = db.Column("updated_date", db.DateTime)
     wid = db.Column('wid', db.Integer, ForeignKey('warehouse.wid'))
     cid = db.Column('cid', db.Integer, ForeignKey('category.cid'))
-    warehouse = relationship("Warehouse", backref=db.backref("inventory", lazy='dynamic'))
-    category = relationship("Category", backref=db.backref("inventory", lazy='dynamic'))
+    warehouse = relationship("Warehouse", backref=db.backref("inventory", lazy='dynamic', cascade="all,delete"))
+    category = relationship("Category", backref=db.backref("inventory", lazy='dynamic', cascade="all,delete"))
 
     def __init__(self, name, description, code, material, price, quantity, perbox, location, file,
                  wid, cid, rack, unit_code):
@@ -234,7 +234,7 @@ class Loctite(db.Model, Serializer):
     batch = db.Column("batch", db.Integer)
     expiry_date = db.Column("expiry_date", db.Date)
     file = db.Column("file", db.String(150))
-    created_date = db.Column("created_date", db.DateTime, default=datetime.datetime.now())
+    created_date = db.Column("created_date", db.DateTime, default=datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
     updated_date = db.Column("updated_date", db.DateTime)
 
     def __init__(self, name, description, price, quantity, batch, expiry_date, file):
@@ -269,7 +269,7 @@ class AuditLog(db.Model, Serializer):
     field = db.Column("field", db.String(255))
     old_value = db.Column("old_value", db.Text)
     new_value = db.Column("new_value", db.Text)
-    date_time = db.Column("date_time", db.DateTime, default=datetime.datetime.now())
+    date_time = db.Column("date_time", db.DateTime, default=datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
     user = db.Column("user", db.String(255))
     action = db.Column("action", db.String(255))
 
@@ -326,6 +326,7 @@ def get_all_items():
                              Inventory.perbox, Inventory.location, Inventory.rack, Inventory.unit_code, Category.cid,
                              Category.cat_name).filter(Inventory.wid == Warehouse.wid).filter(Category.cid == Inventory.cid).all()
     return items
+
 
 
 def get_item(pid):
