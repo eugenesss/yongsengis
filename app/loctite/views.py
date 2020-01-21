@@ -96,7 +96,7 @@ def update_items(pid):
         item.batch = batch
         item.expiry_date = expiry_date
         item.file = file
-        item.updated_date = datetime.datetime.now()
+        item.updated_date = datetime.datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S')
         db.session.commit()
 
         # return response
@@ -154,7 +154,7 @@ def update_multiple_items():
         item.batch = batch
         item.expiry_date = expiry_date
         item.file = file
-        item.updated_date = datetime.datetime.now()
+        item.updated_date = datetime.datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S')
         db.session.commit()
 
     return jsonify("Updated")

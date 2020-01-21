@@ -135,7 +135,7 @@ def update_items(pid):
         item.cid = cid
         item.rack = rack
         item.unit_code = unit_code
-        item.updated_date = datetime.datetime.now()
+        item.updated_date = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         db.session.commit()
 
         # Return response
@@ -213,7 +213,7 @@ def update_multiple_items():
         item.cid = cid
         item.rack = rack
         item.unit_code = unit_code
-        item.updated_date = datetime.datetime.now()
+        item.updated_date = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         db.session.commit()
 
         # Return response
@@ -285,12 +285,12 @@ def auditlog_record(item, field, new_value, action):
 
     if action == "edit":
         if item[field] != new_value:
-            record = AuditLog(name, field, item[field], new_value, user_name, action)
+            record = AuditLog(name, field, item[field], new_value, datetime.datetime.utcnow(), user_name, action)
             db.session.add(record)
             db.session.commit()
 
     elif action == "delete" or action == "create":
-        record = AuditLog(name, None, None, None, user_name, action)
+        record = AuditLog(name, None, None, None, datetime.datetime.utcnow(), user_name, action)
         db.session.add(record)
         db.session.commit()
 
