@@ -234,7 +234,7 @@ class Loctite(db.Model, Serializer):
     batch = db.Column("batch", db.Integer)
     expiry_date = db.Column("expiry_date", db.Date)
     file = db.Column("file", db.String(150))
-    created_date = db.Column("created_date", db.DateTime, default=datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+    created_date = db.Column("created_date", db.DateTime, default=datetime.datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S'))
     updated_date = db.Column("updated_date", db.DateTime)
 
     def __init__(self, name, description, price, quantity, batch, expiry_date, file):
@@ -269,15 +269,16 @@ class AuditLog(db.Model, Serializer):
     field = db.Column("field", db.String(255))
     old_value = db.Column("old_value", db.Text)
     new_value = db.Column("new_value", db.Text)
-    date_time = db.Column("date_time", db.DateTime, default=datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+    date_time = db.Column("date_time", db.DateTime)
     user = db.Column("user", db.String(255))
     action = db.Column("action", db.String(255))
 
-    def __init__(self, name, field, old_value, new_value, user, action):
+    def __init__(self, name, field, old_value, new_value, date_time, user, action):
         self.name = name
         self.field = field
         self.old_value = old_value
         self.new_value = new_value
+        self.date_time = date_time
         self.user = user
         self.action = action
 
@@ -299,7 +300,7 @@ class TodoList(db.Model, Serializer):
     uid = db.Column("uid", db.Integer, primary_key=True)
     title = db.Column("title", db.String(255))
     description = db.Column("description", db.Text)
-    created_date = db.Column("created_date", db.DateTime, default=datetime.datetime.now())
+    created_date = db.Column("created_date", db.DateTime, default=datetime.datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S'))
     done = db.Column(db.Boolean, default=False)
     author = db.Column("author", db.String(255))
     due_date = db.Column("due_date", db.DateTime)
@@ -321,20 +322,21 @@ class TodoListSchema(Schema):
 
 
 def get_all_items():
-    items = db.session.query(Warehouse.wid, Warehouse.wh_name, Inventory.pid, Inventory.name, Inventory.quantity,
+    items = db.session.query(Inventory.pid,Warehouse.wid, Warehouse.wh_name, Inventory.name, Inventory.quantity,
                              Inventory.description, Inventory.code, Inventory.price, Inventory.material,
                              Inventory.perbox, Inventory.location, Inventory.rack, Inventory.unit_code, Category.cid,
-                             Category.cat_name).filter(Inventory.wid == Warehouse.wid).filter(Category.cid == Inventory.cid).all()
+                             Category.cat_name).join(Warehouse, Inventory.wid == Warehouse.wid, isouter=True)\
+        .join(Category, Category.cid == Inventory.cid, isouter=True).all()
     return items
 
 
-
 def get_item(pid):
-    item = db.session.query(Warehouse.wid, Warehouse.wh_name, Inventory.pid, Inventory.name, Inventory.quantity,
+    item = db.session.query(Inventory.pid, Inventory.name, Warehouse.wid, Warehouse.wh_name, Inventory.quantity,
                             Inventory.description, Inventory.code, Inventory.price, Inventory.material,
                             Inventory.perbox, Inventory.location, Inventory.rack, Inventory.unit_code, Category.cid,
-                            Category.cat_name).filter(Inventory.pid == pid).filter(Warehouse.wid == Inventory.wid).\
-        filter(Category.cid == Inventory.cid).first()
+                            Category.cat_name).filter(Inventory.pid == pid)\
+        .join(Warehouse, Warehouse.wid == Inventory.wid, isouter=True)\
+        .join(Category, Category.cid == Inventory.cid, isouter=True).first()
     return item
 
 
@@ -342,6 +344,7 @@ def get_item_by_warehouse(wid):
     items = db.session.query(Warehouse.wid, Warehouse.wh_name, Inventory.pid, Inventory.name, Inventory.quantity,
                             Inventory.description, Inventory.code, Inventory.price, Inventory.material,
                             Inventory.perbox, Inventory.location, Inventory.rack, Inventory.unit_code, Category.cid,
-                            Category.cat_name).filter(Inventory.wid == wid).filter(Category.cid == Inventory.cid).filter(Inventory.wid == Warehouse.wid).all()
+                            Category.cat_name).filter(Inventory.wid == wid).filter(Category.cid == Inventory.cid)\
+        .filter(Inventory.wid == Warehouse.wid).all()
     return items
 
