@@ -7,6 +7,7 @@ import BgCard from "Components/BgCard";
 
 // widgets
 import TodoList from "Components/Widgets/TodoList";
+// import StockCount from "Components/Widgets/StockCount";
 
 class Homebase extends Component {
   render() {
@@ -16,9 +17,7 @@ class Homebase extends Component {
           <title>YSIS | Dashboard</title>
         </Helmet>
         <div className="row">
-          <div className="col-md-7">
-            <BgCard>zero stock count</BgCard>
-          </div>
+          <div className="col-md-7">{/* <StockCount /> */}</div>
           <div className="col-md-5">
             <TodoList />
           </div>
