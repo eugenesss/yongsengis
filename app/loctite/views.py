@@ -203,11 +203,11 @@ def auditlog_record(item, field, new_value, action):
         if field == "expiry_date":
             new_value = (datetime.datetime.strptime(new_value, '%Y-%m-%d').date())
         if item[field] != new_value:
-            record = AuditLog(name, field, item[field], new_value, user_name, action)
+            record = AuditLog(name, field, item[field], new_value, datetime.datetime.utcnow(), user_name, action)
             db.session.add(record)
             db.session.commit()
 
     elif action == "delete" or action == "create":
-        record = AuditLog(name, None, None, None, user_name, action)
+        record = AuditLog(name, None, None, None, datetime.datetime.utcnow(), user_name, action)
         db.session.add(record)
         db.session.commit()
