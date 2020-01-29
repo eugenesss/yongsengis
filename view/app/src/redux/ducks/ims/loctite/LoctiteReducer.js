@@ -95,7 +95,7 @@ export default (state = INIT_STATE, action) => {
         }
       };
     case types.SUBMIT_LOCTITE_FAILURE:
-      NotificationManager.danger("Error in POST api");
+      NotificationManager.error("Error in POST api");
       console.log(action.payload);
       return {
         ...state,
