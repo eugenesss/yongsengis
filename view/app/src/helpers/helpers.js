@@ -182,4 +182,7 @@ export const listOptions = {
   rowsPerPage: 15,
   rowsPerPageOptions: [15, 30, 60, 100],
   textLabels: { body: { noMatch: "No data to display" } }
+  // setTableProps: () => ({
+  //   size: "small"
+  // })
 };
