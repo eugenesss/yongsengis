@@ -11,7 +11,7 @@ function renderPage(props) {
       className="rct-scroll"
       autoHide
       autoHideDuration={100}
-      style={{ height: "calc(100vh - 160px)" }}
+      style={{ height: "calc(100vh - 180px)" }}
     >
       <div className="rct-page-content">{children}</div>
     </Scrollbars>

@@ -14,6 +14,7 @@ function TabsWrapper(props) {
   }
 
   const { children } = props;
+  console.log(children);
   return (
     <BgCard
       fullBlock
@@ -23,16 +24,19 @@ function TabsWrapper(props) {
           onChange={(e, value) => handleChange(value)}
           variant="fullWidth"
         >
-          {children.length ? (
+          {children.length > 1 ? (
             children.map((child, key) => (
               <Tab
                 key={key}
-                icon={child.props.icon}
-                label={child.props.label}
+                icon={child.props && child.props.icon}
+                label={child.props && child.props.label}
               />
             ))
           ) : (
-            <Tab icon={children.props.icon} label={children.props.label} />
+            <Tab
+              icon={children.props && children.props.icon}
+              label={children.props && children.props.label}
+            />
           )}
         </Tabs>
       }

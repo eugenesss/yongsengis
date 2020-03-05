@@ -16,7 +16,7 @@ import AuthSaga from "Ducks/session/auth/AuthSaga";
 import { ReportSaga } from "Ducks/report";
 
 // widgets
-import { TodoListSaga } from "Ducks/widget";
+import { TodoListSaga, WarehouseHealthSaga } from "Ducks/widget";
 
 export default function* rootSaga() {
   yield all([
@@ -31,8 +31,7 @@ export default function* rootSaga() {
     // System
     ReportSaga(),
     TodoListSaga(),
-
-    // Calendar
+    WarehouseHealthSaga(),
 
     // Settings
     UserManagementSaga(),
