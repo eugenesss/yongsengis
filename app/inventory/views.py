@@ -6,6 +6,7 @@ from functools import wraps
 
 import os
 import datetime
+import csv
 
 from app import db
 from ..models import Inventory, InventorySchema, UpdateInventorySchema, get_all_items, get_item, get_item_by_warehouse, \
@@ -293,6 +294,46 @@ def auditlog_record(item, field, new_value, action):
         record = AuditLog(name, None, None, None, datetime.datetime.utcnow(), user_name, action)
         db.session.add(record)
         db.session.commit()
+
+
+@inventory.route("/inventory/import", methods=["POST"])
+@jwt_required
+def import_csv():
+    if request.method == 'POST':
+
+        # create variable for uploaded file
+        f = request.files['fileupload']
+
+        # store the file contents as a string
+        fstring = f.read()
+
+        # decode the file as it contains BOM signature
+        fdecode = fstring.decode("utf-8-sig")
+
+        # create list of dictionaries keyed by header row
+        csv_dicts = [{k: v for k, v in row.items()} for
+                     row in csv.DictReader(fdecode.splitlines(), skipinitialspace=True)]
+
+        for i in range(len(csv_dicts)):
+            # Add item to database
+            item = Inventory(name=csv_dicts[i].get('name', None),
+                             description=csv_dicts[i].get('description', None),
+                             code=csv_dicts[i].get('code', None),
+                             material=csv_dicts[i].get('material', None),
+                             price=csv_dicts[i].get('price', None),
+                             location=csv_dicts[i].get('location', None),
+                             quantity=csv_dicts[i].get('quantity', None),
+                             perbox=csv_dicts[i].get('perbox', None),
+                             file=csv_dicts[i].get('file', None),
+                             wid=csv_dicts[i].get('wid', None),
+                             cid=csv_dicts[i].get('cid', None),
+                             rack=csv_dicts[i].get('rack', None),
+                             unit_code=csv_dicts[i].get('unit_code', None))
+            db.session.add(item)
+            db.session.commit()
+            auditlog_record(item, None, None, "create")
+
+    return jsonify("imported successfully", 200)
 
 
 

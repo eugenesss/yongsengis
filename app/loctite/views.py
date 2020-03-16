@@ -2,6 +2,7 @@ from flask import request, json, jsonify
 from . import loctite
 import datetime
 import os
+import csv
 
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from flask_login import login_required
@@ -211,3 +212,37 @@ def auditlog_record(item, field, new_value, action):
         record = AuditLog(name, None, None, None, datetime.datetime.utcnow(), user_name, action)
         db.session.add(record)
         db.session.commit()
+
+
+@loctite.route("/loctite/import", methods=["POST"])
+@jwt_required
+def import_csv():
+    if request.method == 'POST':
+
+        # create variable for uploaded file
+        f = request.files['fileupload']
+
+        # store the file contents as a string
+        fstring = f.read()
+
+        # decode the file as it contains BOM signature
+        fdecode = fstring.decode("utf-8-sig")
+
+        # create list of dictionaries keyed by header row
+        csv_dicts = [{k: v for k, v in row.items()} for
+                     row in csv.DictReader(fdecode.splitlines(), skipinitialspace=True)]
+
+        for i in range(len(csv_dicts)):
+            # Add item to database
+            item = Loctite(name=csv_dicts[i].get('name', None),
+                           description=csv_dicts[i].get('description', None),
+                           price=csv_dicts[i].get('price', None),
+                           quantity=csv_dicts[i].get('quantity', None),
+                           file=csv_dicts[i].get('file', None),
+                           batch=csv_dicts[i].get('batch', None),
+                           expiry_date=csv_dicts[i].get('expiry_date', None))
+            db.session.add(item)
+            db.session.commit()
+            auditlog_record(item, None, None, "create")
+
+    return jsonify("imported successfully", 200)
