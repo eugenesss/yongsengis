@@ -15,6 +15,7 @@ import {
 } from "Ducks/setting";
 
 // system
+import { ImportReducer } from "Ducks/import";
 import { ReportReducer } from "Ducks/report";
 import { CalendarReducer } from "Ducks/calendar";
 import { TodoListReducer, WarehouseHealthReducer } from "Ducks/widget";
@@ -39,6 +40,7 @@ const reducers = combineReducers({
     todoList: TodoListReducer,
     warehouseHealth: WarehouseHealthReducer
   }),
+  importState: ImportReducer,
   reportState: ReportReducer,
   calendarState: CalendarReducer,
   usersState: UserManagementReducer,

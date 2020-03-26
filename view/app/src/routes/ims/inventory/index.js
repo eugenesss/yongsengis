@@ -1,17 +1,24 @@
 import React, { Component } from "react";
 import { show } from "redux-modal";
 import { connect } from "react-redux";
-//Sub Components
-import InventoryList from "./components/InventoryList";
 //Page Req
 import { Helmet } from "react-helmet";
 import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
-// List View
+import BgCard from "Components/BgCard";
+import RctSectionLoader from "Components/RctSectionLoader";
 import ListViewSelector from "Components/PageTitleBar/ListViewSelector";
+
+import InventoryList from "./components/InventoryList";
+
 // View Dialog
 import ShowInventory from "./view";
 import EditInventory from "./edit";
-import { inventoryNewPage, inventoryMassUpdatePage } from "Helpers/imsURL";
+
+import {
+  inventoryNewPage,
+  inventoryMassUpdatePage,
+  inventoryImportPage
+} from "Helpers/imsURL";
 // Actions
 import {
   getAllInventory,
@@ -24,14 +31,19 @@ import { getWarehouse } from "Ducks/ims/fields";
 class ims_inventory_list extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      invView: false,
+      invToView: {}
+    };
     this.handleView = this.handleView.bind(this);
     this.handleEdit = this.handleEdit.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
     this.newInv = this.newInv.bind(this);
     this.massUpdate = this.massUpdate.bind(this);
+    this.importInv = this.importInv.bind(this);
     this.renderOptions = this.renderOptions.bind(this);
   }
-  componentWillMount() {
+  componentDidMount() {
     this.props.getAllInventory();
     this.props.getWarehouse();
   }
@@ -56,9 +68,8 @@ class ims_inventory_list extends Component {
   delete(id) {
     this.props.deleteInventory(id);
   }
-
-  refresh() {
-    console.log("refresh");
+  importInv() {
+    this.props.history.push(inventoryImportPage);
   }
 
   renderOptions() {
@@ -66,18 +77,11 @@ class ims_inventory_list extends Component {
       { wh_name: "All Inventory", wid: "" },
       ...this.props.warehouse
     ];
-
     return options;
   }
 
   render() {
-    const {
-      options,
-      nowShowing,
-      tableData,
-      loading
-    } = this.props.inventoryList;
-    const { warehouse } = this.props;
+    const { nowShowing, tableData, loading } = this.props.inventoryList;
     return (
       <React.Fragment>
         <Helmet>
@@ -89,26 +93,32 @@ class ims_inventory_list extends Component {
           actionGroup={{
             add: { onClick: this.newInv },
             mid: { label: "Mass Update", onClick: this.massUpdate },
-            more: [{ label: "Refresh List", onClick: this.refresh }]
+            more: [
+              { label: "Import Inventory", onClick: this.importInv },
+              { label: "Refresh List", onClick: this.refresh }
+            ]
           }}
         />
-        <InventoryList
-          title={
-            <ListViewSelector
-              options={this.renderOptions()}
-              nowShowing={nowShowing}
-              onChangeValue={this.props.changeInvList}
-              optValue="wid"
-              optLabel="wh_name"
-            ></ListViewSelector>
-          }
-          tableData={tableData}
-          loading={loading}
+        <BgCard>
+          {loading && <RctSectionLoader />}
+          <InventoryList
+            title={
+              <ListViewSelector
+                options={this.renderOptions()}
+                nowShowing={nowShowing}
+                onChangeValue={this.props.changeInvList}
+                optValue="wid"
+                optLabel="wh_name"
+              ></ListViewSelector>
+            }
+            tableData={tableData}
+            handleView={this.handleView}
+          />
+        </BgCard>
+        <ShowInventory
           handleEdit={this.handleEdit}
-          handleView={this.handleView}
           handleDelete={this.handleDelete}
         />
-        <ShowInventory />
         <EditInventory />
       </React.Fragment>
     );

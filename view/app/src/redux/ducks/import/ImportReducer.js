@@ -20,17 +20,6 @@ export default (state = INIT_STATE, action) => {
       console.log(action.payload);
       return { ...state, loading: false };
 
-    /**
-     * Fetch Mapping Data
-     */
-    case types.FETCH_IMPORT_MAPPING:
-      return { ...state, loading: true };
-    case types.FETCH_IMPORT_MAPPING_SUCCESS:
-      return { ...state, loading: false, mappingData: action.payload };
-    case types.FETCH_IMPORT_MAPPING_FAILURE:
-      NotificationManager.error("Error in Fetching Mapping Data");
-      console.log(action.payload);
-      return { ...state, loading: false };
     default:
       return { ...state };
   }

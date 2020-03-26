@@ -10,26 +10,26 @@ import RctSectionLoader from "Components/RctSectionLoader";
 // Actions
 import { importRecord } from "Ducks/import";
 
-class ims_inventory_import extends Component {
+class ims_loctite_import extends Component {
   constructor(props) {
     super(props);
-    this.importInventoryRecord = this.importInventoryRecord.bind(this);
+    this.importLoctiteRecord = this.importLoctiteRecord.bind(this);
   }
 
-  importInventoryRecord(file) {
-    this.props.importRecord("inventory", file);
+  importLoctiteRecord(file) {
+    this.props.importRecord("loctite", file);
   }
 
   render() {
     return (
       <React.Fragment>
         <Helmet>
-          <title>YSIS | Import Inventory</title>
+          <title>YSIS | Import Loctite</title>
         </Helmet>
         {this.props.loading && <RctSectionLoader />}
         <ImportRecords
-          importType="inventory"
-          importAction={this.importInventoryRecord}
+          importType="loctite"
+          importAction={this.importLoctiteRecord}
         />
       </React.Fragment>
     );
@@ -40,4 +40,4 @@ const mapStateToProps = ({ importState }) => {
   return { loading };
 };
 
-export default connect(mapStateToProps, { importRecord })(ims_inventory_import);
+export default connect(mapStateToProps, { importRecord })(ims_loctite_import);

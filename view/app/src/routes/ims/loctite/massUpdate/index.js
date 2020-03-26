@@ -33,7 +33,7 @@ class ims_loctite_massupdate extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.onAdjust = this.onAdjust.bind(this);
   }
-  componentWillMount() {
+  componentDidMount() {
     this.props.getAllLoctite();
   }
   handleSelect(val) {
@@ -132,11 +132,8 @@ const mapStateToProps = ({ imsState }) => {
   return { loading, tableData };
 };
 
-export default connect(
-  mapStateToProps,
-  {
-    getAllLoctite,
-    removeFromLocList,
-    massUpdateLoctite
-  }
-)(ims_loctite_massupdate);
+export default connect(mapStateToProps, {
+  getAllLoctite,
+  removeFromLocList,
+  massUpdateLoctite
+})(ims_loctite_massupdate);

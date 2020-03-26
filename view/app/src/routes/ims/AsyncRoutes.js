@@ -5,7 +5,7 @@ import Loadable from "react-loadable";
 import RctPageLoader from "Components/RctPageLoader";
 
 /**
- * Lead Routes
+ * Inventory Routes
  */
 export const ims_inventory_list = Loadable({
   loader: () => import("./inventory"),
@@ -19,9 +19,13 @@ export const ims_inventory_massupdate = Loadable({
   loader: () => import("./inventory/massUpdate"),
   loading: () => <RctPageLoader />
 });
+export const ims_inventory_import = Loadable({
+  loader: () => import("./inventory/import"),
+  loading: () => <RctPageLoader />
+});
 
 /**
- * Customer Routes
+ * Loctite Routes
  */
 export const ims_loctite_list = Loadable({
   loader: () => import("./loctite"),
@@ -33,5 +37,9 @@ export const ims_loctite_new = Loadable({
 });
 export const ims_loctite_massupdate = Loadable({
   loader: () => import("./loctite/massUpdate"),
+  loading: () => <RctPageLoader />
+});
+export const ims_loctite_import = Loadable({
+  loader: () => import("./loctite/import"),
   loading: () => <RctPageLoader />
 });

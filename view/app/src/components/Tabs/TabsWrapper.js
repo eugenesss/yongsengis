@@ -14,7 +14,6 @@ function TabsWrapper(props) {
   }
 
   const { children } = props;
-  console.log(children);
   return (
     <BgCard
       fullBlock

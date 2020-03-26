@@ -41,7 +41,10 @@ class InventoryForm extends Component {
   componentDidMount() {
     this.props.getWarehouse();
     this.props.getCategories();
-    if (this.props.edit) this.setState({ item: this.props.edit });
+    if (this.props.edit) {
+      var { quantity, ...others } = this.props.edit;
+      this.setState({ item: { ...others } });
+    }
   }
 
   handleInv(field, value) {
@@ -142,14 +145,16 @@ class InventoryForm extends Component {
               />
             }
             quantity={
-              <FormInput
-                type="number"
-                label="Quantity"
-                value={item.quantity}
-                target="quantity"
-                handleChange={this.handleInv}
-                required={!item.quantity}
-              />
+              !edit && (
+                <FormInput
+                  type="number"
+                  label="Quantity"
+                  value={item.quantity}
+                  target="quantity"
+                  handleChange={this.handleInv}
+                  required={!item.quantity}
+                />
+              )
             }
             perbox={
               <FormInput

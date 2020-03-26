@@ -13,7 +13,7 @@ class ims_loctite_edit extends Component {
     super(props);
     this.handleEdit = this.handleEdit.bind(this);
   }
-  componentWillMount() {
+  componentDidMount() {
     this.props.startEditLoctite(this.props.itemToEdit);
   }
   handleEdit(item) {
@@ -44,7 +44,6 @@ const mapStateToProps = ({ imsState }) => {
   return { loctiteForm };
 };
 
-export default connect(
-  mapStateToProps,
-  { startEditLoctite, editLoctite }
-)(connectModal({ name: "edit_loctite" })(ims_loctite_edit));
+export default connect(mapStateToProps, { startEditLoctite, editLoctite })(
+  connectModal({ name: "edit_loctite" })(ims_loctite_edit)
+);

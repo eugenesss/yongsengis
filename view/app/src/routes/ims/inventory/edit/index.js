@@ -13,7 +13,7 @@ class ims_inventory_edit extends Component {
     super(props);
     this.handleEdit = this.handleEdit.bind(this);
   }
-  componentWillMount() {
+  componentDidMount() {
     this.props.startEditInventory(this.props.itemToEdit);
   }
   handleEdit(item) {
@@ -44,7 +44,6 @@ const mapStateToProps = ({ imsState }) => {
   return { inventoryForm };
 };
 
-export default connect(
-  mapStateToProps,
-  { startEditInventory, editInventory }
-)(connectModal({ name: "edit_inventory" })(ims_inventory_edit));
+export default connect(mapStateToProps, { startEditInventory, editInventory })(
+  connectModal({ name: "edit_inventory" })(ims_inventory_edit)
+);

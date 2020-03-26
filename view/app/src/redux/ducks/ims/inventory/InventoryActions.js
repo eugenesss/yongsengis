@@ -134,3 +134,17 @@ export const removeFromInvList = id => ({
   type: types.REMOVE_FROM_INV_LIST,
   payload: id
 });
+
+// Stock update
+export const invStockUpdate = data => ({
+  type: types.INV_STOCK_UPDATE,
+  payload: data
+});
+export const invStockUpdateSuccess = data => ({
+  type: types.INV_STOCK_UPDATE_SUCCESS,
+  payload: data
+});
+export const invStockUpdateFailure = error => ({
+  type: types.INV_STOCK_UPDATE_FAILURE,
+  payload: error
+});

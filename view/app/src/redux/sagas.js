@@ -18,6 +18,9 @@ import { ReportSaga } from "Ducks/report";
 // widgets
 import { TodoListSaga, WarehouseHealthSaga } from "Ducks/widget";
 
+// Import
+import { ImportSaga } from "Ducks/import";
+
 export default function* rootSaga() {
   yield all([
     // IMS
@@ -32,6 +35,7 @@ export default function* rootSaga() {
     ReportSaga(),
     TodoListSaga(),
     WarehouseHealthSaga(),
+    ImportSaga(),
 
     // Settings
     UserManagementSaga(),

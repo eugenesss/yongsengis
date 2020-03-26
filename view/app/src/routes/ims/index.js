@@ -25,6 +25,11 @@ function imsSwitcher() {
           path={url.inventoryMassUpdatePage}
           component={async.ims_inventory_massupdate}
         />
+        <Route
+          exact
+          path={url.inventoryImportPage}
+          component={async.ims_inventory_import}
+        />
 
         {/* ------- /Loctite ------- */}
         <Route
@@ -42,6 +47,12 @@ function imsSwitcher() {
           path={url.loctiteMassUpdatePage}
           component={async.ims_loctite_massupdate}
         />
+        <Route
+          exact
+          path={url.loctiteImportPage}
+          component={async.ims_loctite_import}
+        />
+
         {/* ------- /404 ------- */}
         <Redirect to="/404" />
       </Switch>

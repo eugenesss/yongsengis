@@ -1,11 +1,6 @@
 import { all, call, fork, put, takeEvery, delay } from "redux-saga/effects";
-import { IMPORT_RECORD, FETCH_IMPORT_MAPPING } from "./ImportTypes";
-import {
-  importRecordSuccess,
-  importRecordFailure,
-  fetchImportMappingSuccess,
-  fetchImportMappingFailure
-} from "./ImportActions";
+import { IMPORT_RECORD } from "./ImportTypes";
+import { importRecordSuccess, importRecordFailure } from "./ImportActions";
 
 import api from "Api";
 
@@ -13,14 +8,8 @@ import api from "Api";
 // REQUESTS
 //=========================
 const importRecordRequest = async (model, fileData) => {
-  //const result = await api.post(`/${model}/import`, fileData);
-  //return result.data;
-  console.log(model, fileData);
-};
-const fetchImportMappingRequest = async model => {
-  // const result = await api.get(`/${model}/importMapping`);
-  // return result.data;
-  console.log(model);
+  const result = await api.post(`/${model}/import`, fileData);
+  return result.data;
 };
 
 //=========================
@@ -36,15 +25,6 @@ function* importRecordToDB({ payload }) {
     yield put(importRecordFailure(error));
   }
 }
-function* fetchImportMappingFromDB({ payload }) {
-  try {
-    const data = yield call(fetchImportMappingRequest, payload);
-    yield delay(500);
-    yield put(fetchImportMappingSuccess(data));
-  } catch (error) {
-    yield put(fetchImportMappingFailure(error));
-  }
-}
 
 //=======================
 // WATCHER FUNCTIONS
@@ -52,13 +32,9 @@ function* fetchImportMappingFromDB({ payload }) {
 export function* importRecordWatcher() {
   yield takeEvery(IMPORT_RECORD, importRecordToDB);
 }
-export function* fetchImportMappingWatcher() {
-  yield takeEvery(FETCH_IMPORT_MAPPING, fetchImportMappingFromDB);
-}
-
 //=======================
 // FORK SAGAS TO STORE
 //=======================
 export default function* rootSaga() {
-  yield all([fork(importRecordWatcher), fork(fetchImportMappingWatcher)]);
+  yield all([fork(importRecordWatcher)]);
 }

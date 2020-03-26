@@ -1,12 +1,4 @@
-import {
-  all,
-  call,
-  fork,
-  put,
-  takeEvery,
-  delay,
-  select
-} from "redux-saga/effects";
+import { all, call, fork, put, takeEvery, select } from "redux-saga/effects";
 import {
   GET_ALL_INVENTORY,
   ON_CHANGE_INVENTORY_LIST,
@@ -16,7 +8,8 @@ import {
   EDIT_INVENTORY,
   DELETE_INVENTORY,
   MASS_UPDATE_FILTER_INVENTORY,
-  MASS_UPDATE_INVENTORY
+  MASS_UPDATE_INVENTORY,
+  INV_STOCK_UPDATE
 } from "./InventoryTypes";
 import {
   inventoryApiFailure,
@@ -33,7 +26,9 @@ import {
   filterInventorySuccess,
   filterInventoryFailure,
   massUpdateInventorySuccess,
-  massUpdateInventoryFailure
+  massUpdateInventoryFailure,
+  invStockUpdateSuccess,
+  invStockUpdateFailure
 } from "./InventoryActions";
 
 import { inventoryListPage } from "Helpers/imsURL";
@@ -71,6 +66,11 @@ const massUpdateInvRequest = async data => {
   const result = await api.post("/update_items", data);
   return result.data;
 };
+const invStockUpdateRequest = async data => {
+  console.log(data);
+  // const result = await api.post("/update_items", data);
+  // return result.data;
+};
 
 //=========================
 // CALL(GENERATOR) ACTIONS
@@ -78,7 +78,6 @@ const massUpdateInvRequest = async data => {
 function* getAllInventoryFromDB() {
   try {
     const inv = yield call(getAllInventoryReq);
-    yield delay(500);
     yield put(getAllInventorySuccess(inv));
   } catch (error) {
     yield put(inventoryApiFailure(error));
@@ -91,12 +90,9 @@ function* changeInvList({ payload }) {
     if (wid == "") {
       // All Leads
       data = yield call(getAllInventoryReq);
-      yield delay(500);
       yield put(getAllInventorySuccess(data));
     } else {
       data = yield call(getWarehouseInventory, wid);
-      yield delay(500);
-      yield put(getAllInventorySuccess(data));
     }
   } catch (error) {
     yield put(inventoryApiFailure(error));
@@ -119,7 +115,6 @@ function* submitInvToDB({ payload }) {
   try {
     const inv = yield call(postInventoryReq, data);
     if (redirect) {
-      yield delay(400);
       history.push(inventoryListPage);
     }
     yield put(submitInventorySuccess(inv));
@@ -130,7 +125,6 @@ function* submitInvToDB({ payload }) {
 function* startEditInv({ payload }) {
   try {
     const data = yield call(startEditInvReq, payload);
-    yield delay(500);
     yield put(startEditInventorySuccess(data));
   } catch (error) {
     yield put(startEditInventoryFailure(error));
@@ -139,7 +133,6 @@ function* startEditInv({ payload }) {
 function* editInv({ payload }) {
   try {
     const data = yield call(editInvReq, payload);
-    yield delay(500);
     yield put(editInventorySuccess(data));
   } catch (error) {
     yield put(editInventoryFailure(error));
@@ -148,7 +141,6 @@ function* editInv({ payload }) {
 function* deleteInv({ payload }) {
   try {
     yield call(deleteInvReq, payload);
-    yield delay(500);
     yield put(deleteInventorySuccess(payload));
   } catch (error) {
     yield put(deleteInventoryFailure(error));
@@ -164,7 +156,6 @@ function* filterInv({ payload }) {
     const data = tableData.filter(inv =>
       inv[field].toLowerCase().includes(keyword.toLowerCase())
     );
-    yield delay(500);
     yield put(filterInventorySuccess(data));
   } catch (error) {
     yield put(filterInventoryFailure(error));
@@ -176,6 +167,14 @@ function* massUpdateInv({ payload }) {
     yield put(massUpdateInventorySuccess(data));
   } catch (error) {
     yield put(massUpdateInventoryFailure(error));
+  }
+}
+function* invStockUpdate({ payload }) {
+  try {
+    const data = yield call(invStockUpdateRequest, payload);
+    yield put(invStockUpdateSuccess(data));
+  } catch (error) {
+    yield put(invStockUpdateFailure(error));
   }
 }
 
@@ -209,6 +208,9 @@ export function* filterInvWatcher() {
 export function* massUpdateInvWatcher() {
   yield takeEvery(MASS_UPDATE_INVENTORY, massUpdateInv);
 }
+export function* invStockUpdateWatcher() {
+  yield takeEvery(INV_STOCK_UPDATE, invStockUpdate);
+}
 
 //=======================
 // FORK SAGAS TO STORE
@@ -223,6 +225,7 @@ export default function* rootSaga() {
     fork(editInventoryWatcher),
     fork(deleteInventoryWatcher),
     fork(filterInvWatcher),
-    fork(massUpdateInvWatcher)
+    fork(massUpdateInvWatcher),
+    fork(invStockUpdateWatcher)
   ]);
 }

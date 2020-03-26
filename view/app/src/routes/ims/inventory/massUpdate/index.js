@@ -33,7 +33,7 @@ class ims_inventory_massupdate extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.onAdjust = this.onAdjust.bind(this);
   }
-  componentWillMount() {
+  componentDidMount() {
     this.props.getAllInventory();
   }
   handleSelect(val) {
@@ -135,11 +135,8 @@ const mapStateToProps = ({ imsState }) => {
   return { loading, tableData };
 };
 
-export default connect(
-  mapStateToProps,
-  {
-    getAllInventory,
-    removeFromInvList,
-    massUpdateInventory
-  }
-)(ims_inventory_massupdate);
+export default connect(mapStateToProps, {
+  getAllInventory,
+  removeFromInvList,
+  massUpdateInventory
+})(ims_inventory_massupdate);

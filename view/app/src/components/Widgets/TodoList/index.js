@@ -29,27 +29,39 @@ import {
   deleteToDo,
   newToDo
 } from "Ducks/widget/TodoList";
+import ViewTodo from "./ViewTodo";
 
 class TodoList extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      viewTodo: false,
+      todo: {}
+    };
     this.openNewTodoDialog = this.openNewTodoDialog.bind(this);
+    this.closeView = this.closeView.bind(this);
   }
 
   componentDidMount() {
     this.props.getToDo();
   }
 
+  // open view todo dialog
+  viewToDo(todo) {
+    this.setState(prevState => ({ viewTodo: !prevState.viewTodo, todo }));
+  }
+  closeView() {
+    this.setState(prevState => ({ viewTodo: !prevState.viewTodo, todo: {} }));
+  }
+
   // open new todo dialog
   openNewTodoDialog() {
     this.props.show("new_todo", { submitToDo: this.props.newToDo });
   }
-
   // edit todo dialog
   editTodoDialog(edit) {
     this.props.show("new_todo", { submitToDo: this.props.updateToDo, edit });
   }
-
   // open delete todo dialog
   handleDelete(itemID, name) {
     this.props.show("alert_delete", {
@@ -87,7 +99,7 @@ class TodoList extends Component {
                   <ListItem
                     button
                     key={key}
-                    // onClick={() => this.handleComplete(!data.done, data)}
+                    onClick={() => this.viewToDo(data)}
                   >
                     <div
                       className={classnames(
@@ -170,6 +182,11 @@ class TodoList extends Component {
           </div>
         </BgCard>
         <NewTodo />
+        <ViewTodo
+          handleHide={this.closeView}
+          show={this.state.viewTodo}
+          view={this.state.todo}
+        />
       </React.Fragment>
     );
   }

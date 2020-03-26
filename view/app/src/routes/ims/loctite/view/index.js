@@ -5,6 +5,7 @@ import DialogRoot from "Components/Dialog/DialogRoot";
 
 import RctSectionLoader from "Components/RctSectionLoader";
 import { Details } from "@material-ui/icons";
+import { Button } from "@material-ui/core";
 // Components
 import PageErrorMsg from "Components/Error/PageErrorMessage";
 import TabsWrapper from "Components/Tabs/TabsWrapper";
@@ -15,7 +16,7 @@ import LoctiteDetails from "../components/LoctiteDetails";
 import { viewLoctite } from "Ducks/ims/loctite";
 
 class ims_loctite_view extends Component {
-  componentWillMount() {
+  componentDidMount() {
     var id = this.props.itemID;
     this.props.viewLoctite(id);
   }
@@ -36,6 +37,8 @@ class ims_loctite_view extends Component {
             <div className="col-md-3">
               <div>
                 <InventoryCard name={loctite.name} />
+                <Button>Edit</Button>
+                <Button>Delete</Button>
               </div>
             </div>
             <div className="col-md-9">
@@ -61,7 +64,6 @@ const mapStateToProps = ({ imsState }) => {
   return { loctiteToView };
 };
 
-export default connect(
-  mapStateToProps,
-  { viewLoctite }
-)(connectModal({ name: "view_loctite" })(ims_loctite_view));
+export default connect(mapStateToProps, { viewLoctite })(
+  connectModal({ name: "view_loctite" })(ims_loctite_view)
+);

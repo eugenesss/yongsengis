@@ -168,6 +168,9 @@ export default (state = INIT_STATE, action) => {
           ...state.inventoryForm,
           modalLoading: false,
           item: action.payload
+        },
+        itemToView: {
+          item: action.payload
         }
       };
     case types.EDIT_INVENTORY_FAILURE:
@@ -242,9 +245,32 @@ export default (state = INIT_STATE, action) => {
       NotificationManager.success("Items Updated!");
       return { ...state, massUpdate: { ...state.massUpdate, loading: false } };
     case types.MASS_UPDATE_INVENTORY_FAILURE:
-      NotificationManager.erorr("Error");
+      NotificationManager.error("Error");
       console.log(action.payload);
       return { ...state, massUpdate: { ...state.massUpdate, loading: false } };
+
+    // Stock update
+    case types.INV_STOCK_UPDATE:
+      return {
+        ...state,
+        inventoryList: { ...state.inventoryList, loading: true }
+      };
+    case types.INV_STOCK_UPDATE_SUCCESS:
+      var invStockUpdate = updateInvList(action.payload);
+      return {
+        ...state,
+        inventoryList: {
+          ...state.inventoryList,
+          loading: false,
+          tableData: invStockUpdate
+        }
+      };
+    case types.INV_STOCK_UPDATE_FAILURE:
+      NotificationManager.error("Error in updating stock count");
+      return {
+        ...state,
+        inventoryList: { ...state.inventoryList, loading: false }
+      };
 
     default:
       return { ...state };
