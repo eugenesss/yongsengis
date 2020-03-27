@@ -113,14 +113,16 @@ class LoctiteForm extends Component {
               />
             }
             quantity={
-              <FormInput
-                type="number"
-                label="Quantity"
-                value={loctite.quantity}
-                target="quantity"
-                handleChange={this.handleInv}
-                required={!loctite.quantity}
-              />
+              !edit && (
+                <FormInput
+                  type="number"
+                  label="Quantity"
+                  value={loctite.quantity}
+                  target="quantity"
+                  handleChange={this.handleInv}
+                  required={!loctite.quantity}
+                />
+              )
             }
             description={
               <FormInput

@@ -66,10 +66,8 @@ const massUpdateInvRequest = async data => {
   return result.data;
 };
 const invStockUpdateRequest = async data => {
-  console.log(data);
-  const result = await api.post("/inventory/adjustment", { ...data });
-  console.log(result);
-  // return result.data;
+  const result = await api.post("/inventory/adjustment", data);
+  return result.data;
 };
 
 //=========================
@@ -171,7 +169,6 @@ function* massUpdateInv({ payload }) {
 }
 function* invStockUpdate({ payload }) {
   try {
-    console.log(payload);
     const data = yield call(invStockUpdateRequest, payload);
     yield put(invStockUpdateSuccess(data));
   } catch (error) {

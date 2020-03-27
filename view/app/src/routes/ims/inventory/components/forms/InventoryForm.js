@@ -42,8 +42,7 @@ class InventoryForm extends Component {
     this.props.getWarehouse();
     this.props.getCategories();
     if (this.props.edit) {
-      var { quantity, ...others } = this.props.edit;
-      this.setState({ item: { ...others } });
+      this.setState({ item: this.props.edit });
     }
   }
 

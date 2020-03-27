@@ -21,7 +21,7 @@ class ims_loctite_view extends Component {
     this.props.viewLoctite(id);
   }
   render() {
-    const { show, handleHide } = this.props;
+    const { show, handleHide, handleEdit, handleDelete } = this.props;
     const { loctite, loading } = this.props.loctiteToView;
     return (
       <DialogRoot
@@ -37,8 +37,21 @@ class ims_loctite_view extends Component {
             <div className="col-md-3">
               <div>
                 <InventoryCard name={loctite.name} />
-                <Button>Edit</Button>
-                <Button>Delete</Button>
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  className="my-10 w-100"
+                  onClick={() => handleEdit(loctite.pid)}
+                >
+                  Edit
+                </Button>
+                <Button
+                  variant="outlined"
+                  className="border-danger text-danger my-10 w-100"
+                  onClick={() => handleDelete(loctite.pid)}
+                >
+                  Delete
+                </Button>
               </div>
             </div>
             <div className="col-md-9">

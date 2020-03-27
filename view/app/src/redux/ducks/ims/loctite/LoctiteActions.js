@@ -124,3 +124,17 @@ export const removeFromLocList = id => ({
   type: types.REMOVE_FROM_LOC_LIST,
   payload: id
 });
+
+// Stock update
+export const locStockUpdate = data => ({
+  type: types.LOC_STOCK_UPDATE,
+  payload: data
+});
+export const locStockUpdateSuccess = data => ({
+  type: types.LOC_STOCK_UPDATE_SUCCESS,
+  payload: data
+});
+export const locStockUpdateFailure = error => ({
+  type: types.LOC_STOCK_UPDATE_FAILURE,
+  payload: error
+});

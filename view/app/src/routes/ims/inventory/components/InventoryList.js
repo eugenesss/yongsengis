@@ -2,11 +2,8 @@ import React from "react";
 import AccessComponent from "Auth/AccessComponent";
 
 //Page req
-import { IconButton } from "@material-ui/core";
-import { Input } from "@material-ui/icons";
 import RecordsList from "Components/RecordsList";
 import { listOptions } from "Helpers/helpers";
-
 import QtyAdjust from "./QtyAdjust";
 
 export default function InventoryList({ tableData, title, handleView }) {

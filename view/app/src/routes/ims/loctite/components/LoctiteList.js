@@ -2,20 +2,11 @@ import React from "react";
 import AccessComponent from "Auth/AccessComponent";
 
 //Page req
-import { IconButton, Tooltip } from "@material-ui/core";
-import { Edit, Delete } from "@material-ui/icons";
 import RecordsList from "Components/RecordsList";
 import { listOptions, getTheDate } from "Helpers/helpers";
-import RctSectionLoader from "Components/RctSectionLoader";
+import QtyAdjust from "./QtyAdjust";
 
-const LoctiteList = ({
-  tableData,
-  loading,
-  title,
-  handleView,
-  handleEdit,
-  handleDelete
-}) => {
+const LoctiteList = ({ tableData, title, handleView }) => {
   const columns = [
     {
       label: "ID",
@@ -51,64 +42,33 @@ const LoctiteList = ({
       }
     },
     {
-      label: "Actions",
+      label: "Adjust Qty",
       name: "pid",
       options: {
         filter: false,
         sort: false,
         customBodyRender: (value, tableMeta) => {
           return (
-            <React.Fragment>
-              <AccessComponent>
-                <Tooltip id="tooltip-icon" title="Edit">
-                  <IconButton
-                    className="p-5 mr-2"
-                    aria-label="Edit"
-                    onClick={() => {
-                      handleEdit(value);
-                    }}
-                  >
-                    <Edit fontSize="small" />
-                  </IconButton>
-                </Tooltip>
-                <Tooltip id="tooltip-icon" title="Delete">
-                  <IconButton
-                    className="text-danger p-5 mr-2"
-                    aria-label="Delete"
-                    onClick={() => {
-                      handleDelete(value, tableMeta.rowData[1]);
-                    }}
-                  >
-                    <Delete fontSize="small" />
-                  </IconButton>
-                </Tooltip>
-              </AccessComponent>
-            </React.Fragment>
+            <AccessComponent>
+              <QtyAdjust pid={value} name={tableMeta.rowData[1]} />
+            </AccessComponent>
           );
         }
       }
     }
   ];
 
-  // listOptions.onRowClick = rowData => onRowClick(rowData[0]);
-  listOptions.customToolbarSelect = (
-    selectedRows,
-    displayData,
-    setSelectRows
-  ) =>
-    // delete multiple function
-    null;
+  const options = Object.assign({}, listOptions, {
+    setTableProps: () => ({ size: "small" })
+  });
 
   return (
-    <div className="rct-block">
-      <RecordsList
-        title={title}
-        columns={columns}
-        data={tableData}
-        options={listOptions}
-      />
-      {loading && <RctSectionLoader />}
-    </div>
+    <RecordsList
+      title={title}
+      columns={columns}
+      data={tableData}
+      options={options}
+    />
   );
 };
 

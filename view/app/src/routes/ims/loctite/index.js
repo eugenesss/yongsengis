@@ -8,6 +8,9 @@ import EditLoctite from "./edit";
 //Page Req
 import { Helmet } from "react-helmet";
 import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
+import RctSectionLoader from "Components/RctSectionLoader";
+import BgCard from "Components/BgCard";
+
 import {
   loctiteNewPage,
   loctiteMassUpdatePage,
@@ -58,7 +61,7 @@ class ims_loctite extends Component {
   }
 
   render() {
-    const { action, tableData, loading } = this.props.loctiteList;
+    const { tableData, loading } = this.props.loctiteList;
     return (
       <React.Fragment>
         <Helmet>
@@ -76,14 +79,19 @@ class ims_loctite extends Component {
             ]
           }}
         />
-        <LoctiteList
-          tableData={tableData}
-          loading={loading}
-          handleEdit={this.handleEdit}
+        <BgCard>
+          {loading && <RctSectionLoader />}
+          <LoctiteList
+            tableData={tableData}
+            handleEdit={this.handleEdit}
+            handleDelete={this.handleDelete}
+            handleView={this.handleView}
+          />
+        </BgCard>
+        <ViewLoctite
           handleDelete={this.handleDelete}
-          handleView={this.handleView}
+          handleEdit={this.handleEdit}
         />
-        <ViewLoctite />
         <EditLoctite />
       </React.Fragment>
     );

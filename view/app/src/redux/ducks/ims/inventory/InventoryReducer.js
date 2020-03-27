@@ -249,13 +249,16 @@ export default (state = INIT_STATE, action) => {
       console.log(action.payload);
       return { ...state, massUpdate: { ...state.massUpdate, loading: false } };
 
+    //=========================
     // Stock update
+    //=========================
     case types.INV_STOCK_UPDATE:
       return {
         ...state,
         inventoryList: { ...state.inventoryList, loading: true }
       };
     case types.INV_STOCK_UPDATE_SUCCESS:
+      NotificationManager.success("Stock count updated");
       var invStockUpdate = updateInvList(action.payload);
       return {
         ...state,
@@ -267,6 +270,7 @@ export default (state = INIT_STATE, action) => {
       };
     case types.INV_STOCK_UPDATE_FAILURE:
       NotificationManager.error("Error in updating stock count");
+      console.log(action.payload);
       return {
         ...state,
         inventoryList: { ...state.inventoryList, loading: false }

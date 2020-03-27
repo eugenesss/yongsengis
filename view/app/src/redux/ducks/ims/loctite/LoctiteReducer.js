@@ -232,6 +232,33 @@ export default (state = INIT_STATE, action) => {
       console.log(action.payload);
       return { ...state, massUpdate: { ...state.massUpdate, loading: false } };
 
+    //=========================
+    // Stock update
+    //=========================
+    case types.LOC_STOCK_UPDATE:
+      return {
+        ...state,
+        loctiteList: { ...state.loctiteList, loading: true }
+      };
+    case types.LOC_STOCK_UPDATE_SUCCESS:
+      NotificationManager.success("Stock count updated");
+      var invStockUpdate = updateInvList(action.payload);
+      return {
+        ...state,
+        loctiteList: {
+          ...state.loctiteList,
+          loading: false,
+          tableData: invStockUpdate
+        }
+      };
+    case types.LOC_STOCK_UPDATE_FAILURE:
+      NotificationManager.error("Error in updating stock count");
+      console.log(action.payload);
+      return {
+        ...state,
+        loctiteList: { ...state.loctiteList, loading: false }
+      };
+
     default:
       return { ...state };
   }

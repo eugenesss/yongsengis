@@ -1,12 +1,4 @@
-import {
-  all,
-  call,
-  fork,
-  put,
-  takeEvery,
-  delay,
-  select
-} from "redux-saga/effects";
+import { all, call, fork, put, takeEvery, select } from "redux-saga/effects";
 import {
   GET_ALL_LOCTITE,
   VIEW_LOCTITE,
@@ -15,7 +7,8 @@ import {
   EDIT_LOCTITE,
   DELETE_LOCTITE,
   MASS_UPDATE_FILTER_LOCTITE,
-  MASS_UPDATE_LOCTITE
+  MASS_UPDATE_LOCTITE,
+  LOC_STOCK_UPDATE
 } from "./LoctiteTypes";
 import {
   loctiteApiFailure,
@@ -32,7 +25,9 @@ import {
   filterLoctiteSuccess,
   filterLoctiteFailure,
   massUpdateLoctiteSuccess,
-  massUpdateLoctiteFailure
+  massUpdateLoctiteFailure,
+  locStockUpdateFailure,
+  locStockUpdateSuccess
 } from "./LoctiteActions";
 
 import { loctiteListPage } from "Helpers/imsURL";
@@ -60,8 +55,6 @@ const submitLoctiteFormRequest = async data => {
   return result.data;
 };
 const editLocReq = async item => {
-  console.log(item);
-  console.log(typeof item.quantity);
   const result = await api.post(`/update_loctite/${item.pid}`, item);
   return result.data;
 };
@@ -71,6 +64,10 @@ const deleteLocReq = async id => {
 };
 const massUpdateLocRequest = async data => {
   const result = await api.post("/update_loctites", data);
+  return result.data;
+};
+const locStockUpdateRequest = async data => {
+  const result = await api.post("/loctite/adjustment", data);
   return result.data;
 };
 
@@ -106,7 +103,6 @@ function* submitLoctiteForm({ payload }) {
   try {
     const inv = yield call(submitLoctiteFormRequest, data);
     if (redirect) {
-      yield delay(400);
       history.push(loctiteListPage);
     }
     yield put(submitLoctiteSuccess(inv));
@@ -122,7 +118,6 @@ function* editLoc({ payload }) {
       ...others
     };
     const data = yield call(editLocReq, loctite);
-    yield delay(500);
     yield put(editLoctiteSuccess(data));
   } catch (error) {
     yield put(editLoctiteFailure(error));
@@ -131,7 +126,6 @@ function* editLoc({ payload }) {
 function* deleteLoc({ payload }) {
   try {
     yield call(deleteLocReq, payload);
-    yield delay(500);
     yield put(deleteLoctiteSuccess(payload));
   } catch (error) {
     yield put(deleteLoctiteFailure(error));
@@ -149,7 +143,6 @@ function* filterLoc({ payload }) {
       }
       return inv[field].toLowerCase().includes(keyword.toLowerCase());
     });
-    yield delay(500);
     yield put(filterLoctiteSuccess(data));
   } catch (error) {
     yield put(filterLoctiteFailure(error));
@@ -161,6 +154,14 @@ function* massUpdateLoc({ payload }) {
     yield put(massUpdateLoctiteSuccess(data));
   } catch (error) {
     yield put(massUpdateLoctiteFailure(error));
+  }
+}
+function* locStockUpdate({ payload }) {
+  try {
+    const data = yield call(locStockUpdateRequest, payload);
+    yield put(locStockUpdateSuccess(data));
+  } catch (error) {
+    yield put(locStockUpdateFailure(error));
   }
 }
 
@@ -191,6 +192,9 @@ export function* filterLocWatcher() {
 export function* massUpdateLocWatcher() {
   yield takeEvery(MASS_UPDATE_LOCTITE, massUpdateLoc);
 }
+export function* locStockUpdateWatcher() {
+  yield takeEvery(LOC_STOCK_UPDATE, locStockUpdate);
+}
 
 //=======================
 // FORK SAGAS TO STORE
@@ -204,6 +208,7 @@ export default function* rootSaga() {
     fork(editLoctiteWatcher),
     fork(deleteLoctiteWatcher),
     fork(filterLocWatcher),
-    fork(massUpdateLocWatcher)
+    fork(massUpdateLocWatcher),
+    fork(locStockUpdateWatcher)
   ]);
 }
