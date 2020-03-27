@@ -268,13 +268,13 @@ def get_by_warehouse(wid):
     return inventories_schema.jsonify(items)
 
 
-@inventory.route("/auditlog")
+@inventory.route("/inventory/auditlog")
 @jwt_required
 def show_auditlog():
     """
     Display all inventory
     """
-    logs = AuditLog.query.order_by(desc(AuditLog.date_time)).all()
+    logs = db.session.query(AuditLog).filter(AuditLog.product == "inventory").all()
     audit_schema = AuditLogSchema(many=True)
     return audit_schema.jsonify(logs)
 
@@ -283,15 +283,22 @@ def auditlog_record(item, field, new_value, action):
     current_user = get_jwt_identity()
     user_name = current_user["first_name"]
     name = item["name"]
+    product = "inventory"
 
     if action == "edit":
         if item[field] != new_value:
-            record = AuditLog(name, field, item[field], new_value, datetime.datetime.utcnow(), user_name, action)
+            record = AuditLog(name, field, item[field], new_value, datetime.datetime.utcnow(), user_name, action,
+                              product)
             db.session.add(record)
             db.session.commit()
 
-    elif action == "delete" or action == "create":
-        record = AuditLog(name, None, None, None, datetime.datetime.utcnow(), user_name, action)
+    elif action == "in adjustment" or action == "out adjustment":
+        record = AuditLog(name, field, None, new_value, datetime.datetime.utcnow(), user_name, action, product)
+        db.session.add(record)
+        db.session.commit()
+
+    else:
+        record = AuditLog(name, None, None, None, datetime.datetime.utcnow(), user_name, action, product)
         db.session.add(record)
         db.session.commit()
 

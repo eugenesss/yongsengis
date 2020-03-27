@@ -8,7 +8,7 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 from flask_login import login_required
 
 from app import db
-from ..models import Loctite, LoctiteSchema, AuditLog, AuditLogSchema
+from ..models import Loctite, LoctiteSchema, AuditLog, AuditLogSchema, LoctiteOrders
 
 
 @loctite.route('/save_loctite', methods=['POST'])
@@ -195,21 +195,39 @@ def upload_images(pid):
     return jsonify('File uploaded successfully'), 200
 
 
+@loctite.route("/loctite/auditlog")
+@jwt_required
+def show_auditlog():
+    """
+    Display all inventory
+    """
+    logs = db.session.query(AuditLog).filter(AuditLog.product == "loctite").all()
+    audit_schema = AuditLogSchema(many=True)
+    return audit_schema.jsonify(logs)
+
+
 def auditlog_record(item, field, new_value, action):
     current_user = get_jwt_identity()
     user_name = current_user["first_name"]
     name = item["name"]
+    product = "loctite"
 
     if action == "edit":
         if field == "expiry_date":
             new_value = (datetime.datetime.strptime(new_value, '%Y-%m-%d').date())
         if item[field] != new_value:
-            record = AuditLog(name, field, item[field], new_value, datetime.datetime.utcnow(), user_name, action)
+            record = AuditLog(name, field, item[field], new_value, datetime.datetime.utcnow(), user_name, action,
+                              product)
             db.session.add(record)
             db.session.commit()
 
-    elif action == "delete" or action == "create":
-        record = AuditLog(name, None, None, None, datetime.datetime.utcnow(), user_name, action)
+    elif action == "in adjustment" or action == "out adjustment":
+        record = AuditLog(name, field, None, new_value, datetime.datetime.utcnow(), user_name, action, product)
+        db.session.add(record)
+        db.session.commit()
+
+    else:
+        record = AuditLog(name, None, None, None, datetime.datetime.utcnow(), user_name, action, product)
         db.session.add(record)
         db.session.commit()
 
@@ -248,5 +266,43 @@ def import_csv():
     return jsonify("imported successfully", 200)
 
 
+@loctite.route("/loctite/adjustment", methods=["POST"])
+@jwt_required
+def stock_adjustment():
+
+    # retrieve the data from request
+    data = request.data
+    data_js = json.loads(data)
+
+    pid = data_js.get("pid")
+    item = Loctite.query.filter_by(pid=pid).first()
+
+    count = data_js.get('count')
+    results = data_js.get('results')
+
+    adjustment_type = None
+
+    current_stock = item.quantity
+    if results == "out":
+        item.quantity = current_stock - count
+        item.updated_date = datetime.datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S')
+        auditlog_record(item, "quantity", count, "in adjustment")
+        adjustment_type = "out"
+
+    elif results == "in":
+        item.quantity = current_stock + count
+        item.updated_date = datetime.datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S')
+        auditlog_record(item, "quantity", count, "out adjustment")
+        adjustment_type = "in"
+
+    # save loctite orders for widget
+    orders = LoctiteOrders(pid, count, current_stock, adjustment_type,
+                             datetime.datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S'))
+    db.session.add(orders)
+    db.session.commit()
+
+    loctite_schema = LoctiteSchema()
+
+    return loctite_schema.jsonify(Loctite.query.get(pid)), 200
 
 

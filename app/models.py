@@ -272,8 +272,9 @@ class AuditLog(db.Model, Serializer):
     date_time = db.Column("date_time", db.DateTime)
     user = db.Column("user", db.String(255))
     action = db.Column("action", db.String(255))
+    product = db.Column("product", db.String(255))
 
-    def __init__(self, name, field, old_value, new_value, date_time, user, action):
+    def __init__(self, name, field, old_value, new_value, date_time, user, action, product):
         self.name = name
         self.field = field
         self.old_value = old_value
@@ -281,6 +282,7 @@ class AuditLog(db.Model, Serializer):
         self.date_time = date_time
         self.user = user
         self.action = action
+        self.product = product
 
 
 class AuditLogSchema(Schema):
@@ -289,7 +291,7 @@ class AuditLogSchema(Schema):
     """
     class Meta:
         # Fields to expose
-        fields = ("name", "field", "old_value", "new_value", "date_time", "user", "action")
+        fields = ("name", "field", "old_value", "new_value", "date_time", "user", "action", "product")
 
 
 class TodoList(db.Model, Serializer):
@@ -341,13 +343,24 @@ class InventoryOrders(db.Model, Serializer):
         self.updated_date = updated_date
 
 
-class InventoryOrdersSchema(Schema):
+class LoctiteOrders(db.Model, Serializer):
     """
-    LoctiteOrders Schema
+    Keep track of Loctite orders
     """
-    class Meta:
-        # fields to expose
-        fields = ("pid", "incoming", "outgoing", "current", "updated_date")
+    __tablename__ = 'loctiteorders'
+    id = db.Column(db.Integer, primary_key=True)
+    pid = db.Column("pid", db.Integer)
+    count = db.Column("count", db.Integer)
+    current = db.Column("current", db.Integer)
+    adjustment_type = db.Column("adjustment_type", db.String(255))
+    updated_date = db.Column("updated_date", db.DateTime)
+
+    def __init__(self, pid, count, current, adjustment_type, updated_date):
+        self.pid = pid
+        self.count = count
+        self.current = current
+        self.adjustment_type = adjustment_type
+        self.updated_date = updated_date
 
 
 
