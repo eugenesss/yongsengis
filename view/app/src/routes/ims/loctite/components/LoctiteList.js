@@ -29,7 +29,6 @@ const LoctiteList = ({ tableData, title, handleView }) => {
         }
       }
     },
-    { label: "Quantity", name: "quantity" },
     {
       label: "Batch Number",
       name: "batch"
@@ -41,6 +40,7 @@ const LoctiteList = ({ tableData, title, handleView }) => {
         customBodyRender: value => getTheDate(value)
       }
     },
+    { label: "Quantity", name: "quantity" },
     {
       label: "Adjust Qty",
       name: "pid",

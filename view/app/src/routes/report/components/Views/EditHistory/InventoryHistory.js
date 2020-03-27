@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-// import ReportContainer from "../../ReportContainer";
 import RctSectionLoader from "Components/RctSectionLoader";
 // Charts
 import EditHistoryChart from "Components/Charts/EditHistoryChart";
@@ -33,7 +32,6 @@ const mapStateToProps = ({ reportState }) => {
   return { inventory };
 };
 
-export default connect(
-  mapStateToProps,
-  { getEditHistoryInv }
-)(InventoryHistoryReport);
+export default connect(mapStateToProps, { getEditHistoryInv })(
+  InventoryHistoryReport
+);

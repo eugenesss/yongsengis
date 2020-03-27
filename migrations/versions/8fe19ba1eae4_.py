@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 4c8e25087a93
+Revision ID: 8fe19ba1eae4
 Revises: 
-Create Date: 2020-03-27 22:01:10.923122
+Create Date: 2020-03-27 23:22:34.244342
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 from sqlalchemy.dialects import mysql
 
 # revision identifiers, used by Alembic.
-revision = '4c8e25087a93'
+revision = '8fe19ba1eae4'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -27,6 +27,7 @@ def upgrade():
     sa.Column('updated_date', sa.DateTime(), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
+    op.add_column(u'auditlog', sa.Column('product', sa.String(length=255), nullable=True))
     op.alter_column(u'employees', 'is_admin',
                existing_type=mysql.TINYINT(display_width=1),
                type_=sa.Boolean(),
@@ -48,5 +49,6 @@ def downgrade():
                existing_type=sa.Boolean(),
                type_=mysql.TINYINT(display_width=1),
                existing_nullable=True)
+    op.drop_column(u'auditlog', 'product')
     op.drop_table('loctiteorders')
     # ### end Alembic commands ###

@@ -7,19 +7,12 @@ import { ReportDefaultMessage } from "../DefaultMessages";
 import InventoryHistory from "./EditHistory/InventoryHistory";
 import LoctiteHistory from "./EditHistory/LoctiteHistory";
 
-const ReportRender = ({ componentToRender }) => {
-  switch (componentToRender) {
-    //===================
-    // Edit History
-    //===================
-    case "editHistoryInv":
-      return <InventoryHistory />;
-    case "editHistoryLoctite":
-      return <LoctiteHistory />;
-
-    default:
-      return <ReportDefaultMessage />;
-  }
+const reportRender = {
+  editHistoryInv: InventoryHistory,
+  editHistoryLoctite: LoctiteHistory
 };
 
-export default ReportRender;
+export default ({ componentToRender }) => {
+  const Handler = reportRender[componentToRender] || ReportDefaultMessage;
+  return <Handler />;
+};
