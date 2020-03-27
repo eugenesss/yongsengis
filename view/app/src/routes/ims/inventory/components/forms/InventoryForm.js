@@ -67,8 +67,7 @@ class InventoryForm extends Component {
   }
 
   checkDisabled() {
-    const disabled =
-      this.state.item.name && this.state.item.quantity && this.state.item.cid;
+    const disabled = this.state.item.name && this.state.item.cid;
     return disabled;
   }
 

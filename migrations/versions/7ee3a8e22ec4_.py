@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 51bd917f660e
+Revision ID: 7ee3a8e22ec4
 Revises: 
-Create Date: 2020-03-27 09:46:12.913273
+Create Date: 2020-03-27 20:23:18.290208
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 from sqlalchemy.dialects import mysql
 
 # revision identifiers, used by Alembic.
-revision = '51bd917f660e'
+revision = '7ee3a8e22ec4'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -21,8 +21,9 @@ def upgrade():
     op.create_table('inventoryorders',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('pid', sa.Integer(), nullable=True),
-    sa.Column('outgoing', sa.Integer(), nullable=True),
+    sa.Column('count', sa.Integer(), nullable=True),
     sa.Column('current', sa.Integer(), nullable=True),
+    sa.Column('adjustment_type', sa.String(length=255), nullable=True),
     sa.Column('updated_date', sa.DateTime(), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
@@ -30,6 +31,10 @@ def upgrade():
                existing_type=mysql.TINYINT(display_width=1),
                type_=sa.Boolean(),
                existing_nullable=True)
+    op.drop_constraint(u'inventory_ibfk_2', 'inventory', type_='foreignkey')
+    op.drop_constraint(u'inventory_ibkf_1', 'inventory', type_='foreignkey')
+    op.create_foreign_key(None, 'inventory', 'warehouse', ['wid'], ['wid'])
+    op.create_foreign_key(None, 'inventory', 'category', ['cid'], ['cid'])
     op.alter_column(u'todolist', 'done',
                existing_type=mysql.TINYINT(display_width=1),
                type_=sa.Boolean(),
@@ -43,6 +48,10 @@ def downgrade():
                existing_type=sa.Boolean(),
                type_=mysql.TINYINT(display_width=1),
                existing_nullable=True)
+    op.drop_constraint(None, 'inventory', type_='foreignkey')
+    op.drop_constraint(None, 'inventory', type_='foreignkey')
+    op.create_foreign_key(u'inventory_ibkf_1', 'inventory', 'warehouse', ['wid'], ['wid'], onupdate=u'CASCADE', ondelete=u'SET NULL')
+    op.create_foreign_key(u'inventory_ibfk_2', 'inventory', 'category', ['cid'], ['cid'], onupdate=u'CASCADE', ondelete=u'SET NULL')
     op.alter_column(u'employees', 'is_admin',
                existing_type=sa.Boolean(),
                type_=mysql.TINYINT(display_width=1),

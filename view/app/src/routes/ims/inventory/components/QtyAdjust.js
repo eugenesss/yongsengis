@@ -46,9 +46,8 @@ export default function QtyAdjust(props) {
     setState(prevState => ({ ...prevState, results: newAlignment }));
   };
   const handleCount = count => {
-    setState(prevState => ({ ...prevState, count }));
+    setState(prevState => ({ ...prevState, count: parseInt(count) }));
   };
-
   const handleSave = () => {
     dispatch(invStockUpdate({ pid, ...state }));
   };

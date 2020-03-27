@@ -48,7 +48,6 @@ const getWarehouseInventory = async wid => {
 };
 const postInventoryReq = async data => {
   const result = await api.post("/save_item", data);
-  return result.data;
 };
 const startEditInvReq = async id => {
   const result = await api.get(`update_item/${id}`);
@@ -68,7 +67,8 @@ const massUpdateInvRequest = async data => {
 };
 const invStockUpdateRequest = async data => {
   console.log(data);
-  // const result = await api.post("/update_items", data);
+  const result = await api.post("/inventory/adjustment", { ...data });
+  console.log(result);
   // return result.data;
 };
 
@@ -171,6 +171,7 @@ function* massUpdateInv({ payload }) {
 }
 function* invStockUpdate({ payload }) {
   try {
+    console.log(payload);
     const data = yield call(invStockUpdateRequest, payload);
     yield put(invStockUpdateSuccess(data));
   } catch (error) {

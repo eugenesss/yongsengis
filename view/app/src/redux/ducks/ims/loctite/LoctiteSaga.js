@@ -60,6 +60,8 @@ const submitLoctiteFormRequest = async data => {
   return result.data;
 };
 const editLocReq = async item => {
+  console.log(item);
+  console.log(typeof item.quantity);
   const result = await api.post(`/update_loctite/${item.pid}`, item);
   return result.data;
 };
@@ -69,7 +71,6 @@ const deleteLocReq = async id => {
 };
 const massUpdateLocRequest = async data => {
   const result = await api.post("/update_loctites", data);
-  console.log(result);
   return result.data;
 };
 
