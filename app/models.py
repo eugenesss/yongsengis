@@ -314,11 +314,41 @@ class TodoList(db.Model, Serializer):
 
 class TodoListSchema(Schema):
     """
-    AuditLog Schema
+    TodoList Schema
     """
     class Meta:
         # Fields to expose
         fields = ("uid", "title", "description", "created_date", "done", "author", "due_date")
+
+
+class InventoryOrders(db.Model, Serializer):
+    """
+    Keep track of Loctite orders
+    """
+    __tablename__ = 'inventoryorders'
+    id = db.Column(db.Integer, primary_key=True)
+    pid = db.Column("pid", db.Integer)
+    count = db.Column("count", db.Integer)
+    current = db.Column("current", db.Integer)
+    adjustment_type = db.Column("adjustment_type", db.String(255))
+    updated_date = db.Column("updated_date", db.DateTime)
+
+    def __init__(self, pid, count, current, adjustment_type, updated_date):
+        self.pid = pid
+        self.count = count
+        self.current = current
+        self.adjustment_type = adjustment_type
+        self.updated_date = updated_date
+
+
+class InventoryOrdersSchema(Schema):
+    """
+    LoctiteOrders Schema
+    """
+    class Meta:
+        # fields to expose
+        fields = ("pid", "incoming", "outgoing", "current", "updated_date")
+
 
 
 def get_all_items():

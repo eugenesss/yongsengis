@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 952feca93505
-Revises: 
-Create Date: 2020-01-13 10:52:32.504319
+Revision ID: 877e34d61f8b
+Revises: 51bd917f660e
+Create Date: 2020-03-27 09:57:37.760033
 
 """
 from alembic import op
@@ -10,8 +10,8 @@ import sqlalchemy as sa
 from sqlalchemy.dialects import mysql
 
 # revision identifiers, used by Alembic.
-revision = '952feca93505'
-down_revision = None
+revision = '877e34d61f8b'
+down_revision = '51bd917f660e'
 branch_labels = None
 depends_on = None
 
@@ -22,6 +22,9 @@ def upgrade():
                existing_type=mysql.TINYINT(display_width=1),
                type_=sa.Boolean(),
                existing_nullable=True)
+    op.add_column('inventoryorders', sa.Column('adjustment_type', sa.String(length=255), nullable=True))
+    op.add_column('inventoryorders', sa.Column('count', sa.Integer(), nullable=True))
+    op.drop_column('inventoryorders', 'outgoing')
     op.alter_column('todolist', 'done',
                existing_type=mysql.TINYINT(display_width=1),
                type_=sa.Boolean(),
@@ -35,6 +38,9 @@ def downgrade():
                existing_type=sa.Boolean(),
                type_=mysql.TINYINT(display_width=1),
                existing_nullable=True)
+    op.add_column('inventoryorders', sa.Column('outgoing', mysql.INTEGER(display_width=11), autoincrement=False, nullable=True))
+    op.drop_column('inventoryorders', 'count')
+    op.drop_column('inventoryorders', 'adjustment_type')
     op.alter_column('employees', 'is_admin',
                existing_type=sa.Boolean(),
                type_=mysql.TINYINT(display_width=1),

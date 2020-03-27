@@ -246,3 +246,7 @@ def import_csv():
             auditlog_record(item, None, None, "create")
 
     return jsonify("imported successfully", 200)
+
+
+
+

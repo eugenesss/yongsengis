@@ -5,7 +5,13 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/inventory/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/inventory/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/loctite/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/loctite/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/instance/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/instance/config.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/README" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/alembic.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/env.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/script.py.mako" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/versions/952feca93505_.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/view/app/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/view/app/package-lock.json" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -16,11 +22,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/inventory/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="452">
-              <caret line="336" lean-forward="true" selection-start-line="298" selection-end-line="336" />
+            <state relative-caret-position="377">
+              <caret line="364" lean-forward="true" selection-start-line="364" selection-end-line="365" />
               <folding>
                 <element signature="e#0#40#0" expanded="true" />
               </folding>
@@ -28,11 +34,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/loctite/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="452">
-              <caret line="248" lean-forward="true" selection-start-line="248" selection-end-line="248" />
+            <state relative-caret-position="-3068">
+              <caret line="10" column="69" selection-start-line="10" selection-start-column="69" selection-end-line="10" selection-end-column="69" />
               <folding>
                 <element signature="e#0#40#0" expanded="true" />
               </folding>
@@ -43,8 +49,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="539">
-              <caret line="322" selection-start-line="322" selection-end-line="322" />
+            <state relative-caret-position="213">
+              <caret line="330" column="42" lean-forward="true" selection-start-line="330" selection-start-column="42" selection-end-line="330" selection-end-column="42" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
               </folding>
@@ -86,7 +92,7 @@
         <entry file="file://$PROJECT_DIR$/instance/config.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="45">
-              <caret line="3" column="56" selection-start-line="3" selection-start-column="56" selection-end-line="3" selection-end-column="56" />
+              <caret line="3" selection-start-line="3" selection-end-line="3" />
             </state>
           </provider>
         </entry>
@@ -164,16 +170,16 @@
         <option value="$PROJECT_DIR$/app/todolist/views.py" />
         <option value="$PROJECT_DIR$/app/category/views.py" />
         <option value="$PROJECT_DIR$/app/warehouse/views.py" />
-        <option value="$PROJECT_DIR$/app/models.py" />
         <option value="$PROJECT_DIR$/instance/config.py" />
-        <option value="$PROJECT_DIR$/app/inventory/views.py" />
         <option value="$PROJECT_DIR$/app/loctite/views.py" />
+        <option value="$PROJECT_DIR$/app/models.py" />
+        <option value="$PROJECT_DIR$/app/inventory/views.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-1833" />
-    <option name="y" value="64" />
+    <option name="x" value="-1920" />
+    <option name="y" value="23" />
     <option name="width" value="1680" />
     <option name="height" value="972" />
   </component>
@@ -182,6 +188,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -209,13 +216,18 @@
             <path>
               <item name="yongsengis" type="b2602c69:ProjectViewProjectNode" />
               <item name="yongsengis" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="static" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="yongsengis" type="b2602c69:ProjectViewProjectNode" />
+              <item name="yongsengis" type="462c0819:PsiDirectoryNode" />
               <item name="instance" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -249,9 +261,10 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-1833" y="64" width="1680" height="972" extended-state="0" />
+    <frame x="-1920" y="23" width="1680" height="972" extended-state="0" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.20735383" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.20735383" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -262,7 +275,7 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Version Control" order="7" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="8" visible="true" weight="0.3" />
+      <window_info anchor="bottom" id="Terminal" order="8" visible="true" weight="0.3" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
       <window_info anchor="bottom" id="Python Console" order="10" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -503,16 +516,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/todolist/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="525">
-          <caret line="42" column="41" selection-start-line="42" selection-start-column="41" selection-end-line="42" selection-end-column="41" />
-          <folding>
-            <element signature="e#0#22#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/view/app/src/redux/ducks/widget/WarehouseHealth/dummydata.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="75">
@@ -527,12 +530,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/models.py">
+    <entry file="file://$PROJECT_DIR$/app/todolist/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="539">
-          <caret line="322" selection-start-line="322" selection-end-line="322" />
+        <state relative-caret-position="525">
+          <caret line="42" column="41" selection-start-line="42" selection-start-column="41" selection-end-line="42" selection-end-column="41" />
           <folding>
-            <element signature="e#0#15#0" expanded="true" />
+            <element signature="e#0#22#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -540,24 +543,34 @@
     <entry file="file://$PROJECT_DIR$/instance/config.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="45">
-          <caret line="3" column="56" selection-start-line="3" selection-start-column="56" selection-end-line="3" selection-end-column="56" />
+          <caret line="3" selection-start-line="3" selection-end-line="3" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/inventory/views.py">
+    <entry file="file://$PROJECT_DIR$/app/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="452">
-          <caret line="336" lean-forward="true" selection-start-line="298" selection-end-line="336" />
+        <state relative-caret-position="213">
+          <caret line="330" column="42" lean-forward="true" selection-start-line="330" selection-start-column="42" selection-end-line="330" selection-end-column="42" />
           <folding>
-            <element signature="e#0#40#0" expanded="true" />
+            <element signature="e#0#15#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/loctite/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="452">
-          <caret line="248" lean-forward="true" selection-start-line="248" selection-end-line="248" />
+        <state relative-caret-position="-3068">
+          <caret line="10" column="69" selection-start-line="10" selection-start-column="69" selection-end-line="10" selection-end-column="69" />
+          <folding>
+            <element signature="e#0#40#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/inventory/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="377">
+          <caret line="364" lean-forward="true" selection-start-line="364" selection-end-line="365" />
           <folding>
             <element signature="e#0#40#0" expanded="true" />
           </folding>

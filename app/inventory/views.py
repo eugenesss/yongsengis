@@ -10,7 +10,7 @@ import csv
 
 from app import db
 from ..models import Inventory, InventorySchema, UpdateInventorySchema, get_all_items, get_item, get_item_by_warehouse, \
-    AuditLog, AuditLogSchema, Employee
+    AuditLog, AuditLogSchema, Employee, InventoryOrders
 
 
 @inventory.route('/save_item', methods=['GET', 'POST'])
@@ -336,5 +336,43 @@ def import_csv():
     return jsonify("imported successfully", 200)
 
 
+@inventory.route("/inventory/adjustment", methods=["POST"])
+@jwt_required
+def stock_adjustment():
+
+    # retrieve the data from request
+    data = request.data
+    data_js = json.loads(data)
+
+    pid = data_js.get("pid")
+    item = Inventory.query.filter_by(pid=pid).first()
+
+    count = data_js.get('count')
+    results = data_js.get('results')
+
+    adjustment_type = None
+
+    current_stock = item.quantity
+    if results == "out":
+        item.quantity = current_stock - count
+        item.updated_date = datetime.datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S')
+        auditlog_record(item, "quantity", count, "in adjustment")
+        adjustment_type = "out"
+
+    elif results == "in":
+        item.quantity = current_stock + count
+        item.updated_date = datetime.datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S')
+        auditlog_record(item, "quantity", count, "out adjustment")
+        adjustment_type = "in"
+
+    # save loctite orders for widget
+    orders = InventoryOrders(pid, count, current_stock, adjustment_type,
+                             datetime.datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S'))
+    db.session.add(orders)
+    db.session.commit()
+
+    inventory_schema = UpdateInventorySchema()
+
+    return inventory_schema.jsonify(get_item(pid))
 
 
