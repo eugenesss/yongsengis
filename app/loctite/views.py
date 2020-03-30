@@ -6,10 +6,13 @@ import csv
 
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from flask_login import login_required
+from boto3 import session
 
 from app import db
 from ..models import Loctite, LoctiteSchema, AuditLog, AuditLogSchema, LoctiteOrders
 
+ACCESS_ID = 'DBDO6LSVA6XLHOPOELOR'
+SECRET_KEY = 'F9n1Ouy1VpEO4w5bwRjbgGIuyzRiA0hF98UFZ3Cv1Ag'
 
 @loctite.route('/save_loctite', methods=['POST'])
 @jwt_required
@@ -177,22 +180,46 @@ def delete_items(pid):
     return jsonify("item deleted"), 200
 
 
-@loctite.route("/upload_image/<int:pid>", methods=['POST'])
+@loctite.route("/loctite/upload_image/<int:pid>", methods=['POST'])
 @jwt_required
-def upload_images(pid):
+def upload_image(pid):
     """
     Upload images
     """
-    pic = request.files['file']
-    if pic.filename != '':
-        pic_dir = os.path.join(os.path.abspath(os.curdir)) + "/", pic
-        pic.save(pic_dir)
+    sessions = session.Session()
+    client = sessions.client('s3',
+                            region_name='sgp1',
+                            endpoint_url='https://ysis-space.sgp1.digitaloceanspaces.com',
+                            aws_access_key_id=ACCESS_ID,
+                            aws_secret_access_key=SECRET_KEY)
 
-        item = Loctite.query.get_or_404(pid)
-        item.file = pic_dir
-        db.session.commit()
+    file = request.files['file']
+    file_key = 'loctite/' + file.filename
+    item = Loctite.query.get_or_404(pid)
+    if item.file is not None:
+        delete_image(item.file)
 
-    return jsonify('File uploaded successfully'), 200
+    client.upload_fileobj(Fileobj=file,
+                          Bucket='ysis-space',
+                          ExtraArgs={'ACL': 'public-read'},
+                          Key=file_key)
+
+    item.file = file_key
+    db.session.commit()
+
+    loctite_schema = LoctiteSchema()
+    return loctite_schema.jsonify(Loctite.query.get(pid)), 200
+
+
+def delete_image(file_key):
+    sessions = session.Session()
+    client = sessions.client('s3',
+                            region_name='sgp1',
+                            endpoint_url='https://ysis-space.sgp1.digitaloceanspaces.com',
+                            aws_access_key_id=ACCESS_ID,
+                            aws_secret_access_key=SECRET_KEY)
+
+    client.delete_object(Bucket='ysis-space', Key=file_key)
 
 
 @loctite.route("/loctite/auditlog")

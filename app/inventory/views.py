@@ -268,7 +268,8 @@ def upload_image(pid):
     item.file = file_key
     db.session.commit()
 
-    return jsonify("Image uploaded"), 200
+    inventory_schema = UpdateInventorySchema()
+    return inventory_schema.jsonify(get_item(pid))
 
 
 def delete_image(file_key):
@@ -280,8 +281,6 @@ def delete_image(file_key):
                             aws_secret_access_key=SECRET_KEY)
 
     client.delete_object(Bucket='ysis-space', Key=file_key)
-
-    create_app("development").logger.info("Field deleted!")
 
 
 @inventory.route("/warehouse/<int:wid>", methods=["GET"])
