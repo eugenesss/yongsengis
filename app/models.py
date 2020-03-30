@@ -207,7 +207,7 @@ class InventorySchema(Schema):
     class Meta:
         # Fields to expose
         fields = ("wid", "wh_name", "pid", "name", "quantity", "description", "code", "price", "material", "perbox",
-                  "location", "cid", "cat_name", "rack", "unit_code")
+                  "location", "cid", "cat_name", "rack", "unit_code", "file")
 
 
 class UpdateInventorySchema(Schema):
@@ -218,7 +218,7 @@ class UpdateInventorySchema(Schema):
     class Meta:
         # Fields to expose
         fields = ("wid", "wh_name", "pid", "name", "quantity", "description", "code", "price", "material", "perbox",
-                  "location", "cid", "cat_name", "rack", "unit_code")
+                  "location", "cid", "cat_name", "rack", "unit_code", "file")
 
 
 class Loctite(db.Model, Serializer):
@@ -363,12 +363,11 @@ class LoctiteOrders(db.Model, Serializer):
         self.updated_date = updated_date
 
 
-
 def get_all_items():
     items = db.session.query(Inventory.pid,Warehouse.wid, Warehouse.wh_name, Inventory.name, Inventory.quantity,
                              Inventory.description, Inventory.code, Inventory.price, Inventory.material,
                              Inventory.perbox, Inventory.location, Inventory.rack, Inventory.unit_code, Category.cid,
-                             Category.cat_name).join(Warehouse, Inventory.wid == Warehouse.wid, isouter=True)\
+                             Category.cat_name, Inventory.file).join(Warehouse, Inventory.wid == Warehouse.wid, isouter=True)\
         .join(Category, Category.cid == Inventory.cid, isouter=True).all()
     return items
 
@@ -377,7 +376,7 @@ def get_item(pid):
     item = db.session.query(Inventory.pid, Inventory.name, Warehouse.wid, Warehouse.wh_name, Inventory.quantity,
                             Inventory.description, Inventory.code, Inventory.price, Inventory.material,
                             Inventory.perbox, Inventory.location, Inventory.rack, Inventory.unit_code, Category.cid,
-                            Category.cat_name).filter(Inventory.pid == pid)\
+                            Category.cat_name, Inventory.file).filter(Inventory.pid == pid)\
         .join(Warehouse, Warehouse.wid == Inventory.wid, isouter=True)\
         .join(Category, Category.cid == Inventory.cid, isouter=True).first()
     return item
@@ -387,7 +386,7 @@ def get_item_by_warehouse(wid):
     items = db.session.query(Warehouse.wid, Warehouse.wh_name, Inventory.pid, Inventory.name, Inventory.quantity,
                             Inventory.description, Inventory.code, Inventory.price, Inventory.material,
                             Inventory.perbox, Inventory.location, Inventory.rack, Inventory.unit_code, Category.cid,
-                            Category.cat_name).filter(Inventory.wid == wid).filter(Category.cid == Inventory.cid)\
+                            Category.cat_name, Inventory.file).filter(Inventory.wid == wid).filter(Category.cid == Inventory.cid)\
         .filter(Inventory.wid == Warehouse.wid).all()
     return items
 

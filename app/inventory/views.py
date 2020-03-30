@@ -3,6 +3,10 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 from sqlalchemy import desc
 from . import inventory
 from functools import wraps
+from .. import create_app
+
+from boto3 import session
+from botocore.client import Config
 
 import os
 import datetime
@@ -11,6 +15,9 @@ import csv
 from app import db
 from ..models import Inventory, InventorySchema, UpdateInventorySchema, get_all_items, get_item, get_item_by_warehouse, \
     AuditLog, AuditLogSchema, Employee, InventoryOrders
+
+ACCESS_ID = 'DBDO6LSVA6XLHOPOELOR'
+SECRET_KEY = 'F9n1Ouy1VpEO4w5bwRjbgGIuyzRiA0hF98UFZ3Cv1Ag'
 
 
 @inventory.route('/save_item', methods=['GET', 'POST'])
@@ -106,9 +113,6 @@ def update_items(pid):
         location = data_js.get('location')
         auditlog_record(item, "location", location, "edit")
 
-        img_file = data_js.get('file')
-        auditlog_record(item, "file", img_file, "edit")
-
         wid = data_js.get('wid')
         auditlog_record(item, "wid", wid, "edit")
 
@@ -121,7 +125,6 @@ def update_items(pid):
         unit_code = data_js.get('unit_code')
         auditlog_record(item, "unit_code", unit_code, "edit")
 
-
         # Update the changes
         item.name = name
         item.description = description
@@ -132,7 +135,6 @@ def update_items(pid):
         item.perbox = perbox
         item.location = location
         item.wid = wid
-        item.file = img_file
         item.cid = cid
         item.rack = rack
         item.unit_code = unit_code
@@ -241,20 +243,54 @@ def delete_items(pid):
 
 @inventory.route("/upload_image/<int:pid>", methods=['POST'])
 @jwt_required
-def upload_images(pid):
+def upload_image(pid):
     """
     Upload images
     """
-    pic = request.files['file']
-    if pic.filename != '':
-        pic_dir = os.path.join(os.path.abspath(os.curdir)) + "/", pic
-        pic.save(pic_dir)
+    sessions = session.Session()
+    client = sessions.client('s3',
+                            region_name='sgp1',
+                            endpoint_url='https://ysis-space.sgp1.digitaloceanspaces.com',
+                            aws_access_key_id=ACCESS_ID,
+                            aws_secret_access_key=SECRET_KEY)
 
-        item = Inventory.query.get_or_404(pid)
-        item.filename = pic_dir
-        db.session.commit()
+    file = request.files['file']
+    file_key = 'inventory/' + file.filename
+    item = Inventory.query.get_or_404(pid)
+    if item.file is not None:
+        delete_image(item.file)
 
-    return jsonify('File uploaded successfully'), 200
+    client.upload_fileobj(Fileobj=file,
+                          Bucket='ysis-space',
+                          ExtraArgs={'ACL': 'public-read'},
+                          Key=file_key)
+
+    item.file = file_key
+    db.session.commit()
+
+    return jsonify("Image uploaded"), 200
+
+
+@inventory.route("/get_image/<int:pid>", methods=['GET'])
+@jwt_required
+def get_image(pid):
+    """
+    Upload images
+    """
+    return "<img src='https://ysis-space.sgp1.digitaloceanspaces.com/ysis-space/inventory/testfile.png' alt='test'>"
+
+
+def delete_image(file_key):
+    sessions = session.Session()
+    client = sessions.client('s3',
+                            region_name='sgp1',
+                            endpoint_url='https://ysis-space.sgp1.digitaloceanspaces.com',
+                            aws_access_key_id=ACCESS_ID,
+                            aws_secret_access_key=SECRET_KEY)
+
+    client.delete_object(Bucket='ysis-space', Key=file_key)
+
+    create_app("development").logger.info("Field deleted!")
 
 
 @inventory.route("/warehouse/<int:wid>", methods=["GET"])
