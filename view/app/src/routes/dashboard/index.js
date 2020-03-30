@@ -8,6 +8,7 @@ import BgCard from "Components/BgCard";
 // widgets
 import TodoList from "Components/Widgets/TodoList";
 import StockInOut from "Components/Widgets/StockInOut";
+import LowStockCount from "Components/Widgets/LowStockCount";
 
 class Homebase extends Component {
   render() {
@@ -25,13 +26,8 @@ class Homebase extends Component {
           </div>
         </div>
         <div className="row">
-          <div className="col-md-6">
-            <BgCard>recent flow of loctite</BgCard>
-          </div>
-        </div>
-        <div className="row">
           <div className="col-md-12">
-            <BgCard>warehouse inventory health</BgCard>
+            <LowStockCount />
           </div>
         </div>
       </React.Fragment>
