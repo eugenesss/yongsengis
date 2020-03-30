@@ -241,7 +241,7 @@ def delete_items(pid):
     return jsonify("Item deleted"), 200
 
 
-@inventory.route("/upload_image/<int:pid>", methods=['POST'])
+@inventory.route("/inventory/upload_image/<int:pid>", methods=['POST'])
 @jwt_required
 def upload_image(pid):
     """
@@ -269,15 +269,6 @@ def upload_image(pid):
     db.session.commit()
 
     return jsonify("Image uploaded"), 200
-
-
-@inventory.route("/get_image/<int:pid>", methods=['GET'])
-@jwt_required
-def get_image(pid):
-    """
-    Upload images
-    """
-    return "<img src='https://ysis-space.sgp1.digitaloceanspaces.com/ysis-space/inventory/testfile.png' alt='test'>"
 
 
 def delete_image(file_key):
