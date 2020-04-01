@@ -11,16 +11,13 @@ export const inventoryApiFailure = error => ({
 /**
  * GET ALL INVENTORY
  */
-export const getAllInventory = () => ({
-  type: types.GET_ALL_INVENTORY
+export const getAllInventory = id => ({
+  type: types.GET_ALL_INVENTORY,
+  payload: id
 });
 export const getAllInventorySuccess = inventory => ({
   type: types.GET_ALL_INVENTORY_SUCCESS,
   payload: inventory
-});
-export const changeInvList = option => ({
-  type: types.ON_CHANGE_INVENTORY_LIST,
-  payload: option
 });
 
 /**

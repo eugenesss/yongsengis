@@ -36,7 +36,11 @@ class ims_inventory_view extends Component {
           <div className="row">
             <div className="col-md-3">
               <div>
-                <InventoryCard name={item.name} category={item.cat_name} />
+                <InventoryCard
+                  name={item.name}
+                  image={item.file}
+                  category={item.cat_name}
+                />
               </div>
               <Button
                 variant="outlined"

@@ -5,10 +5,10 @@ import {
   ViewCardDetails
 } from "Components/Layouts/ViewInventoryCard";
 
-const InventoryCard = ({ name, category, stock, warehouse, rack }) => {
+const InventoryCard = ({ name, category, image, stock, warehouse, rack }) => {
   return (
     <ViewCardLayout>
-      <ViewCardTitle name={name} subHeading={[category]} />
+      <ViewCardTitle name={name} image={image} subHeading={[category]} />
     </ViewCardLayout>
   );
 };

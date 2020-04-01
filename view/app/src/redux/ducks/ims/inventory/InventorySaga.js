@@ -38,16 +38,22 @@ import api from "Api";
 //=========================
 // REQUESTS
 //=========================
-const getAllInventoryReq = async () => {
-  const result = await api.get("/show_items");
-  return result.data;
-};
-const getWarehouseInventory = async wid => {
-  const result = await api.get(`/warehouse/${wid}`);
+const getAllInventoryReq = async wid => {
+  let result;
+  if (wid) {
+    result = await api.get(`/warehouse/${wid}`);
+  } else {
+    result = await api.get("/show_items");
+  }
   return result.data;
 };
 const postInventoryReq = async data => {
   const result = await api.post("/save_item", data);
+  return result.data;
+};
+const saveInvImageReq = async ({ id, data }) => {
+  const result = await api.post(`/inventory/upload_image/${id}`, data);
+  return result.data;
 };
 const startEditInvReq = async id => {
   const result = await api.get(`update_item/${id}`);
@@ -73,25 +79,10 @@ const invStockUpdateRequest = async data => {
 //=========================
 // CALL(GENERATOR) ACTIONS
 //=========================
-function* getAllInventoryFromDB() {
+function* getAllInventoryFromDB({ payload }) {
   try {
-    const inv = yield call(getAllInventoryReq);
+    const inv = yield call(getAllInventoryReq, payload);
     yield put(getAllInventorySuccess(inv));
-  } catch (error) {
-    yield put(inventoryApiFailure(error));
-  }
-}
-function* changeInvList({ payload }) {
-  let data;
-  const { wid } = payload;
-  try {
-    if (wid == "") {
-      // All Leads
-      data = yield call(getAllInventoryReq);
-      yield put(getAllInventorySuccess(data));
-    } else {
-      data = yield call(getWarehouseInventory, wid);
-    }
   } catch (error) {
     yield put(inventoryApiFailure(error));
   }
@@ -109,9 +100,16 @@ function* getInventoryFromDB({ payload }) {
   }
 }
 function* submitInvToDB({ payload }) {
-  const { data, redirect, history } = payload;
+  const {
+    data: { file, ...others },
+    redirect,
+    history
+  } = payload;
   try {
-    const inv = yield call(postInventoryReq, data);
+    const inv = yield call(postInventoryReq, others);
+    if (file) {
+      yield call(saveInvImageReq, { id: inv.pid, data: file });
+    }
     if (redirect) {
       history.push(inventoryListPage);
     }
@@ -129,8 +127,13 @@ function* startEditInv({ payload }) {
   }
 }
 function* editInv({ payload }) {
+  let data;
+  const { file, ...others } = payload;
   try {
-    const data = yield call(editInvReq, payload);
+    data = yield call(editInvReq, others);
+    if (file) {
+      data = yield call(saveInvImageReq, { id: others.pid, data: file });
+    }
     yield put(editInventorySuccess(data));
   } catch (error) {
     yield put(editInventoryFailure(error));
@@ -182,9 +185,6 @@ function* invStockUpdate({ payload }) {
 export function* getAllInventoryWatcher() {
   yield takeEvery(GET_ALL_INVENTORY, getAllInventoryFromDB);
 }
-export function* changeInvListWatcher() {
-  yield takeEvery(ON_CHANGE_INVENTORY_LIST, changeInvList);
-}
 export function* getInventoryWatcher() {
   yield takeEvery(GET_INVENTORY, getInventoryFromDB);
 }
@@ -216,7 +216,6 @@ export function* invStockUpdateWatcher() {
 export default function* rootSaga() {
   yield all([
     fork(getAllInventoryWatcher),
-    fork(changeInvListWatcher),
     fork(getInventoryWatcher),
     fork(submitInventoryWatcher),
     fork(startEditInventoryWatcher),

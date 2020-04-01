@@ -268,8 +268,8 @@ def upload_image(pid):
     item.file = file_key
     db.session.commit()
 
-    return jsonify("Image uploaded"), 200
-
+    inventory_schema = UpdateInventorySchema()
+    return inventory_schema.jsonify(get_item(pid))
 
 def delete_image(file_key):
     sessions = session.Session()

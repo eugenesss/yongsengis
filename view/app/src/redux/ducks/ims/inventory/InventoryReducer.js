@@ -7,9 +7,7 @@ import * as types from "./InventoryTypes";
 const INIT_STATE = {
   inventoryList: {
     tableData: [],
-    loading: false,
-    nowShowing: "All Inventory",
-    options: ["All Inventory", "JOOSENG #1", "AIC #2", "AMK #3"]
+    loading: false
   },
   itemToView: {
     item: null,
@@ -49,7 +47,6 @@ export default (state = INIT_STATE, action) => {
     //=========================
     case types.INVENTORY_API_FAILURE:
       NotificationManager.error("Inventory API Error");
-      console.log(action.payload);
       return INIT_STATE;
 
     //=========================
@@ -67,15 +64,6 @@ export default (state = INIT_STATE, action) => {
           ...state.inventoryList,
           loading: false,
           tableData: action.payload
-        }
-      };
-    case types.ON_CHANGE_INVENTORY_LIST:
-      return {
-        ...state,
-        inventoryList: {
-          ...state.inventoryList,
-          nowShowing: action.payload.wh_name,
-          loading: true
         }
       };
 

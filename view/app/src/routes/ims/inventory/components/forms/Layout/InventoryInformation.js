@@ -13,10 +13,11 @@ function InventoryInformation(props) {
     perbox,
     unit_code,
     description,
+    picUpload,
     ...others
   } = props;
   return (
-    <FormInputLayout title="Item Information" {...others}>
+    <FormInputLayout title="Item Information" upload={picUpload} {...others}>
       <div className="row justify-content-center">
         <div className="col-md-5 d-block">
           {name}

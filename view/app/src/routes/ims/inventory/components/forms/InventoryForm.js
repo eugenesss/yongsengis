@@ -9,6 +9,7 @@ import { InventoryInformation } from "./Layout";
 
 // Input Components
 import FormInput from "Components/Form/FormInput";
+import Dropzone from "Components/Dropzone";
 
 // Actions
 import { getWarehouse, getCategories } from "Ducks/ims/fields";
@@ -26,7 +27,8 @@ const initialState = {
     rack: "",
     wid: "",
     description: ""
-  }
+  },
+  imageToUpload: []
 };
 
 class InventoryForm extends Component {
@@ -46,6 +48,18 @@ class InventoryForm extends Component {
     }
   }
 
+  removeFile(file) {
+    this.setState(state => {
+      const index = state.imageToUpload.indexOf(file);
+      const imageToUpload = state.imageToUpload.slice(0);
+      imageToUpload.splice(index, 1);
+      return { ...state, imageToUpload };
+    });
+  }
+  handleUpload = file => {
+    this.setState(state => ({ ...state, imageToUpload: file }));
+  };
+
   handleInv(field, value) {
     this.setState(prevState => ({
       ...prevState,
@@ -57,16 +71,23 @@ class InventoryForm extends Component {
   }
 
   onSubmit() {
-    this.props.handleSubmit(this.state.item, true, this.props.history);
+    let submitData;
+    if (this.state.imageToUpload.length > 0) {
+      var data = new FormData();
+      this.state.imageToUpload.map(file => data.append("file", file));
+      submitData = { ...this.state.item, file: data };
+    } else {
+      submitData = this.state.item;
+    }
+    this.props.handleSubmit(submitData, true, this.props.history);
   }
-
   onSaveNew() {
     this.props.handleSubmit(this.state.item, false);
     this.setState(initialState);
   }
-
   checkDisabled() {
-    const disabled = this.state.item.name && this.state.item.cid;
+    const disabled =
+      this.state.item.name && this.state.item.cid && this.state.item.wid;
     return disabled;
   }
 
@@ -86,6 +107,23 @@ class InventoryForm extends Component {
         <form autoComplete="off">
           <hr />
           <InventoryInformation
+            picUpload={
+              <React.Fragment>
+                <small className="mt-20">Image Upload</small>
+                <Dropzone
+                  acceptFileTypes="image/jpeg,image/png"
+                  onDrop={this.handleUpload}
+                  onRemove={this.removeFile}
+                  uploadedFiles={this.state.imageToUpload}
+                />
+                {edit && (
+                  <p>
+                    * Note to update image just upload another image to override
+                    the current one.
+                  </p>
+                )}
+              </React.Fragment>
+            }
             name={
               <FormInput
                 label="Name"
@@ -112,6 +150,7 @@ class InventoryForm extends Component {
                 selectObjProp="wid"
                 selectObjLabel="wh_name"
                 handleChange={this.handleInv}
+                required={!item.wid}
               />
             }
             rack={

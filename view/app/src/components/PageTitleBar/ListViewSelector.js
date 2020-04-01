@@ -1,37 +1,24 @@
-import React, { useState } from "react";
-import {
-  Dropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem
-} from "reactstrap";
+import React from "react";
+import { Select, MenuItem, FormControl } from "@material-ui/core";
 
-function ListViewSelector(props) {
-  const [dropdownOpen, setdropdownOpen] = useState(false);
-  function toggle() {
-    setdropdownOpen(!dropdownOpen);
-  }
-  const { options, nowShowing, onChangeValue, optLabel } = props;
+export default function ListViewSelector(props) {
+  const { options, nowShowing, onChangeValue, optLabel, optValue } = props;
+
   return (
-    <Dropdown isOpen={dropdownOpen} toggle={() => toggle()}>
-      <DropdownToggle color="info" className="text-white mr-15" caret>
-        {nowShowing}
-      </DropdownToggle>
-      <DropdownMenu>
-        {options.map((opt, key) => {
-          return (
-            <DropdownItem
-              style={{ padding: "0.45rem 1.5rem" }}
-              onClick={() => onChangeValue(opt)}
-              key={key}
-            >
-              {opt[optLabel]}
-            </DropdownItem>
-          );
-        })}
-      </DropdownMenu>
-    </Dropdown>
+    <FormControl variant="outlined">
+      <Select
+        id="demo-simple-select-outlined"
+        value={nowShowing}
+        onChange={onChangeValue}
+        label="Age"
+        displayEmpty
+      >
+        {options.map(opt => (
+          <MenuItem key={opt[optValue]} dense value={opt[optValue]}>
+            {opt[optLabel]}
+          </MenuItem>
+        ))}
+      </Select>
+    </FormControl>
   );
 }
-
-export default ListViewSelector;

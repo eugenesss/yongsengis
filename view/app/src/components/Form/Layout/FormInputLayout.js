@@ -7,6 +7,7 @@ const FormInputLayout = props => (
       <div>
         <h2>{props.title}</h2>
         <p className="text-muted">{props.desc}</p>
+        {props.upload && props.upload}
       </div>
     </div>
     <div
