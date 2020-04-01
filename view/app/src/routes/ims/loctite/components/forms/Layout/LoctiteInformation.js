@@ -9,11 +9,11 @@ function LoctiteInformation(props) {
     batch,
     price,
     expiry_date,
-    file,
+    upload,
     ...others
   } = props;
   return (
-    <FormInputLayout title="Loctite Information" {...others}>
+    <FormInputLayout title="Loctite Information" upload={upload} {...others}>
       <div className="row justify-content-center">
         <div className="col-md-5 d-block">
           {name}

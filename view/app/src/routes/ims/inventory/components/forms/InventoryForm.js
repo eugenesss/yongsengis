@@ -36,8 +36,7 @@ class InventoryForm extends Component {
     super(props);
     this.state = initialState;
     this.handleInv = this.handleInv.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
-    this.onSaveNew = this.onSaveNew.bind(this);
+    this.onSubmitNew = this.onSubmitNew.bind(this);
   }
 
   componentDidMount() {
@@ -70,7 +69,7 @@ class InventoryForm extends Component {
     }));
   }
 
-  onSubmit() {
+  onSubmitNew(redirect) {
     let submitData;
     if (this.state.imageToUpload.length > 0) {
       var data = new FormData();
@@ -79,12 +78,10 @@ class InventoryForm extends Component {
     } else {
       submitData = this.state.item;
     }
-    this.props.handleSubmit(submitData, true, this.props.history);
+    this.props.handleSubmit(submitData, redirect, this.props.history);
+    if (!redirect) this.setState(initialState);
   }
-  onSaveNew() {
-    this.props.handleSubmit(this.state.item, false);
-    this.setState(initialState);
-  }
+
   checkDisabled() {
     const disabled =
       this.state.item.name && this.state.item.cid && this.state.item.wid;
@@ -97,8 +94,8 @@ class InventoryForm extends Component {
     const { item } = this.state;
     return (
       <FormWrapper
-        onSave={this.onSubmit}
-        onSaveNew={this.onSaveNew}
+        onSave={() => this.onSubmitNew(true)}
+        onSaveNew={() => this.onSubmitNew(false)}
         disabled={this.checkDisabled()}
         edit={edit}
         title={title}

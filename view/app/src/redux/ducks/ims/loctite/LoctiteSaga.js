@@ -58,6 +58,10 @@ const editLocReq = async item => {
   const result = await api.post(`/update_loctite/${item.pid}`, item);
   return result.data;
 };
+const saveLocImageReq = async ({ id, data }) => {
+  const result = await api.post(`/loctite/upload_image/${id}`, data);
+  return result.data;
+};
 const deleteLocReq = async id => {
   const result = await api.post(`/delete_loctite/${id}`);
   return result.data;
@@ -99,9 +103,16 @@ function* startLoctiteEdit({ payload }) {
   }
 }
 function* submitLoctiteForm({ payload }) {
-  const { data, redirect, history } = payload;
+  const {
+    data: { file, ...other },
+    redirect,
+    history
+  } = payload;
   try {
-    const inv = yield call(submitLoctiteFormRequest, data);
+    const inv = yield call(submitLoctiteFormRequest, other);
+    if (file) {
+      yield call(saveLocImageReq, { id: inv.pid, data: file });
+    }
     if (redirect) {
       history.push(loctiteListPage);
     }
@@ -111,13 +122,17 @@ function* submitLoctiteForm({ payload }) {
   }
 }
 function* editLoc({ payload }) {
+  let data;
+  const { expiry_date, file, ...others } = payload;
   try {
-    const { expiry_date, ...others } = payload;
     const loctite = {
       expiry_date: moment(expiry_date).format("YYYY-MM-DD"),
       ...others
     };
-    const data = yield call(editLocReq, loctite);
+    data = yield call(editLocReq, loctite);
+    if (file) {
+      data = yield call(saveInvImageReq, { id: others.pid, data: file });
+    }
     yield put(editLoctiteSuccess(data));
   } catch (error) {
     yield put(editLoctiteFailure(error));

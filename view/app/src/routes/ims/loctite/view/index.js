@@ -36,7 +36,7 @@ class ims_loctite_view extends Component {
           <div className="row">
             <div className="col-md-3">
               <div>
-                <InventoryCard name={loctite.name} />
+                <InventoryCard name={loctite.name} image={loctite.file} />
                 <Button
                   variant="outlined"
                   color="primary"

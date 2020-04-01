@@ -11,6 +11,7 @@ import { LoctiteInformation } from "./Layout";
 // Input Components
 import FormInput from "Components/Form/FormInput";
 import DatePickerInput from "Components/Form/Pickers/DatePicker";
+import Dropzone from "Components/Dropzone";
 
 const initialState = {
   loctite: {
@@ -21,7 +22,8 @@ const initialState = {
     price: 0,
     expiry_date: moment().format("YYYY-MM-DD"),
     file: ""
-  }
+  },
+  imageToUpload: []
 };
 
 class LoctiteForm extends Component {
@@ -29,13 +31,24 @@ class LoctiteForm extends Component {
     super(props);
     this.state = initialState;
     this.handleInv = this.handleInv.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
-    this.onSaveNew = this.onSaveNew.bind(this);
+    this.onSubmitNew = this.onSubmitNew.bind(this);
   }
 
   componentDidMount() {
     if (this.props.edit) this.setState({ loctite: this.props.edit });
   }
+
+  removeFile(file) {
+    this.setState(state => {
+      const index = state.imageToUpload.indexOf(file);
+      const imageToUpload = state.imageToUpload.slice(0);
+      imageToUpload.splice(index, 1);
+      return { ...state, imageToUpload };
+    });
+  }
+  handleUpload = file => {
+    this.setState(state => ({ ...state, imageToUpload: file }));
+  };
 
   handleInv(field, value) {
     this.setState(prevState => ({
@@ -47,13 +60,17 @@ class LoctiteForm extends Component {
     }));
   }
 
-  onSubmit() {
-    this.props.handleSubmit(this.state.loctite, true, this.props.history);
-  }
-
-  onSaveNew() {
-    this.props.handleSubmit(this.state.loctite, false);
-    this.setState(initialState);
+  onSubmitNew(redirect) {
+    let submitData;
+    if (this.state.imageToUpload.length > 0) {
+      var data = new FormData();
+      this.state.imageToUpload.map(file => data.append("file", file));
+      submitData = { ...this.state.loctite, file: data };
+    } else {
+      submitData = this.state.loctite;
+    }
+    this.props.handleSubmit(submitData, redirect, this.props.history);
+    if (!redirect) this.setState(initialState);
   }
 
   checkDisabled() {
@@ -67,8 +84,8 @@ class LoctiteForm extends Component {
     const { loctite } = this.state;
     return (
       <FormWrapper
-        onSave={this.onSubmit}
-        onSaveNew={this.onSaveNew}
+        onSave={() => this.onSubmitNew(true)}
+        onSaveNew={() => this.onSubmitNew(false)}
         disabled={this.checkDisabled()}
         edit={edit}
         title={title}
@@ -77,7 +94,23 @@ class LoctiteForm extends Component {
         <form autoComplete="off">
           <hr />
           <LoctiteInformation
-            // file,
+            upload={
+              <React.Fragment>
+                <small className="mt-20">Image Upload</small>
+                <Dropzone
+                  acceptFileTypes="image/jpeg,image/png"
+                  onDrop={this.handleUpload}
+                  onRemove={this.removeFile}
+                  uploadedFiles={this.state.imageToUpload}
+                />
+                {edit && (
+                  <p>
+                    * Note to update image just upload another image to override
+                    the current one.
+                  </p>
+                )}
+              </React.Fragment>
+            }
             name={
               <FormInput
                 label="Name"
