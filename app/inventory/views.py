@@ -281,8 +281,6 @@ def delete_image(file_key):
 
     client.delete_object(Bucket='ysis-space', Key=file_key)
 
-    create_app("development").logger.info("Field deleted!")
-
 
 @inventory.route("/warehouse/<int:wid>", methods=["GET"])
 @jwt_required
