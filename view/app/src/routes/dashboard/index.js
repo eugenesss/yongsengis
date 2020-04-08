@@ -3,11 +3,11 @@ import React, { Component } from "react";
 // sub components
 import { Helmet } from "react-helmet";
 
-import BgCard from "Components/BgCard";
-
 // widgets
 import TodoList from "Components/Widgets/TodoList";
 import StockInOut from "Components/Widgets/StockInOut";
+import InvStockCount from "Components/Widgets/StockCount/Inventory";
+import LocStockCount from "Components/Widgets/StockCount/Loctite";
 
 class Homebase extends Component {
   render() {
@@ -26,12 +26,10 @@ class Homebase extends Component {
         </div>
         <div className="row">
           <div className="col-md-6">
-            <BgCard>recent flow of loctite</BgCard>
+            <InvStockCount />
           </div>
-        </div>
-        <div className="row">
-          <div className="col-md-12">
-            <BgCard>warehouse inventory health</BgCard>
+          <div className="col-md-6">
+            <LocStockCount />
           </div>
         </div>
       </React.Fragment>
