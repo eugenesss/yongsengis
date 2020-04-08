@@ -367,8 +367,9 @@ def get_all_items():
     items = db.session.query(Inventory.pid,Warehouse.wid, Warehouse.wh_name, Inventory.name, Inventory.quantity,
                              Inventory.description, Inventory.code, Inventory.price, Inventory.material,
                              Inventory.perbox, Inventory.location, Inventory.rack, Inventory.unit_code, Category.cid,
-                             Category.cat_name, Inventory.file).join(Warehouse, Inventory.wid == Warehouse.wid, isouter=True)\
-        .join(Category, Category.cid == Inventory.cid, isouter=True).all()
+                             Category.cat_name, Inventory.file)\
+        .join(Warehouse, Inventory.wid == Warehouse.wid, isouter=True)\
+        .join(Category, Category.cid == Inventory.cid, isouter=True)
     return items
 
 
@@ -383,10 +384,36 @@ def get_item(pid):
 
 
 def get_item_by_warehouse(wid):
-    items = db.session.query(Warehouse.wid, Warehouse.wh_name, Inventory.pid, Inventory.name, Inventory.quantity,
-                            Inventory.description, Inventory.code, Inventory.price, Inventory.material,
-                            Inventory.perbox, Inventory.location, Inventory.rack, Inventory.unit_code, Category.cid,
-                            Category.cat_name, Inventory.file).filter(Inventory.wid == wid).filter(Category.cid == Inventory.cid)\
-        .filter(Inventory.wid == Warehouse.wid).all()
+    items = db.session.query(Inventory.pid, Warehouse.wid, Warehouse.wh_name, Inventory.name, Inventory.quantity,
+                             Inventory.description, Inventory.code, Inventory.price, Inventory.material,
+                             Inventory.perbox, Inventory.location, Inventory.rack, Inventory.unit_code, Category.cid,
+                             Category.cat_name, Inventory.file) \
+        .filter(Inventory.wid == wid) \
+        .join(Warehouse, Inventory.wid == Warehouse.wid, isouter=True) \
+        .join(Category, Category.cid == Inventory.cid, isouter=True)
     return items
 
+
+def query_inventory(query):
+    look_for = '%{0}%'.format(query)
+    items = db.session.query(Inventory.pid, Warehouse.wid, Warehouse.wh_name, Inventory.name, Inventory.quantity,
+                             Inventory.description, Inventory.code, Inventory.price, Inventory.material,
+                             Inventory.perbox, Inventory.location, Inventory.rack, Inventory.unit_code, Category.cid,
+                             Category.cat_name, Inventory.file)\
+        .filter(Inventory.name.ilike(look_for))\
+        .join(Warehouse, Inventory.wid == Warehouse.wid, isouter=True)\
+        .join(Category, Category.cid == Inventory.cid, isouter=True)
+    return items
+
+
+def query_warehouse(query, wid):
+    look_for = '%{0}%'.format(query)
+    items = db.session.query(Inventory.pid, Warehouse.wid, Warehouse.wh_name, Inventory.name, Inventory.quantity,
+                             Inventory.description, Inventory.code, Inventory.price, Inventory.material,
+                             Inventory.perbox, Inventory.location, Inventory.rack, Inventory.unit_code, Category.cid,
+                             Category.cat_name, Inventory.file) \
+        .filter(Inventory.name.ilike(look_for)) \
+        .filter(Inventory.wid == wid)\
+        .join(Warehouse, Inventory.wid == Warehouse.wid, isouter=True) \
+        .join(Category, Category.cid == Inventory.cid, isouter=True)
+    return items
