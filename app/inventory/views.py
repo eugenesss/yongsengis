@@ -1,6 +1,7 @@
 from flask import request, json, jsonify
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from sqlalchemy import desc
+
 from . import inventory
 from functools import wraps
 from .. import create_app
@@ -14,7 +15,7 @@ import csv
 
 from app import db
 from ..models import Inventory, InventorySchema, UpdateInventorySchema, get_all_items, get_item, get_item_by_warehouse, \
-    AuditLog, AuditLogSchema, Employee, InventoryOrders
+    AuditLog, AuditLogSchema, Employee, InventoryOrders, query_inventory, query_warehouse
 
 ACCESS_ID = 'DBDO6LSVA6XLHOPOELOR'
 SECRET_KEY = 'F9n1Ouy1VpEO4w5bwRjbgGIuyzRiA0hF98UFZ3Cv1Ag'
@@ -60,15 +61,37 @@ def save_item():
     return inventory_schema.jsonify(get_item(item.pid))
 
 
+# @inventory.route("/show_items")
+# @jwt_required
+# def show_items():
+#     """
+#     Display all inventory
+#     """
+#     items = get_all_items()
+#     inventories_schema = InventorySchema(many=True)
+#     return inventories_schema.jsonify(items)
+
+
 @inventory.route("/show_items")
 @jwt_required
 def show_items():
     """
-    Display all inventory
+    Query all inventory
     """
-    items = get_all_items()
+    query = request.args.get('query')
+    limit = request.args.get('limit')
+    skip = request.args.get('skip')
+
+    create_app('development').logger.info(query)
+    if query is None:
+        items = get_all_items()
+    else:
+        items = query_inventory(query)
+    items = items.limit(limit).offset(skip)
+    count = len(items.all())
     inventories_schema = InventorySchema(many=True)
-    return inventories_schema.jsonify(items)
+    results = {"count": count, "results": inventories_schema.dump(items)}
+    return jsonify(results)
 
 
 @inventory.route("/update_item/<int:pid>", methods=['POST', 'GET'])
@@ -271,6 +294,7 @@ def upload_image(pid):
     inventory_schema = UpdateInventorySchema()
     return inventory_schema.jsonify(get_item(pid))
 
+
 def delete_image(file_key):
     sessions = session.Session()
     client = sessions.client('s3',
@@ -288,9 +312,19 @@ def get_by_warehouse(wid):
     """
     Search by warehouse
     """
-    items = get_item_by_warehouse(wid)
+    query = request.args.get('query')
+    limit = request.args.get('limit')
+    skip = request.args.get('skip')
+
+    if query is None:
+        items = get_item_by_warehouse(wid)
+    else:
+        items = query_warehouse(query, wid)
+    items = items.limit(limit).offset(skip)
+    count = len(items.all())
     inventories_schema = InventorySchema(many=True)
-    return inventories_schema.jsonify(items)
+    results = {"count": count, "results": inventories_schema.dump(items)}
+    return jsonify(results)
 
 
 @inventory.route("/inventory/auditlog")
