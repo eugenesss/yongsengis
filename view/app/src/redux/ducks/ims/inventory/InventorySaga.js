@@ -1,7 +1,6 @@
 import { all, call, fork, put, takeEvery, select } from "redux-saga/effects";
 import {
   GET_ALL_INVENTORY,
-  ON_CHANGE_INVENTORY_LIST,
   GET_INVENTORY,
   SUBMIT_INVENTORY_FORM,
   START_EDIT_INVENTORY,
@@ -38,9 +37,10 @@ import api from "Api";
 //=========================
 // REQUESTS
 //=========================
-const getAllInventoryReq = async ({ wid, cid, limit, skip, query }) => {
+const getAllInventoryReq = async ({ wid, cid, limit, skip, query, sortBy }) => {
+  const { name, orderBy } = sortBy;
   const result = await api.get(
-    `/show_items?wid=${wid}&cid=${cid}&skip=${skip}&limit=${limit}&query=${query}`
+    `/show_items?wid=${wid}&cid=${cid}&skip=${skip}&limit=${limit}&query=${query}&orderBy=${orderBy}&column=${name}`
   );
   return result.data;
 };

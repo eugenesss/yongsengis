@@ -11,9 +11,9 @@ export const inventoryApiFailure = (error) => ({
 /**
  * GET ALL INVENTORY
  */
-export const getAllInventory = (wid, cid, limit, skip, query) => ({
+export const getAllInventory = (wid, cid, limit, skip, query, sortBy) => ({
   type: types.GET_ALL_INVENTORY,
-  payload: { wid, cid, limit, skip, query },
+  payload: { wid, cid, limit, skip, query, sortBy },
 });
 export const getAllInventorySuccess = (inventory) => ({
   type: types.GET_ALL_INVENTORY_SUCCESS,

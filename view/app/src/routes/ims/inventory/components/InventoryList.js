@@ -33,14 +33,11 @@ class InventoryList extends Component {
     this.state = {
       limit: 0,
       skip: 0,
-      filters: [],
       searchText: "",
-      orderBy: [],
-      serverSideFilterList: [],
       columns: [],
-      sorted: {
+      sortBy: {
         name: "",
-        direction: "",
+        orderBy: "",
       },
       nowShowing: "all",
       catShowing: "all",
@@ -53,6 +50,9 @@ class InventoryList extends Component {
     this.props.getCategories();
   }
 
+  /**
+   * Change Warehouse
+   */
   changeNowShowing = (event) => {
     this.setState({ nowShowing: event.target.value });
     this.props.getAllInventory(
@@ -60,9 +60,14 @@ class InventoryList extends Component {
       this.state.catShowing,
       this.state.limit,
       this.state.skip,
-      this.state.searchText
+      this.state.searchText,
+      this.state.sortBy
     );
   };
+
+  /**
+   * Change Category
+   */
   changeCatShowing = (event) => {
     this.setState({ catShowing: event.target.value });
     this.props.getAllInventory(
@@ -70,16 +75,14 @@ class InventoryList extends Component {
       event.target.value,
       this.state.limit,
       this.state.skip,
-      this.state.searchText
+      this.state.searchText,
+      this.state.sortBy
     );
   };
 
-  // handleFilterSubmit(filterList) {
-  //   const filter = getFilters(filterList, this.state.columns);
-  //   this.props.getAllCustomer(this.state.limit, this.state.skip, filter);
-  //   this.setState({ filters: filterList, serverSideFilterList: filterList });
-  // }
-
+  /**
+   * Search in Table
+   */
   triggerSearch(searchText) {
     this.setState({ searchText: searchText, skip: 0 });
     clearInterval(this.searchInterval);
@@ -88,7 +91,8 @@ class InventoryList extends Component {
       this.state.catShowing,
       this.state.limit,
       this.state.skip,
-      this.state.searchText
+      this.state.searchText,
+      this.state.sortBy
     );
   }
 
@@ -104,7 +108,7 @@ class InventoryList extends Component {
 
     const options = Object.assign({}, listOptions, {
       setTableProps: () => ({ size: "small" }),
-
+      filter: false,
       //server side options
       serverSide: true,
       count: totalCount,
@@ -115,8 +119,6 @@ class InventoryList extends Component {
           this.setState({
             limit,
             skip,
-            filters: tableState.filterList,
-            columns: tableState.columns,
           });
           // Component did mount
           this.props.getAllInventory(
@@ -124,7 +126,8 @@ class InventoryList extends Component {
             catShowing,
             limit,
             skip,
-            this.state.searchText
+            this.state.searchText,
+            this.state.sortBy
           );
         }
       },
@@ -132,9 +135,6 @@ class InventoryList extends Component {
         const limit = tableState.rowsPerPage;
         const skip = tableState.page * tableState.rowsPerPage;
         switch (action) {
-          case "propsUpdate":
-            tableState.filterList = this.state.filters;
-            break;
           case "changePage":
           case "changeRowsPerPage":
             this.setState({ limit, skip });
@@ -143,25 +143,12 @@ class InventoryList extends Component {
               catShowing,
               limit,
               skip,
-              this.state.searchText
+              this.state.searchText,
+              this.state.sortBy
             );
             break;
         }
       },
-
-      // onFilterChange: (column, filterList, type) => {
-      //   if (type == "chip") {
-      //     var filter = getFilters(filterList, this.state.columns);
-      //     this.props.getAllCustomer(
-      //       this.state.limit,
-      //       this.state.skip,
-      //       filter,
-      //       this.state.searchText,
-      //       this.state.orderBy
-      //     );
-      //   }
-      // },
-
       search: true,
       searchText: this.state.searchText,
       onSearchChange: (searchText) => {
@@ -182,47 +169,22 @@ class InventoryList extends Component {
         this.triggerSearch("");
       },
 
-      // onColumnSortChange: (column, direction) => {
-      //   var orderString = column;
-      //   var sorted = { name: column };
-      //   if (direction == "descending") {
-      //     orderString += " DESC";
-      //     sorted.direction = "desc";
-      //   } else {
-      //     orderString += " ASC";
-      //     sorted.direction = "asc";
-      //   }
-      //   this.setState({
-      //     orderBy: [orderString],
-      //     sorted: sorted
-      //   });
-      //   this.props.getAllCustomer(
-      //     this.state.limit,
-      //     this.state.skip,
-      //     this.state.filter,
-      //     this.state.searchText,
-      //     [orderString]
-      //   );
-      // },
-
-      // sort: true,
-      // filterType: "dropdown",
-      // serverSideFilterList: this.state.serverSideFilterList,
-      // customFilterDialogFooter: filterList => {
-      //   return (
-      //     <div style={{ marginTop: "40px" }}>
-      //       <Button
-      //         className="btn-success text-white"
-      //         variant="contained"
-      //         onClick={() => this.handleFilterSubmit(filterList)}
-      //       >
-      //         Search
-      //       </Button>
-      //     </div>
-      //   );
-      // },
-      //  customToolbarSelect: (selectedRows, displayData, setSelectRows) =>
-      //   null
+      sort: true,
+      onColumnSortChange: (column, direction) => {
+        var sortBy = {
+          name: column,
+          orderBy: direction == "descending" ? "desc" : "asc",
+        };
+        this.setState({ sortBy });
+        this.props.getAllInventory(
+          nowShowing,
+          catShowing,
+          this.state.limit,
+          this.state.skip,
+          this.state.searchText,
+          sortBy
+        );
+      },
     });
 
     const columns = [
@@ -236,6 +198,10 @@ class InventoryList extends Component {
         name: "name",
         options: {
           filter: false,
+          sortDirection:
+            this.state.sortBy.name == "name"
+              ? this.state.sortBy.orderBy
+              : "none",
           customBodyRender: (value, tableMeta) => {
             return (
               <a
@@ -254,7 +220,7 @@ class InventoryList extends Component {
         name: "material",
       },
       {
-        label: "categories",
+        label: "Categories",
         name: "cat_name",
         options: { filter: false, sort: false },
       },

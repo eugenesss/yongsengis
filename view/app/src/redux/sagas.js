@@ -16,7 +16,7 @@ import AuthSaga from "Ducks/session/auth/AuthSaga";
 import { ReportSaga } from "Ducks/report";
 
 // widgets
-import { TodoListSaga, WarehouseHealthSaga } from "Ducks/widget";
+import { TodoListSaga } from "Ducks/widget";
 
 // Import
 import { ImportSaga } from "Ducks/import";
@@ -34,12 +34,11 @@ export default function* rootSaga() {
     // System
     ReportSaga(),
     TodoListSaga(),
-    WarehouseHealthSaga(),
     ImportSaga(),
 
     // Settings
     UserManagementSaga(),
     CategorySaga(),
-    WarehouseSaga()
+    WarehouseSaga(),
   ]);
 }

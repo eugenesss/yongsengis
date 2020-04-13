@@ -11,40 +11,39 @@ import { AuthReducer } from "Ducks/session/auth";
 import {
   UserManagementReducer,
   CategoryReducer,
-  WarehouseReducer
+  WarehouseReducer,
 } from "Ducks/setting";
 
 // system
 import { ImportReducer } from "Ducks/import";
 import { ReportReducer } from "Ducks/report";
 import { CalendarReducer } from "Ducks/calendar";
-import { TodoListReducer, WarehouseHealthReducer } from "Ducks/widget";
+import { TodoListReducer } from "Ducks/widget";
 
 // ims
 import { InventoryReducer, LoctiteReducer, ImsFieldReducer } from "Ducks/ims";
 
 const reducers = combineReducers({
   sessionState: combineReducers({
-    authState: AuthReducer
+    authState: AuthReducer,
   }),
   imsState: combineReducers({
     inventoryState: InventoryReducer,
     loctiteState: LoctiteReducer,
-    imsField: ImsFieldReducer
+    imsField: ImsFieldReducer,
   }),
   settingState: combineReducers({
     categoryState: CategoryReducer,
-    warehouseState: WarehouseReducer
+    warehouseState: WarehouseReducer,
   }),
   widgetState: combineReducers({
     todoList: TodoListReducer,
-    warehouseHealth: WarehouseHealthReducer
   }),
   importState: ImportReducer,
   reportState: ReportReducer,
   calendarState: CalendarReducer,
   usersState: UserManagementReducer,
-  modal
+  modal,
 });
 
 export default reducers;
