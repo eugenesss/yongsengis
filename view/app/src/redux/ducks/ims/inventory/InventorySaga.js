@@ -39,9 +39,9 @@ import api from "Api";
 // REQUESTS
 //=========================
 const getAllInventoryReq = async ({ wid, cid, limit, skip, query }) => {
-  const result = await api.get(`/show_items?skip=${skip}&limit=${limit}`);
-
-  console.log(result);
+  const result = await api.get(
+    `/show_items?wid=${wid}&cid=${cid}&skip=${skip}&limit=${limit}&query=${query}`
+  );
   return result.data;
 };
 const postInventoryReq = async (data) => {
@@ -77,7 +77,6 @@ const invStockUpdateRequest = async (data) => {
 // CALL(GENERATOR) ACTIONS
 //=========================
 function* getAllInventoryFromDB({ payload }) {
-  console.log(payload);
   try {
     const inv = yield call(getAllInventoryReq, payload);
     yield put(getAllInventorySuccess(inv));

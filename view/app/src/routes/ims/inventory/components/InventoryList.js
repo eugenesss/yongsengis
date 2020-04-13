@@ -10,6 +10,7 @@ import ListViewSelector from "Components/PageTitleBar/ListViewSelector";
 // Actions
 import { getAllInventory } from "Ducks/ims/inventory";
 import { getWarehouse, getCategories } from "Ducks/ims/fields";
+import { ControlPointDuplicate } from "@material-ui/icons";
 
 function getFilters(filterList, columns) {
   let filter = [];
@@ -44,7 +45,7 @@ class InventoryList extends Component {
       nowShowing: "all",
       catShowing: "all",
     };
-    // this.triggerSearch = this.triggerSearch.bind(this);
+    this.triggerSearch = this.triggerSearch.bind(this);
   }
 
   componentDidMount() {
@@ -57,8 +58,9 @@ class InventoryList extends Component {
     this.props.getAllInventory(
       event.target.value,
       this.state.catShowing,
+      this.state.limit,
       this.state.skip,
-      this.state.limit
+      this.state.searchText
     );
   };
   changeCatShowing = (event) => {
@@ -66,8 +68,9 @@ class InventoryList extends Component {
     this.props.getAllInventory(
       this.state.nowShowing,
       event.target.value,
+      this.state.limit,
       this.state.skip,
-      this.state.limit
+      this.state.searchText
     );
   };
 
@@ -77,17 +80,17 @@ class InventoryList extends Component {
   //   this.setState({ filters: filterList, serverSideFilterList: filterList });
   // }
 
-  // triggerSearch(searchText) {
-  //   this.setState({ searchText: searchText, skip: 0 });
-  //   clearInterval(this.searchInterval);
-  //   this.props.getAllCustomer(
-  //     this.state.limit,
-  //     this.state.skip,
-  //     this.state.filter,
-  //     this.state.searchText,
-  //     this.state.orderBy
-  //   );
-  // }
+  triggerSearch(searchText) {
+    this.setState({ searchText: searchText, skip: 0 });
+    clearInterval(this.searchInterval);
+    this.props.getAllInventory(
+      this.state.nowShowing,
+      this.state.catShowing,
+      this.state.limit,
+      this.state.skip,
+      this.state.searchText
+    );
+  }
 
   render() {
     const { nowShowing, catShowing } = this.state;
@@ -116,23 +119,28 @@ class InventoryList extends Component {
             columns: tableState.columns,
           });
           // Component did mount
-          this.props.getAllInventory(nowShowing, catShowing, limit, skip);
+          this.props.getAllInventory(
+            nowShowing,
+            catShowing,
+            limit,
+            skip,
+            this.state.searchText
+          );
         }
       },
       onTableChange: (action, tableState) => {
         const limit = tableState.rowsPerPage;
         const skip = tableState.page * tableState.rowsPerPage;
-        let filter;
         switch (action) {
           case "propsUpdate":
             tableState.filterList = this.state.filters;
             break;
           case "changePage":
           case "changeRowsPerPage":
-            filter = getFilters(tableState.filterList, tableState.columns);
             this.setState({ limit, skip });
             this.props.getAllInventory(
               nowShowing,
+              catShowing,
               limit,
               skip,
               this.state.searchText
@@ -154,20 +162,25 @@ class InventoryList extends Component {
       //   }
       // },
 
-      // onSearchChange: searchText => {
-      //   if (searchText == null) {
-      //     this.setState({ searchText: "" });
-      //     this.triggerSearch("");
-      //   } else if (searchText.length > 1) {
-      //     clearInterval(this.searchInterval);
-      //     this.searchInterval = setInterval(this.triggerSearch, 1000, searchText);
-      //   }
-      // },
-
-      // onSearchClose: () => {
-      //   this.setState({ searchText: "" });
-      //   this.triggerSearch("");
-      // },
+      search: true,
+      searchText: this.state.searchText,
+      onSearchChange: (searchText) => {
+        if (searchText == null) {
+          this.setState({ searchText: "" });
+          this.triggerSearch("");
+        } else if (searchText.length > 1) {
+          clearInterval(this.searchInterval);
+          this.searchInterval = setInterval(
+            this.triggerSearch,
+            1000,
+            searchText
+          );
+        }
+      },
+      onSearchClose: () => {
+        this.setState({ searchText: "" });
+        this.triggerSearch("");
+      },
 
       // onColumnSortChange: (column, direction) => {
       //   var orderString = column;
@@ -193,8 +206,6 @@ class InventoryList extends Component {
       // },
 
       // sort: true,
-      // search: true,
-      // searchText: this.state.searchText,
       // filterType: "dropdown",
       // serverSideFilterList: this.state.serverSideFilterList,
       // customFilterDialogFooter: filterList => {
@@ -245,7 +256,7 @@ class InventoryList extends Component {
       {
         label: "categories",
         name: "cat_name",
-        options: { filter: false },
+        options: { filter: false, sort: false },
       },
       {
         label: "Unit Code",
@@ -265,7 +276,7 @@ class InventoryList extends Component {
       {
         label: "Warehouse",
         name: "wh_name",
-        options: { filter: false },
+        options: { filter: false, sort: false },
       },
       {
         label: "Quantity",
