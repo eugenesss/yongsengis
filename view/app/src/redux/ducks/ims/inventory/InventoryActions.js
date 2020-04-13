@@ -3,33 +3,33 @@ import * as types from "./InventoryTypes";
 /**
  * GET ALL INVENTORY
  */
-export const inventoryApiFailure = error => ({
+export const inventoryApiFailure = (error) => ({
   type: types.INVENTORY_API_FAILURE,
-  payload: error
+  payload: error,
 });
 
 /**
  * GET ALL INVENTORY
  */
-export const getAllInventory = id => ({
+export const getAllInventory = (wid, cid, limit, skip, query) => ({
   type: types.GET_ALL_INVENTORY,
-  payload: id
+  payload: { wid, cid, limit, skip, query },
 });
-export const getAllInventorySuccess = inventory => ({
+export const getAllInventorySuccess = (inventory) => ({
   type: types.GET_ALL_INVENTORY_SUCCESS,
-  payload: inventory
+  payload: inventory,
 });
 
 /**
  * View Inventory
  */
-export const getInventory = id => ({
+export const getInventory = (id) => ({
   type: types.GET_INVENTORY,
-  payload: id
+  payload: id,
 });
-export const getInventorySuccess = inv => ({
+export const getInventorySuccess = (inv) => ({
   type: types.GET_INVENTORY_SUCCESS,
-  payload: inv
+  payload: inv,
 });
 
 /**
@@ -37,111 +37,111 @@ export const getInventorySuccess = inv => ({
  */
 export const submitInventory = (data, redirect, history) => ({
   type: types.SUBMIT_INVENTORY_FORM,
-  payload: { data, redirect, history }
+  payload: { data, redirect, history },
 });
-export const submitInventorySuccess = data => ({
+export const submitInventorySuccess = (data) => ({
   type: types.SUBMIT_INVENTORY_SUCCESS,
-  payload: data
+  payload: data,
 });
-export const submitInventoryFailure = error => ({
+export const submitInventoryFailure = (error) => ({
   type: types.SUBMIT_INVENTORY_FAILURE,
-  payload: error
+  payload: error,
 });
 export const clearInventoryForm = () => ({
-  type: types.CLEAR_INVENTORY_FORM
+  type: types.CLEAR_INVENTORY_FORM,
 });
 export const handleInvFormChange = (field, value) => ({
   type: types.HANDLE_INV_FORM_CHANGE,
-  payload: { field, value }
+  payload: { field, value },
 });
 
 // Edit
-export const startEditInventory = id => ({
+export const startEditInventory = (id) => ({
   type: types.START_EDIT_INVENTORY,
-  payload: id
+  payload: id,
 });
-export const startEditInventorySuccess = data => ({
+export const startEditInventorySuccess = (data) => ({
   type: types.START_EDIT_INVENTORY_SUCCESS,
-  payload: data
+  payload: data,
 });
-export const startEditInventoryFailure = error => ({
+export const startEditInventoryFailure = (error) => ({
   type: types.START_EDIT_INVENTORY_FAILURE,
-  payload: error
+  payload: error,
 });
 
-export const editInventory = data => ({
+export const editInventory = (data) => ({
   type: types.EDIT_INVENTORY,
-  payload: data
+  payload: data,
 });
-export const editInventorySuccess = data => ({
+export const editInventorySuccess = (data) => ({
   type: types.EDIT_INVENTORY_SUCCESS,
-  payload: data
+  payload: data,
 });
-export const editInventoryFailure = error => ({
+export const editInventoryFailure = (error) => ({
   type: types.EDIT_INVENTORY_FAILURE,
-  payload: error
+  payload: error,
 });
 
 // Delete
-export const deleteInventory = id => ({
+export const deleteInventory = (id) => ({
   type: types.DELETE_INVENTORY,
-  payload: id
+  payload: id,
 });
-export const deleteInventorySuccess = id => ({
+export const deleteInventorySuccess = (id) => ({
   type: types.DELETE_INVENTORY_SUCCESS,
-  payload: id
+  payload: id,
 });
-export const deleteInventoryFailure = error => ({
+export const deleteInventoryFailure = (error) => ({
   type: types.DELETE_INVENTORY_FAILURE,
-  payload: error
+  payload: error,
 });
 
 // Mass update
-export const massUpdateInventory = data => ({
+export const massUpdateInventory = (data) => ({
   type: types.MASS_UPDATE_INVENTORY,
-  payload: data
+  payload: data,
 });
-export const massUpdateInventorySuccess = data => ({
+export const massUpdateInventorySuccess = (data) => ({
   type: types.MASS_UPDATE_INVENTORY_SUCCESS,
-  payload: data
+  payload: data,
 });
-export const massUpdateInventoryFailure = error => ({
+export const massUpdateInventoryFailure = (error) => ({
   type: types.MASS_UPDATE_INVENTORY_FAILURE,
-  payload: error
+  payload: error,
 });
 
 // filter mass update
 export const filterInventory = (field, keyword) => ({
   type: types.MASS_UPDATE_FILTER_INVENTORY,
-  payload: { field, keyword }
+  payload: { field, keyword },
 });
-export const filterInventorySuccess = data => ({
+export const filterInventorySuccess = (data) => ({
   type: types.MASS_UPDATE_FILTER_INVENTORY_SUCCESS,
-  payload: data
+  payload: data,
 });
-export const filterInventoryFailure = error => ({
+export const filterInventoryFailure = (error) => ({
   type: types.MASS_UPDATE_FILTER_INVENTORY_FAILURE,
-  payload: error
+  payload: error,
 });
 export const clearFilterInventory = () => ({
-  type: types.CLEAR_UPDATE_FILTER_INVENTORY
+  type: types.CLEAR_UPDATE_FILTER_INVENTORY,
 });
 
-export const removeFromInvList = id => ({
+export const removeFromInvList = (id) => ({
   type: types.REMOVE_FROM_INV_LIST,
-  payload: id
+  payload: id,
 });
 
 // Stock update
-export const invStockUpdate = data => ({
+export const invStockUpdate = (data) => ({
   type: types.INV_STOCK_UPDATE,
-  payload: data
+  payload: data,
 });
-export const invStockUpdateSuccess = data => ({
+export const invStockUpdateSuccess = (data) => ({
   type: types.INV_STOCK_UPDATE_SUCCESS,
-  payload: data
+  payload: data,
 });
-export const invStockUpdateFailure = error => ({
+export const invStockUpdateFailure = (error) => ({
   type: types.INV_STOCK_UPDATE_FAILURE,
-  payload: error
+  payload: error,
 });

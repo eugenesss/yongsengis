@@ -18,7 +18,7 @@ import EditInventory from "./edit";
 import {
   inventoryNewPage,
   inventoryMassUpdatePage,
-  inventoryImportPage
+  inventoryImportPage,
 } from "Helpers/imsURL";
 // Actions
 import { getAllInventory, deleteInventory } from "Ducks/ims/inventory";
@@ -26,42 +26,41 @@ import { getAllInventory, deleteInventory } from "Ducks/ims/inventory";
 import { getWarehouse } from "Ducks/ims/fields";
 
 export default function ims_inventory_list(props) {
-  const dispatch = useDispatch();
   const { history } = props;
+  const dispatch = useDispatch();
   const {
     inventoryState: {
-      inventoryList: { tableData, loading }
+      inventoryList: { loading },
     },
-    imsField: { warehouse }
-  } = useSelector(state => state.imsState);
+  } = useSelector((state) => state.imsState);
 
   const [nowShowing, setNowShowing] = React.useState("");
 
-  React.useEffect(() => {
-    dispatch(getAllInventory(nowShowing));
-  }, [nowShowing]);
+  // React.useEffect(() => {
+  //   dispatch(getAllInventory(nowShowing));
+  // }, [nowShowing]);
 
-  React.useEffect(() => {
-    dispatch(getWarehouse());
-  }, []);
+  // React.useEffect(() => {
+  //   dispatch(getWarehouse());
+  // }, []);
 
-  const changeShowing = event => {
-    setNowShowing(event.target.value);
-  };
+  // const changeShowing = event => {
+  //   setNowShowing(event.target.value);
+  // };
 
   // Item CRUD
   const deleteItem = (id, name) => {
     dispatch(
       show("alert_delete", {
         name: name,
-        action: () => dispatch(deleteInventory(id))
+        action: () => dispatch(deleteInventory(id)),
       })
     );
   };
-  const viewItem = itemID => {
+  const viewItem = (itemID) => {
     dispatch(show("view_inventory", { itemID }));
   };
-  const editItem = itemToEdit => {
+  const editItem = (itemToEdit) => {
     dispatch(show("edit_inventory", { itemToEdit }));
   };
 
@@ -77,30 +76,30 @@ export default function ims_inventory_list(props) {
           add: { onClick: () => history.push(inventoryNewPage) },
           mid: {
             label: "Mass Update",
-            onClick: () => history.push(inventoryMassUpdatePage)
+            onClick: () => history.push(inventoryMassUpdatePage),
           },
           more: [
             {
               label: "Import Inventory",
-              onClick: () => history.push(inventoryImportPage)
-            }
-          ]
+              onClick: () => history.push(inventoryImportPage),
+            },
+          ],
         }}
       />
 
       <BgCard>
         {loading && <RctSectionLoader />}
         <InventoryList
-          title={
-            <ListViewSelector
-              options={[{ wh_name: "All Inventory", wid: "" }, ...warehouse]}
-              nowShowing={nowShowing}
-              onChangeValue={changeShowing}
-              optValue="wid"
-              optLabel="wh_name"
-            ></ListViewSelector>
-          }
-          tableData={tableData}
+          // title={
+          //   <ListViewSelector
+          //     options={[{ wh_name: "All Inventory", wid: "" }, ...warehouse]}
+          //     nowShowing={nowShowing}
+          //     onChangeValue={changeShowing}
+          //     optValue="wid"
+          //     optLabel="wh_name"
+          //   ></ListViewSelector>
+          // }
+          // tableData={tableData}
           handleView={viewItem}
         />
       </BgCard>

@@ -7,7 +7,8 @@ import * as types from "./InventoryTypes";
 const INIT_STATE = {
   inventoryList: {
     tableData: [],
-    loading: false
+    loading: false,
+    totalCount: 0
   },
   itemToView: {
     item: null,
@@ -63,7 +64,8 @@ export default (state = INIT_STATE, action) => {
         inventoryList: {
           ...state.inventoryList,
           loading: false,
-          tableData: action.payload
+          tableData: action.payload.results[0],
+          totalCount: action.payload.count
         }
       };
 

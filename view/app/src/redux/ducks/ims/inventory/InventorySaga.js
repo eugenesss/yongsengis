@@ -9,7 +9,7 @@ import {
   DELETE_INVENTORY,
   MASS_UPDATE_FILTER_INVENTORY,
   MASS_UPDATE_INVENTORY,
-  INV_STOCK_UPDATE
+  INV_STOCK_UPDATE,
 } from "./InventoryTypes";
 import {
   inventoryApiFailure,
@@ -28,7 +28,7 @@ import {
   massUpdateInventorySuccess,
   massUpdateInventoryFailure,
   invStockUpdateSuccess,
-  invStockUpdateFailure
+  invStockUpdateFailure,
 } from "./InventoryActions";
 
 import { inventoryListPage } from "Helpers/imsURL";
@@ -38,16 +38,13 @@ import api from "Api";
 //=========================
 // REQUESTS
 //=========================
-const getAllInventoryReq = async wid => {
-  let result;
-  if (wid) {
-    result = await api.get(`/warehouse/${wid}`);
-  } else {
-    result = await api.get("/show_items");
-  }
+const getAllInventoryReq = async ({ wid, cid, limit, skip, query }) => {
+  const result = await api.get(`/show_items?skip=${skip}&limit=${limit}`);
+
+  console.log(result);
   return result.data;
 };
-const postInventoryReq = async data => {
+const postInventoryReq = async (data) => {
   const result = await api.post("/save_item", data);
   return result.data;
 };
@@ -55,23 +52,23 @@ const saveInvImageReq = async ({ id, data }) => {
   const result = await api.post(`/inventory/upload_image/${id}`, data);
   return result.data;
 };
-const startEditInvReq = async id => {
+const startEditInvReq = async (id) => {
   const result = await api.get(`update_item/${id}`);
   return result.data;
 };
-const editInvReq = async item => {
+const editInvReq = async (item) => {
   const result = await api.post(`update_item/${item.pid}`, item);
   return result.data;
 };
-const deleteInvReq = async id => {
+const deleteInvReq = async (id) => {
   const result = await api.post(`/delete_item/${id}`);
   return result.data;
 };
-const massUpdateInvRequest = async data => {
+const massUpdateInvRequest = async (data) => {
   const result = await api.post("/update_items", data);
   return result.data;
 };
-const invStockUpdateRequest = async data => {
+const invStockUpdateRequest = async (data) => {
   const result = await api.post("/inventory/adjustment", data);
   return result.data;
 };
@@ -80,6 +77,7 @@ const invStockUpdateRequest = async data => {
 // CALL(GENERATOR) ACTIONS
 //=========================
 function* getAllInventoryFromDB({ payload }) {
+  console.log(payload);
   try {
     const inv = yield call(getAllInventoryReq, payload);
     yield put(getAllInventorySuccess(inv));
@@ -89,11 +87,10 @@ function* getAllInventoryFromDB({ payload }) {
 }
 function* getInventoryFromDB({ payload }) {
   try {
-    //const inv = yield call(getInventoryReq, payload);
-    const invList = state =>
+    const invList = (state) =>
       state.imsState.inventoryState.inventoryList.tableData;
     const tableData = yield select(invList);
-    const inv = tableData.find(inv => inv.pid === payload);
+    const inv = tableData.find((inv) => inv.pid === payload);
     yield put(getInventorySuccess(inv));
   } catch (error) {
     yield put(inventoryApiFailure(error));
@@ -103,7 +100,7 @@ function* submitInvToDB({ payload }) {
   const {
     data: { file, ...others },
     redirect,
-    history
+    history,
   } = payload;
   try {
     const inv = yield call(postInventoryReq, others);
@@ -149,12 +146,12 @@ function* deleteInv({ payload }) {
 }
 function* filterInv({ payload }) {
   const { field, keyword } = payload;
-  const invList = state =>
+  const invList = (state) =>
     state.imsState.inventoryState.inventoryList.tableData;
   try {
     //filter object
     const tableData = yield select(invList);
-    const data = tableData.filter(inv =>
+    const data = tableData.filter((inv) =>
       inv[field].toLowerCase().includes(keyword.toLowerCase())
     );
     yield put(filterInventorySuccess(data));
@@ -223,6 +220,6 @@ export default function* rootSaga() {
     fork(deleteInventoryWatcher),
     fork(filterInvWatcher),
     fork(massUpdateInvWatcher),
-    fork(invStockUpdateWatcher)
+    fork(invStockUpdateWatcher),
   ]);
 }
