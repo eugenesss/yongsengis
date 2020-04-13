@@ -15,7 +15,7 @@ import csv
 
 from app import db
 from ..models import Inventory, InventorySchema, UpdateInventorySchema, get_all_items, get_item, get_item_by_warehouse, \
-    AuditLog, AuditLogSchema, Employee, InventoryOrders, query_inventory, query_warehouse
+    AuditLog, AuditLogSchema, Employee, InventoryOrders, query_inventory, query_warehouse, query_category_warehouse
 
 ACCESS_ID = 'DBDO6LSVA6XLHOPOELOR'
 SECRET_KEY = 'F9n1Ouy1VpEO4w5bwRjbgGIuyzRiA0hF98UFZ3Cv1Ag'
@@ -72,26 +72,26 @@ def save_item():
 #     return inventories_schema.jsonify(items)
 
 
-@inventory.route("/show_items")
-@jwt_required
-def show_items():
-    """
-    Query all inventory
-    """
-    query = request.args.get('query')
-    limit = request.args.get('limit')
-    skip = request.args.get('skip')
-
-    create_app('development').logger.info(query)
-    if query is None:
-        items = get_all_items()
-    else:
-        items = query_inventory(query)
-    items = items.limit(limit).offset(skip)
-    count = len(items.all())
-    inventories_schema = InventorySchema(many=True)
-    results = {"count": count, "results": inventories_schema.dump(items)}
-    return jsonify(results)
+# @inventory.route("/show_items")
+# @jwt_required
+# def show_items():
+#     """
+#     Query all inventory
+#     """
+#     query = request.args.get('query')
+#     limit = request.args.get('limit')
+#     skip = request.args.get('skip')
+#
+#     create_app('development').logger.info(query)
+#     if query is None:
+#         items = get_all_items()
+#     else:
+#         items = query_inventory(query)
+#     count = len(items.all())
+#     items = items.limit(limit).offset(skip)
+#     inventories_schema = InventorySchema(many=True)
+#     results = {"count": count, "results": inventories_schema.dump(items)}
+#     return jsonify(results)
 
 
 @inventory.route("/update_item/<int:pid>", methods=['POST', 'GET'])
@@ -319,11 +319,45 @@ def get_by_warehouse(wid):
     if query is None:
         items = get_item_by_warehouse(wid)
     else:
-        items = query_warehouse(query, wid)
-    items = items.limit(limit).offset(skip)
+        items = query_warehouse(query)
+        items = items.filter(Inventory.wid == wid)
     count = len(items.all())
+    items = items.limit(limit).offset(skip)
     inventories_schema = InventorySchema(many=True)
     results = {"count": count, "results": inventories_schema.dump(items)}
+    return jsonify(results)
+
+
+@inventory.route("/show_items", methods=["GET"])
+@jwt_required
+def get_by_warehouse_category():
+    """
+    Search by warehouse
+    """
+    query = request.args.get('query')
+    create_app('development').logger.info(query)
+    limit = request.args.get('limit')
+    skip = request.args.get('skip')
+    wid = request.args.get('warehouse')
+    cid = request.args.get('category')
+    items = get_all_items()
+    # if warehouse is not all
+    if cid != 'all':
+        items = items.filter(Inventory.cid == cid)
+    # if category is not all
+    elif wid != 'all':
+        items = items.filter(Inventory.wid == wid)
+    if query is not None:
+        create_app('development').logger.info("query is not none")
+        look_for = '%{0}%'.format(query)
+        items = items.filter(Inventory.name.ilike(look_for))
+    count = len(items.all())
+    if count == 0:
+        results = None
+    else:
+        items = items.limit(limit).offset(skip)
+        inventories_schema = InventorySchema(many=True)
+        results = {"count": count, "results": inventories_schema.dump(items)}
     return jsonify(results)
 
 
