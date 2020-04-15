@@ -338,8 +338,8 @@ def get_by_warehouse_category():
     create_app('development').logger.info(query)
     limit = request.args.get('limit')
     skip = request.args.get('skip')
-    wid = request.args.get('warehouse')
-    cid = request.args.get('category')
+    wid = request.args.get('wid')
+    cid = request.args.get('cid')
     order_by = request.args.get('orderBy')
     column = request.args.get('column')
 
