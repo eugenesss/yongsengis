@@ -350,7 +350,7 @@ def get_by_warehouse_category():
     if cid != 'all':
         items = items.filter(Inventory.cid == cid)
     # if category is not all
-    elif wid != 'all':
+    if wid != 'all':
         items = items.filter(Inventory.wid == wid)
     if query:
         create_app('development').logger.info("query is not none")
