@@ -340,7 +340,12 @@ def get_by_warehouse_category():
     skip = request.args.get('skip')
     wid = request.args.get('warehouse')
     cid = request.args.get('category')
+    order_by = request.args.get('orderBy')
+    column = request.args.get('column')
+
     items = get_all_items()
+    count = len(items.all())
+
     # if warehouse is not all
     if cid != 'all':
         items = items.filter(Inventory.cid == cid)
@@ -350,8 +355,9 @@ def get_by_warehouse_category():
     if query is not None:
         create_app('development').logger.info("query is not none")
         look_for = '%{0}%'.format(query)
-        items = items.filter(Inventory.name.ilike(look_for))
-    count = len(items.all())
+        items = items.filter(Inventory.name.ilike(look_for) | Inventory.material.ilike(look_for))
+    if column is not None:
+        items = items.order_by("Inventory." + column + " " + order_by)
     if count == 0:
         results = None
     else:
