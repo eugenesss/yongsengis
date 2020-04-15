@@ -352,11 +352,11 @@ def get_by_warehouse_category():
     # if category is not all
     elif wid != 'all':
         items = items.filter(Inventory.wid == wid)
-    if query is not None:
+    if query:
         create_app('development').logger.info("query is not none")
         look_for = '%{0}%'.format(query)
         items = items.filter(Inventory.name.ilike(look_for) | Inventory.material.ilike(look_for))
-    if column is not None:
+    if column:
         items = items.order_by("Inventory." + column + " " + order_by)
     if count == 0:
         results = None
