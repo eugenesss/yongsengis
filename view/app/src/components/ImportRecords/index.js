@@ -7,33 +7,33 @@ class ImportRecords extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      csvToImport: []
+      csvToImport: [],
     };
     this.handleUpload = this.handleUpload.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.removeFile = this.removeFile.bind(this);
   }
   removeFile(file) {
-    this.setState(state => {
+    this.setState((state) => {
       const index = state.csvToImport.indexOf(file);
       const csvToImport = state.csvToImport.slice(0);
       csvToImport.splice(index, 1);
       return { csvToImport };
     });
   }
-  handleUpload = file => {
+  handleUpload = (file) => {
     this.setState({
-      csvToImport: file
+      csvToImport: file,
     });
   };
   onSubmit = () => {
     var data = new FormData();
-    this.state.csvToImport.map(file => data.append("fileupload", file));
+    this.state.csvToImport.map((file) => data.append("fileupload", file));
     this.props.importAction(data);
   };
 
   render() {
-    const { importType } = this.props;
+    const { importType, importFile } = this.props;
 
     return (
       <React.Fragment>
@@ -50,11 +50,18 @@ class ImportRecords extends Component {
               is formatted in format Y-m-d (2019-07-02)
             </p>
           </div>
-          <div className="mb-20">
-            <Button className="bg-success text-white mb-20" variant="contained">
-              Download Sample Data
-            </Button>
-          </div>
+          {importFile && (
+            <div className="mb-20">
+              <a href={importFile} target="_blank" download>
+                <Button
+                  className="bg-success text-white mb-20"
+                  variant="contained"
+                >
+                  Download Sample Data
+                </Button>
+              </a>
+            </div>
+          )}
           <div className="w-100">
             <div className="py-20 pr-20">
               <Dropzone

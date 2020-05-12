@@ -5,13 +5,14 @@ import { Edit, Delete } from "@material-ui/icons";
 
 function WarehouseList({ data, editWh, newWh, deleteWh }) {
   const columns = [
+    { label: "Wid", name: "wid" },
     { label: "Name", name: "wh_name" },
     { label: "Location", name: "location" },
     {
       name: "wid",
       label: "Action",
       options: {
-        customBodyRender: value => (
+        customBodyRender: (value) => (
           <React.Fragment>
             <IconButton size="small" onClick={() => editWh(value)}>
               <Edit style={{ fontSize: "1rem" }} />
@@ -26,9 +27,9 @@ function WarehouseList({ data, editWh, newWh, deleteWh }) {
           </React.Fragment>
         ),
         filter: false,
-        search: false
-      }
-    }
+        search: false,
+      },
+    },
   ];
 
   const options = {
@@ -48,7 +49,8 @@ function WarehouseList({ data, editWh, newWh, deleteWh }) {
           New Warehouse
         </Button>
       );
-    }
+    },
+    setTableProps: () => ({ size: "small" }),
   };
   return (
     <RecordsList

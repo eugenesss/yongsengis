@@ -1,0 +1,4 @@
+﻿name,price,code,material,cid,unit_code,quantity,perbox,rack,wid,description
+Hammer,0,HAM-335,Steel,1,HAM-335,77,7,34,2,Strong Hammer
+Ladder,0,LAD-990,Aloy,1,LAD-990,88,9,5,2,Tall Ladder
+Paint,0,PNT-776,Liquid,1,PNT-776,99,4,7,1,Colourful Paints

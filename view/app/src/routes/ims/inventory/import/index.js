@@ -30,6 +30,7 @@ class ims_inventory_import extends Component {
         <ImportRecords
           importType="inventory"
           importAction={this.importInventoryRecord}
+          // importFile="/inventory.csv"
         />
       </React.Fragment>
     );
@@ -40,4 +41,7 @@ const mapStateToProps = ({ importState }) => {
   return { loading };
 };
 
-export default connect(mapStateToProps, { importRecord })(ims_inventory_import);
+export default connect(
+  mapStateToProps,
+  { importRecord }
+)(ims_inventory_import);

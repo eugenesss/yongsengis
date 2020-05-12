@@ -5,12 +5,13 @@ import { Edit, Delete } from "@material-ui/icons";
 
 function CategoriesTable({ data, editCat, newCat, deleteCat }) {
   const columns = [
+    { label: "Cid", name: "cid" },
     { label: "Name", name: "cat_name" },
     {
       name: "cid",
       label: "Action",
       options: {
-        customBodyRender: value => (
+        customBodyRender: (value) => (
           <React.Fragment>
             <IconButton size="small" onClick={() => editCat(value)}>
               <Edit style={{ fontSize: "1rem" }} />
@@ -25,9 +26,9 @@ function CategoriesTable({ data, editCat, newCat, deleteCat }) {
           </React.Fragment>
         ),
         filter: false,
-        search: false
-      }
-    }
+        search: false,
+      },
+    },
   ];
 
   const options = {
@@ -47,7 +48,8 @@ function CategoriesTable({ data, editCat, newCat, deleteCat }) {
           New Categories
         </Button>
       );
-    }
+    },
+    setTableProps: () => ({ size: "small" }),
   };
   return (
     <RecordsList

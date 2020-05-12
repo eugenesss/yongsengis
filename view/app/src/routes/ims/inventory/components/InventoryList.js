@@ -10,7 +10,6 @@ import ListViewSelector from "Components/PageTitleBar/ListViewSelector";
 // Actions
 import { getAllInventory } from "Ducks/ims/inventory";
 import { getWarehouse, getCategories } from "Ducks/ims/fields";
-import { ControlPointDuplicate } from "@material-ui/icons";
 
 function getFilters(filterList, columns) {
   let filter = [];
@@ -37,10 +36,10 @@ class InventoryList extends Component {
       columns: [],
       sortBy: {
         name: "",
-        orderBy: ""
+        orderBy: "",
       },
       nowShowing: "all",
-      catShowing: "all"
+      catShowing: "all",
     };
     this.triggerSearch = this.triggerSearch.bind(this);
   }
@@ -53,7 +52,7 @@ class InventoryList extends Component {
   /**
    * Change Warehouse
    */
-  changeNowShowing = event => {
+  changeNowShowing = (event) => {
     this.setState({ nowShowing: event.target.value });
     this.props.getAllInventory(
       event.target.value,
@@ -68,7 +67,7 @@ class InventoryList extends Component {
   /**
    * Change Category
    */
-  changeCatShowing = event => {
+  changeCatShowing = (event) => {
     this.setState({ catShowing: event.target.value });
     this.props.getAllInventory(
       this.state.nowShowing,
@@ -103,7 +102,7 @@ class InventoryList extends Component {
       totalCount,
       warehouse,
       categories,
-      handleView
+      handleView,
     } = this.props;
 
     const options = Object.assign({}, listOptions, {
@@ -118,7 +117,7 @@ class InventoryList extends Component {
         if (action == "tableInitialized") {
           this.setState({
             limit,
-            skip
+            skip,
           });
           // Component did mount
           this.props.getAllInventory(
@@ -151,7 +150,7 @@ class InventoryList extends Component {
       },
       search: true,
       searchText: this.state.searchText,
-      onSearchChange: searchText => {
+      onSearchChange: (searchText) => {
         if (searchText == null) {
           this.setState({ searchText: "" });
           this.triggerSearch("");
@@ -173,7 +172,7 @@ class InventoryList extends Component {
       onColumnSortChange: (column, direction) => {
         var sortBy = {
           name: column,
-          orderBy: direction == "descending" ? "desc" : "asc"
+          orderBy: direction == "descending" ? "desc" : "asc",
         };
         this.setState({ sortBy });
         this.props.getAllInventory(
@@ -184,14 +183,14 @@ class InventoryList extends Component {
           this.state.searchText,
           sortBy
         );
-      }
+      },
     });
 
     const columns = [
       {
         label: "ID",
         name: "pid",
-        options: { display: "excluded", filter: false, sort: false }
+        options: { display: "excluded", filter: false, sort: false },
       },
       {
         label: "Name",
@@ -211,8 +210,8 @@ class InventoryList extends Component {
                 {value}
               </a>
             );
-          }
-        }
+          },
+        },
       },
       {
         label: "Code",
@@ -222,8 +221,8 @@ class InventoryList extends Component {
           sortDirection:
             this.state.sortBy.name == "code"
               ? this.state.sortBy.orderBy
-              : "none"
-        }
+              : "none",
+        },
       },
       {
         label: "Material",
@@ -232,13 +231,13 @@ class InventoryList extends Component {
           sortDirection:
             this.state.sortBy.name == "material"
               ? this.state.sortBy.orderBy
-              : "none"
-        }
+              : "none",
+        },
       },
       {
         label: "Categories",
         name: "cat_name",
-        options: { filter: false, sort: false }
+        options: { filter: false, sort: false },
       },
       {
         label: "Unit Code",
@@ -248,8 +247,8 @@ class InventoryList extends Component {
           sortDirection:
             this.state.sortBy.name == "unit_code"
               ? this.state.sortBy.orderBy
-              : "none"
-        }
+              : "none",
+        },
       },
       {
         label: "Quantity Per Box",
@@ -260,8 +259,8 @@ class InventoryList extends Component {
           sortDirection:
             this.state.sortBy.name == "perBox"
               ? this.state.sortBy.orderBy
-              : "none"
-        }
+              : "none",
+        },
       },
       {
         label: "Rack",
@@ -271,13 +270,13 @@ class InventoryList extends Component {
           sortDirection:
             this.state.sortBy.name == "rack"
               ? this.state.sortBy.orderBy
-              : "none"
-        }
+              : "none",
+        },
       },
       {
         label: "Warehouse",
         name: "wh_name",
-        options: { filter: false, sort: false }
+        options: { filter: false, sort: false },
       },
       {
         label: "Quantity",
@@ -287,8 +286,8 @@ class InventoryList extends Component {
           sortDirection:
             this.state.sortBy.name == "quantity"
               ? this.state.sortBy.orderBy
-              : "none"
-        }
+              : "none",
+        },
       },
       {
         label: "Adjust Qty",
@@ -301,9 +300,9 @@ class InventoryList extends Component {
             <AccessComponent>
               <QtyAdjust pid={value} name={tableMeta.rowData[1]} />
             </AccessComponent>
-          )
-        }
-      }
+          ),
+        },
+      },
     ];
 
     const { optionProps, tableProps } = this.props;
@@ -322,7 +321,7 @@ class InventoryList extends Component {
             <ListViewSelector
               options={[
                 { cat_name: "All Categories", cid: "all" },
-                ...categories
+                ...categories,
               ]}
               nowShowing={catShowing}
               onChangeValue={this.changeCatShowing}
@@ -342,9 +341,9 @@ class InventoryList extends Component {
 const mapStateToProps = ({ imsState }) => {
   const {
     inventoryState: {
-      inventoryList: { tableData, totalCount }
+      inventoryList: { tableData, totalCount },
     },
-    imsField: { warehouse, categories }
+    imsField: { warehouse, categories },
   } = imsState;
   return { tableData, totalCount, warehouse, categories };
 };
