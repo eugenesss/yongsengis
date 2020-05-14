@@ -3,7 +3,7 @@ import * as types from "./ImportTypes";
 
 const INIT_STATE = {
   loading: false,
-  mappingData: []
+  mappingData: [],
 };
 
 export default (state = INIT_STATE, action) => {
@@ -14,6 +14,7 @@ export default (state = INIT_STATE, action) => {
     case types.IMPORT_RECORD:
       return { ...state, loading: true };
     case types.IMPORT_RECORD_SUCCESS:
+      NotificationManager.success("Items Imported Successfully!");
       return { ...state, loading: false };
     case types.IMPORT_RECORD_FAILURE:
       NotificationManager.error("Error in Importing Records");
