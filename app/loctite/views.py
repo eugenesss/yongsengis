@@ -7,6 +7,7 @@ import csv
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from flask_login import login_required
 from boto3 import session
+from sqlalchemy import desc
 
 from app import db
 from ..models import Loctite, LoctiteSchema, AuditLog, AuditLogSchema, LoctiteOrders
@@ -228,7 +229,7 @@ def show_auditlog():
     """
     Display all inventory
     """
-    logs = db.session.query(AuditLog).filter(AuditLog.product == "loctite").order_by('date_time desc').all()
+    logs = db.session.query(AuditLog).filter(AuditLog.product == "loctite").order_by(desc(AuditLog.date_time)).all()
     audit_schema = AuditLogSchema(many=True)
     return audit_schema.jsonify(logs)
 
