@@ -12,21 +12,21 @@ import {
   TableRow,
   TableCell,
   TableHead,
-  Button
+  Button,
 } from "@material-ui/core";
 import InvAdjustmentRow from "./components/InvAdjustmentRow";
 // Actions
 import {
-  getAllInventory,
+  showAllInventory,
   removeFromInvList,
-  massUpdateInventory
+  massUpdateInventory,
 } from "Ducks/ims/inventory";
 
 class ims_inventory_massupdate extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selected: []
+      selected: [],
     };
     this.handleSelect = this.handleSelect.bind(this);
     this.removeFromAdjustment = this.removeFromAdjustment.bind(this);
@@ -34,11 +34,11 @@ class ims_inventory_massupdate extends Component {
     this.onAdjust = this.onAdjust.bind(this);
   }
   componentDidMount() {
-    this.props.getAllInventory();
+    this.props.showAllInventory();
   }
   handleSelect(val) {
     const newState = Object.assign([], this.state.selected);
-    const inv = this.props.tableData.find(inv => inv.pid == val);
+    const inv = this.props.tableData.find((inv) => inv.pid == val);
     newState.push(inv);
     this.setState({ selected: newState });
     this.props.removeFromInvList(val);
@@ -46,7 +46,7 @@ class ims_inventory_massupdate extends Component {
 
   removeFromAdjustment(val) {
     const newState = Object.assign([], this.state.selected).filter(
-      inv => inv.pid != val
+      (inv) => inv.pid != val
     );
     this.setState({ selected: newState });
   }
@@ -135,8 +135,11 @@ const mapStateToProps = ({ imsState }) => {
   return { loading, tableData };
 };
 
-export default connect(mapStateToProps, {
-  getAllInventory,
-  removeFromInvList,
-  massUpdateInventory
-})(ims_inventory_massupdate);
+export default connect(
+  mapStateToProps,
+  {
+    showAllInventory,
+    removeFromInvList,
+    massUpdateInventory,
+  }
+)(ims_inventory_massupdate);
