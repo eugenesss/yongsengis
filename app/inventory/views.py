@@ -88,7 +88,8 @@ def save_item():
 #     else:
 #         items = query_inventory(query)
 #     count = len(items.all())
-#     items = items.limit(limit).offset(skip)
+#     if limit is not None and skip is not None:
+#         items = items.limit(limit).offset(skip)
 #     inventories_schema = InventorySchema(many=True)
 #     results = {"count": count, "results": inventories_schema.dump(items)}
 #     return jsonify(results)
@@ -335,7 +336,6 @@ def get_by_warehouse_category():
     Search by warehouse
     """
     query = request.args.get('query')
-    create_app('development').logger.info(query)
     limit = request.args.get('limit')
     skip = request.args.get('skip')
     wid = request.args.get('wid')
@@ -344,26 +344,23 @@ def get_by_warehouse_category():
     column = request.args.get('column')
 
     items = get_all_items()
-    count = len(items.all())
 
     # if warehouse is not all
-    if cid != 'all':
+    if cid != 'all' and cid is not None:
         items = items.filter(Inventory.cid == cid)
     # if category is not all
-    if wid != 'all':
+    if wid != 'all' and wid is not None:
         items = items.filter(Inventory.wid == wid)
     if query:
-        create_app('development').logger.info("query is not none")
         look_for = '%{0}%'.format(query)
         items = items.filter(Inventory.name.ilike(look_for) | Inventory.material.ilike(look_for))
     if column:
         items = items.order_by("Inventory." + column + " " + order_by)
-    if count == 0:
-        results = None
-    else:
+    count = len(items.all())
+    if limit is not None and skip is not None:
         items = items.limit(limit).offset(skip)
-        inventories_schema = InventorySchema(many=True)
-        results = {"count": count, "results": inventories_schema.dump(items)}
+    inventories_schema = InventorySchema(many=True)
+    results = {"count": count, "results": inventories_schema.dump(items)}
     return jsonify(results)
 
 
