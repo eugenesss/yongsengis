@@ -11,7 +11,7 @@ from botocore.client import Config
 
 import os
 import datetime
-import csv
+import unicodecsv as csv
 
 from app import db
 from ..models import Inventory, InventorySchema, UpdateInventorySchema, get_all_items, get_item, get_item_by_warehouse, \
@@ -406,19 +406,19 @@ def import_csv():
 
         # create variable for uploaded file
         f = request.files['fileupload']
+        # create_app('development').logger.info(type(f))
 
         # store the file contents as a string
         fstring = f.read()
 
-        # decode the file as it contains BOM signature
-        fdecode = fstring.decode("utf-8-sig")
-
         # create list of dictionaries keyed by header row
+        # encoding must be utf-8-sig to read the chinese characters
         csv_dicts = [{k: v for k, v in row.items()} for
-                     row in csv.DictReader(fdecode.splitlines(), skipinitialspace=True)]
+                     row in csv.DictReader(fstring.splitlines(), encoding='utf-8-sig')]
 
         for i in range(len(csv_dicts)):
             # Add item to database
+            create_app('development').logger.info(csv_dicts[i].get('name', None))
             item = Inventory(name=csv_dicts[i].get('name', None),
                              description=csv_dicts[i].get('description', None),
                              code=csv_dicts[i].get('code', None),
