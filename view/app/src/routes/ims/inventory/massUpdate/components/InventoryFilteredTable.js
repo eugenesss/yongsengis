@@ -1,90 +1,139 @@
 import React from "react";
 
 //Page req
+import Paper from "@material-ui/core/Paper";
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableCell from "@material-ui/core/TableCell";
+import TableContainer from "@material-ui/core/TableContainer";
+import TableHead from "@material-ui/core/TableHead";
+import TablePagination from "@material-ui/core/TablePagination";
+import TableRow from "@material-ui/core/TableRow";
 import { IconButton } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
 import { Add } from "@material-ui/icons";
-import RecordsList from "Components/RecordsList";
 
-const InventoryFilteredTable = ({ data, handleSelect }) => {
+const useStyles = makeStyles({
+  root: {
+    width: "100%",
+  },
+  container: {
+    maxHeight: 440,
+  },
+});
+
+const InventoryFilteredTable = ({ data, handleSelect, count, fetchData }) => {
+  const classes = useStyles();
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(+event.target.value);
+    setPage(0);
+  };
+
   const columns = [
     {
       label: "Name",
-      name: "name"
+      name: "name",
     },
-    { label: "Code", name: "code", options: { filter: false } },
+    { label: "Code", name: "code" },
     {
       label: "Material",
-      name: "material"
+      name: "material",
     },
     {
       label: "Category",
-      name: "cat_name"
+      name: "cat_name",
     },
     {
       label: "Unit Code",
       name: "unit_code",
-      options: { filter: false }
     },
     {
       label: "Quantity",
       name: "quantity",
-      options: { filter: false }
     },
     {
       label: "Quantity Per Box",
       name: "perbox",
-      options: { display: false, filter: false }
     },
     {
       label: "Rack",
       name: "rack",
-      options: { filter: false }
     },
     {
       label: "Warehouse",
-      name: "wh_name"
+      name: "wh_name",
     },
     {
       label: "Add to update list",
       name: "pid",
-      options: {
-        filter: false,
-        sort: false,
-        customBodyRender: value => {
-          return (
-            <IconButton
-              className="mr-2 p-5"
-              aria-label="Edit"
-              onClick={() => {
-                handleSelect(value);
-              }}
-            >
-              <Add className="text-success" fontSize="small" />
-            </IconButton>
-          );
-        }
-      }
-    }
+      customBodyRender: (value) => {
+        return (
+          <IconButton
+            className="mr-2 p-5"
+            aria-label="Edit"
+            onClick={() => {
+              handleSelect(value);
+            }}
+          >
+            <Add className="text-success" fontSize="small" />
+          </IconButton>
+        );
+      },
+    },
   ];
 
-  const listOptions = {
-    filterType: "multiselect",
-    responsive: "scrollFullHeight",
-    download: false,
-    print: false,
-    filter: false,
-    search: false,
-    viewColumns: false,
-    customToolbar: false,
-    title: false,
-    selectableRows: "none",
-    elevation: 0,
-    rowsPerPage: 5,
-    rowsPerPageOptions: [5, 10, 15],
-    textLabels: { body: { noMatch: "No filtered data" } }
-  };
+  return (
+    <Paper>
+      <TableContainer className={classes.container}>
+        <Table stickyHeader aria-label="sticky table">
+          <TableHead>
+            <TableRow>
+              {columns.map((column, key) => (
+                <TableCell key={key}>{column.label}</TableCell>
+              ))}
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {data
+              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              .map((row, key) => {
+                return (
+                  <TableRow hover role="checkbox" tabIndex={-1} key={key}>
+                    {columns.map((column, colKey) => {
+                      const value = row[column.name];
 
-  return <RecordsList columns={columns} data={data} options={listOptions} />;
+                      return (
+                        <TableCell key={colKey}>
+                          {column.customBodyRender
+                            ? column.customBodyRender(value)
+                            : value}
+                        </TableCell>
+                      );
+                    })}
+                  </TableRow>
+                );
+              })}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      {/* <TablePagination
+        rowsPerPageOptions={[10, 25, 100]}
+        component="div"
+        count={count}
+        rowsPerPage={rowsPerPage}
+        page={page}
+        onChangePage={handleChangePage}
+        onChangeRowsPerPage={handleChangeRowsPerPage}
+      /> */}
+    </Paper>
+  );
 };
 
 export default InventoryFilteredTable;

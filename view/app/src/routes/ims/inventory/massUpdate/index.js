@@ -1,11 +1,16 @@
-import React, { Component } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 // Page Req
 import { Helmet } from "react-helmet";
 import PageTitleBar from "Components/PageTitleBar/PageTitleBar";
 // Sub Components
 import RctSectionLoader from "Components/RctSectionLoader";
+
 import InventoryFilter from "./components/InventoryFilter";
+import InventoryFilteredTable from "./components/InventoryFilteredTable";
+
+import api from "Api";
+
 import {
   Table,
   TableBody,
@@ -22,124 +27,233 @@ import {
   massUpdateInventory,
 } from "Ducks/ims/inventory";
 
-class ims_inventory_massupdate extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      selected: [],
-    };
-    this.handleSelect = this.handleSelect.bind(this);
-    this.removeFromAdjustment = this.removeFromAdjustment.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.onAdjust = this.onAdjust.bind(this);
-  }
-  componentDidMount() {
-    this.props.showAllInventory();
-  }
-  handleSelect(val) {
-    const newState = Object.assign([], this.state.selected);
-    const inv = this.props.tableData.find((inv) => inv.pid == val);
-    newState.push(inv);
-    this.setState({ selected: newState });
-    this.props.removeFromInvList(val);
-  }
+export default function ims_inventory_massupdate(props) {
+  const [selected, setSelected] = useState([]);
+  const [queriedData, setQueriedData] = useState([]);
+  const [query, setQuery] = useState("");
+  const [count, setCount] = useState(0);
 
-  removeFromAdjustment(val) {
-    const newState = Object.assign([], this.state.selected).filter(
-      (inv) => inv.pid != val
-    );
-    this.setState({ selected: newState });
-  }
+  useEffect(() => {
+    // needs rework
+    function checkDuplicates() {
+      const objFilter = Object.assign([], queriedData);
+      const queriedDataFiltered = objFilter.filter((el) => {
+        return selected.some((f) => {
+          return f.pid !== el.pid;
+        });
+      });
+      setQueriedData(queriedDataFiltered);
+    }
+    selected.length > 0 && checkDuplicates();
+  }, [selected]);
 
-  onAdjust(field, val, key) {
-    const newState = Object.assign([], this.state.selected);
-    const item = newState[key];
-    item[field] = val;
-    this.setState({ selected: newState });
-  }
+  useEffect(() => {
+    async function getQueriedData() {
+      const result = await api.get(
+        `/show_items?wid=all&cid=all&skip=0&limit=10&query=${query}`
+      );
+      setCount(result.data.count);
+      setQueriedData(result.data.results[0]);
+    }
+    const timer = setTimeout(() => {
+      query != "" && console.log("run search");
+      query != "" && getQueriedData();
+    }, 1000);
+    return () => clearTimeout(timer);
+  }, [query]);
 
-  handleSubmit() {
-    this.props.massUpdateInventory(this.state.selected);
+  function selectItem(val) {
+    const selectedItem = Object.assign([], selected);
+    const inv = queriedData.find((inv) => inv.pid == val);
+    selectedItem.push(inv);
+    setSelected(selectedItem);
+    console.log(selected);
   }
-
-  render() {
-    const { loading } = this.props;
-    const { selected } = this.state;
-    return (
-      <React.Fragment>
-        <div className="mb-50">
-          <Helmet>
-            <title>YSIS | Mass Update Inventory</title>
-          </Helmet>
-          <PageTitleBar title="Mass Update Inventory" />
-          {loading && <RctSectionLoader />}
-          <InventoryFilter handleSelect={this.handleSelect} />
-          <hr />
-          <div className="row mb-30">
-            <div className="col-md-12">
-              <div className="d-flex justify-content-between">
-                <h3>Adjustment List</h3>
-                <Button
-                  onClick={this.handleSubmit}
-                  variant="contained"
-                  className="btn-success text-white"
-                >
-                  Update
-                </Button>
-              </div>
-              <Table>
-                <TableHead>
-                  <TableRow>
-                    <TableCell></TableCell>
-                    <TableCell>Name</TableCell>
-                    <TableCell>Code</TableCell>
-                    <TableCell>Category</TableCell>
-                    <TableCell>Unit Code</TableCell>
-                    <TableCell>Rack</TableCell>
-                    <TableCell>Warehouse</TableCell>
-                    <TableCell>Quantity</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {selected.length > 0 ? (
-                    selected.map((item, key) => (
-                      <InvAdjustmentRow
-                        key={key}
-                        index={key}
-                        item={item}
-                        adjust={this.onAdjust}
-                        remove={this.removeFromAdjustment}
-                      />
-                    ))
-                  ) : (
-                    <TableRow>
-                      <TableCell colSpan={8} align="center">
-                        No Items in list
-                      </TableCell>
-                    </TableRow>
-                  )}
-                </TableBody>
-              </Table>
+  return (
+    <React.Fragment>
+      <div className="mb-50">
+        <Helmet>
+          <title>YSIS | Mass Update Inventory</title>
+        </Helmet>
+        <PageTitleBar title="Mass Update Inventory" />
+        {/* {loading && <RctSectionLoader />} */}
+        <InventoryFilter handleChange={setQuery} query={query} />
+        <InventoryFilteredTable
+          data={queriedData}
+          handleSelect={selectItem}
+          count={count}
+        />
+        <hr />
+        {/* <div className="row mb-30">
+          <div className="col-md-12">
+            <div className="d-flex justify-content-between">
+              <h3>Adjustment List</h3>
+              <Button
+                onClick={this.handleSubmit}
+                variant="contained"
+                className="btn-success text-white"
+              >
+                Update
+              </Button>
             </div>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell></TableCell>
+                  <TableCell>Name</TableCell>
+                  <TableCell>Code</TableCell>
+                  <TableCell>Category</TableCell>
+                  <TableCell>Unit Code</TableCell>
+                  <TableCell>Rack</TableCell>
+                  <TableCell>Warehouse</TableCell>
+                  <TableCell>Quantity</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {selected.length > 0 ? (
+                  selected.map((item, key) => (
+                    <InvAdjustmentRow
+                      key={item.pid}
+                      index={key}
+                      item={item}
+                      adjust={this.onAdjust}
+                      remove={this.removeFromAdjustment}
+                    />
+                  ))
+                ) : (
+                  <TableRow>
+                    <TableCell colSpan={8} align="center">
+                      No Items in list
+                    </TableCell>
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
           </div>
-        </div>
-      </React.Fragment>
-    );
-  }
+        </div> */}
+      </div>
+    </React.Fragment>
+  );
 }
 
-const mapStateToProps = ({ imsState }) => {
-  const { inventoryState } = imsState;
-  const { inventoryList } = inventoryState;
-  const { loading, tableData } = inventoryList;
-  return { loading, tableData };
-};
+// class ims_inventory_massupdate extends Component {
+//   constructor(props) {
+//     super(props);
+//     this.state = {
+//       selected: [],
+//     };
+//     this.handleSelect = this.handleSelect.bind(this);
+//     this.removeFromAdjustment = this.removeFromAdjustment.bind(this);
+//     this.handleSubmit = this.handleSubmit.bind(this);
+//     this.onAdjust = this.onAdjust.bind(this);
+//   }
+//   // componentDidMount() {
+//   //   this.props.showAllInventory();
+//   // }
+//   handleSelect(val) {
+//     const newState = Object.assign([], this.state.selected);
+//     const inv = this.props.tableData.find((inv) => inv.pid == val);
+//     newState.push(inv);
+//     this.setState({ selected: newState });
+//     this.props.removeFromInvList(val);
+//   }
 
-export default connect(
-  mapStateToProps,
-  {
-    showAllInventory,
-    removeFromInvList,
-    massUpdateInventory,
-  }
-)(ims_inventory_massupdate);
+//   removeFromAdjustment(val) {
+//     const newState = Object.assign([], this.state.selected).filter(
+//       (inv) => inv.pid != val
+//     );
+//     this.setState({ selected: newState });
+//   }
+
+//   onAdjust(field, val, key) {
+//     const newState = Object.assign([], this.state.selected);
+//     const item = newState[key];
+//     item[field] = val;
+//     this.setState({ selected: newState });
+//   }
+
+//   handleSubmit() {
+//     this.props.massUpdateInventory(this.state.selected);
+//   }
+
+//   render() {
+//     const { loading } = this.props;
+//     const { selected } = this.state;
+//     return (
+//       <React.Fragment>
+//         <div className="mb-50">
+//           <Helmet>
+//             <title>YSIS | Mass Update Inventory</title>
+//           </Helmet>
+//           <PageTitleBar title="Mass Update Inventory" />
+//           {loading && <RctSectionLoader />}
+//           <InventoryFilter handleSelect={this.handleSelect} />
+//           <hr />
+//           <div className="row mb-30">
+//             <div className="col-md-12">
+//               <div className="d-flex justify-content-between">
+//                 <h3>Adjustment List</h3>
+//                 <Button
+//                   onClick={this.handleSubmit}
+//                   variant="contained"
+//                   className="btn-success text-white"
+//                 >
+//                   Update
+//                 </Button>
+//               </div>
+//               <Table>
+//                 <TableHead>
+//                   <TableRow>
+//                     <TableCell></TableCell>
+//                     <TableCell>Name</TableCell>
+//                     <TableCell>Code</TableCell>
+//                     <TableCell>Category</TableCell>
+//                     <TableCell>Unit Code</TableCell>
+//                     <TableCell>Rack</TableCell>
+//                     <TableCell>Warehouse</TableCell>
+//                     <TableCell>Quantity</TableCell>
+//                   </TableRow>
+//                 </TableHead>
+//                 <TableBody>
+//                   {selected.length > 0 ? (
+//                     selected.map((item, key) => (
+//                       <InvAdjustmentRow
+//                         key={key}
+//                         index={key}
+//                         item={item}
+//                         adjust={this.onAdjust}
+//                         remove={this.removeFromAdjustment}
+//                       />
+//                     ))
+//                   ) : (
+//                     <TableRow>
+//                       <TableCell colSpan={8} align="center">
+//                         No Items in list
+//                       </TableCell>
+//                     </TableRow>
+//                   )}
+//                 </TableBody>
+//               </Table>
+//             </div>
+//           </div>
+//         </div>
+//       </React.Fragment>
+//     );
+//   }
+// }
+
+// const mapStateToProps = ({ imsState }) => {
+//   const { inventoryState } = imsState;
+//   const { inventoryList } = inventoryState;
+//   const { loading, tableData } = inventoryList;
+//   return { loading, tableData };
+// };
+
+// export default connect(
+//   mapStateToProps,
+//   {
+//     showAllInventory,
+//     removeFromInvList,
+//     massUpdateInventory,
+//   }
+// )(ims_inventory_massupdate);

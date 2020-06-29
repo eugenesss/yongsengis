@@ -156,15 +156,19 @@ function* filterInv({ payload }) {
     state.imsState.inventoryState.inventoryList.tableData;
   try {
     //filter object
+    const test = yield call(massUpdateFilterReq, keyword);
+    console.log(test);
     const tableData = yield select(invList);
     const data = tableData.filter((inv) =>
       inv[field].toLowerCase().includes(keyword.toLowerCase())
     );
     yield put(filterInventorySuccess(data));
   } catch (error) {
+    console.log(error);
     yield put(filterInventoryFailure(error));
   }
 }
+
 function* massUpdateInv({ payload }) {
   try {
     const data = yield call(massUpdateInvRequest, payload);
