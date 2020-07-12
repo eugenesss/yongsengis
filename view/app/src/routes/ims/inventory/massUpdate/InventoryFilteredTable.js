@@ -7,7 +7,6 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
-import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
 import { IconButton } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
@@ -22,19 +21,8 @@ const useStyles = makeStyles({
   },
 });
 
-const InventoryFilteredTable = ({ data, handleSelect, count, fetchData }) => {
+const InventoryFilteredTable = ({ data, handleSelect }) => {
   const classes = useStyles();
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
-
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(+event.target.value);
-    setPage(0);
-  };
 
   const columns = [
     {
@@ -101,37 +89,26 @@ const InventoryFilteredTable = ({ data, handleSelect, count, fetchData }) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {data
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row, key) => {
-                return (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={key}>
-                    {columns.map((column, colKey) => {
-                      const value = row[column.name];
+            {data.map((row, key) => {
+              return (
+                <TableRow hover role="checkbox" tabIndex={-1} key={key}>
+                  {columns.map((column, colKey) => {
+                    const value = row[column.name];
 
-                      return (
-                        <TableCell key={colKey}>
-                          {column.customBodyRender
-                            ? column.customBodyRender(value)
-                            : value}
-                        </TableCell>
-                      );
-                    })}
-                  </TableRow>
-                );
-              })}
+                    return (
+                      <TableCell key={colKey}>
+                        {column.customBodyRender
+                          ? column.customBodyRender(value)
+                          : value}
+                      </TableCell>
+                    );
+                  })}
+                </TableRow>
+              );
+            })}
           </TableBody>
         </Table>
       </TableContainer>
-      {/* <TablePagination
-        rowsPerPageOptions={[10, 25, 100]}
-        component="div"
-        count={count}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onChangePage={handleChangePage}
-        onChangeRowsPerPage={handleChangeRowsPerPage}
-      /> */}
     </Paper>
   );
 };
