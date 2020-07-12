@@ -9,6 +9,7 @@ import {
   MASS_UPDATE_FILTER_INVENTORY,
   MASS_UPDATE_INVENTORY,
   INV_STOCK_UPDATE,
+  SHOW_ALL_INVENTORY,
 } from "./InventoryTypes";
 import {
   inventoryApiFailure,
@@ -28,6 +29,8 @@ import {
   massUpdateInventoryFailure,
   invStockUpdateSuccess,
   invStockUpdateFailure,
+  showAllInventorySuccess,
+  showAllInventoryFailure,
 } from "./InventoryActions";
 
 import { inventoryListPage } from "Helpers/imsURL";
@@ -70,6 +73,10 @@ const massUpdateInvRequest = async (data) => {
 };
 const invStockUpdateRequest = async (data) => {
   const result = await api.post("/inventory/adjustment", data);
+  return result.data;
+};
+const showInventoryReq = async () => {
+  const result = await api.get("/show_items");
   return result.data;
 };
 
@@ -149,15 +156,19 @@ function* filterInv({ payload }) {
     state.imsState.inventoryState.inventoryList.tableData;
   try {
     //filter object
+    const test = yield call(massUpdateFilterReq, keyword);
+    console.log(test);
     const tableData = yield select(invList);
     const data = tableData.filter((inv) =>
       inv[field].toLowerCase().includes(keyword.toLowerCase())
     );
     yield put(filterInventorySuccess(data));
   } catch (error) {
+    console.log(error);
     yield put(filterInventoryFailure(error));
   }
 }
+
 function* massUpdateInv({ payload }) {
   try {
     const data = yield call(massUpdateInvRequest, payload);
@@ -172,6 +183,14 @@ function* invStockUpdate({ payload }) {
     yield put(invStockUpdateSuccess(data));
   } catch (error) {
     yield put(invStockUpdateFailure(error));
+  }
+}
+function* showInventory() {
+  try {
+    const data = yield call(showInventoryReq);
+    yield put(showAllInventorySuccess(data));
+  } catch (error) {
+    yield put(showAllInventoryFailure(error));
   }
 }
 
@@ -205,6 +224,9 @@ export function* massUpdateInvWatcher() {
 export function* invStockUpdateWatcher() {
   yield takeEvery(INV_STOCK_UPDATE, invStockUpdate);
 }
+export function* showInventoryWatcher() {
+  yield takeEvery(SHOW_ALL_INVENTORY, showInventory);
+}
 
 //=======================
 // FORK SAGAS TO STORE
@@ -220,5 +242,6 @@ export default function* rootSaga() {
     fork(filterInvWatcher),
     fork(massUpdateInvWatcher),
     fork(invStockUpdateWatcher),
+    fork(showInventoryWatcher),
   ]);
 }

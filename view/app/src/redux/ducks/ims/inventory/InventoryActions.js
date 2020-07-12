@@ -145,3 +145,16 @@ export const invStockUpdateFailure = (error) => ({
   type: types.INV_STOCK_UPDATE_FAILURE,
   payload: error,
 });
+
+// SHOW ALL INVENTORY WITHOUT FILTERS
+export const showAllInventory = () => ({
+  type: types.SHOW_ALL_INVENTORY,
+});
+export const showAllInventorySuccess = (data) => ({
+  type: types.SHOW_ALL_INVENTORY_SUCCESS,
+  payload: data,
+});
+export const showAllInventoryFailure = (error) => ({
+  type: types.SHOW_ALL_INVENTORY_FAILURE,
+  payload: error,
+});

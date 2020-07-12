@@ -8,11 +8,11 @@ const INIT_STATE = {
   inventoryList: {
     tableData: [],
     loading: false,
-    totalCount: 0
+    totalCount: 0,
   },
   itemToView: {
     item: null,
-    loading: false
+    loading: false,
   },
   inventoryForm: {
     loading: false,
@@ -28,15 +28,15 @@ const INIT_STATE = {
       perBox: 0,
       rack: "",
       warehouse: "",
-      description: ""
-    }
+      description: "",
+    },
   },
-  massUpdate: { populatedData: [], loading: false }
+  massUpdate: { populatedData: [], loading: false },
 };
 
 export default (state = INIT_STATE, action) => {
   function updateInvList(item) {
-    var allInv = Object.assign([], state.inventoryList.tableData).map(inv =>
+    var allInv = Object.assign([], state.inventoryList.tableData).map((inv) =>
       inv.pid == item.pid ? (inv = item) : inv
     );
     return allInv;
@@ -56,7 +56,7 @@ export default (state = INIT_STATE, action) => {
     case types.GET_ALL_INVENTORY:
       return {
         ...state,
-        inventoryList: { ...state.inventoryList, loading: true }
+        inventoryList: { ...state.inventoryList, loading: true },
       };
     case types.GET_ALL_INVENTORY_SUCCESS:
       return {
@@ -65,8 +65,8 @@ export default (state = INIT_STATE, action) => {
           ...state.inventoryList,
           loading: false,
           tableData: action.payload.results[0],
-          totalCount: action.payload.count
-        }
+          totalCount: action.payload.count,
+        },
       };
 
     //=========================
@@ -83,7 +83,7 @@ export default (state = INIT_STATE, action) => {
     case types.SUBMIT_INVENTORY_FORM:
       return {
         ...state,
-        inventoryForm: { ...state.inventoryForm, loading: true }
+        inventoryForm: { ...state.inventoryForm, loading: true },
       };
     case types.SUBMIT_INVENTORY_SUCCESS:
       NotificationManager.success("Successfully created Item");
@@ -94,15 +94,15 @@ export default (state = INIT_STATE, action) => {
         inventoryForm: {
           ...state.inventoryForm,
           loading: false,
-          item: INIT_STATE.inventoryForm.item
-        }
+          item: INIT_STATE.inventoryForm.item,
+        },
       };
     case types.SUBMIT_INVENTORY_FAILURE:
       NotificationManager.error("Error in POST api");
       console.log(action.payload);
       return {
         ...state,
-        inventoryForm: { ...state.inventoryForm, loading: false }
+        inventoryForm: { ...state.inventoryForm, loading: false },
       };
     case types.CLEAR_INVENTORY_FORM:
       return { ...state, inventoryForm: INIT_STATE.inventoryForm };
@@ -113,9 +113,9 @@ export default (state = INIT_STATE, action) => {
           ...state.inventoryForm,
           item: {
             ...state.inventoryForm.item,
-            [action.payload.field]: action.payload.value
-          }
-        }
+            [action.payload.field]: action.payload.value,
+          },
+        },
       };
 
     //=========================
@@ -124,7 +124,7 @@ export default (state = INIT_STATE, action) => {
     case types.START_EDIT_INVENTORY:
       return {
         ...state,
-        inventoryForm: { ...state.inventoryForm, modalLoading: true }
+        inventoryForm: { ...state.inventoryForm, modalLoading: true },
       };
     case types.START_EDIT_INVENTORY_SUCCESS:
       return {
@@ -132,21 +132,21 @@ export default (state = INIT_STATE, action) => {
         inventoryForm: {
           ...state.inventoryForm,
           modalLoading: false,
-          item: action.payload
-        }
+          item: action.payload,
+        },
       };
     case types.START_EDIT_INVENTORY_FAILURE:
       NotificationManager.error("Error in fetching Item");
       console.log(action.payload);
       return {
         ...state,
-        inventoryForm: { ...state.inventoryForm, modalLoading: false }
+        inventoryForm: { ...state.inventoryForm, modalLoading: false },
       };
 
     case types.EDIT_INVENTORY:
       return {
         ...state,
-        inventoryForm: { ...state.inventoryForm, modalLoading: true }
+        inventoryForm: { ...state.inventoryForm, modalLoading: true },
       };
     case types.EDIT_INVENTORY_SUCCESS:
       NotificationManager.success("Successfully edit item");
@@ -157,18 +157,18 @@ export default (state = INIT_STATE, action) => {
         inventoryForm: {
           ...state.inventoryForm,
           modalLoading: false,
-          item: action.payload
+          item: action.payload,
         },
         itemToView: {
-          item: action.payload
-        }
+          item: action.payload,
+        },
       };
     case types.EDIT_INVENTORY_FAILURE:
       NotificationManager.error("Error in edit item");
       console.log(action.payload);
       return {
         ...state,
-        inventoryForm: { ...state.inventoryForm, modalLoading: false }
+        inventoryForm: { ...state.inventoryForm, modalLoading: false },
       };
 
     //=========================
@@ -177,27 +177,27 @@ export default (state = INIT_STATE, action) => {
     case types.DELETE_INVENTORY:
       return {
         ...state,
-        inventoryList: { ...state.inventoryList, loading: true }
+        inventoryList: { ...state.inventoryList, loading: true },
       };
     case types.DELETE_INVENTORY_SUCCESS:
       NotificationManager.success("Item deleted");
       var deleteInv = Object.assign([], state.inventoryList.tableData).filter(
-        inv => inv.pid !== action.payload
+        (inv) => inv.pid !== action.payload
       );
       return {
         ...state,
         inventoryList: {
           ...state.inventoryList,
           tableData: deleteInv,
-          loading: false
-        }
+          loading: false,
+        },
       };
     case types.DELETE_INVENTORY_FAILURE:
       NotificationManager.error("Error in deleting item");
       console.log(action.payload);
       return {
         ...state,
-        inventoryList: { ...state.inventoryList, loading: false }
+        inventoryList: { ...state.inventoryList, loading: false },
       };
 
     //=========================
@@ -208,7 +208,7 @@ export default (state = INIT_STATE, action) => {
     case types.MASS_UPDATE_FILTER_INVENTORY_SUCCESS:
       return {
         ...state,
-        massUpdate: { populatedData: action.payload, loading: false }
+        massUpdate: { populatedData: action.payload, loading: false },
       };
     case types.MASS_UPDATE_FILTER_INVENTORY_FAILURE:
       NotificationManager.error("Error in filter");
@@ -220,13 +220,13 @@ export default (state = INIT_STATE, action) => {
       var removedFromMassUpdate = Object.assign(
         [],
         state.massUpdate.populatedData
-      ).filter(inv => inv.pid != action.payload);
+      ).filter((inv) => inv.pid != action.payload);
       return {
         ...state,
         massUpdate: {
           ...state.massUpdate,
-          populatedData: removedFromMassUpdate
-        }
+          populatedData: removedFromMassUpdate,
+        },
       };
 
     case types.MASS_UPDATE_INVENTORY:
@@ -245,7 +245,7 @@ export default (state = INIT_STATE, action) => {
     case types.INV_STOCK_UPDATE:
       return {
         ...state,
-        inventoryList: { ...state.inventoryList, loading: true }
+        inventoryList: { ...state.inventoryList, loading: true },
       };
     case types.INV_STOCK_UPDATE_SUCCESS:
       NotificationManager.success("Stock count updated");
@@ -255,16 +255,30 @@ export default (state = INIT_STATE, action) => {
         inventoryList: {
           ...state.inventoryList,
           loading: false,
-          tableData: invStockUpdate
-        }
+          tableData: invStockUpdate,
+        },
       };
     case types.INV_STOCK_UPDATE_FAILURE:
       NotificationManager.error("Error in updating stock count");
       console.log(action.payload);
       return {
         ...state,
-        inventoryList: { ...state.inventoryList, loading: false }
+        inventoryList: { ...state.inventoryList, loading: false },
       };
+
+    //=================================
+    // Show all Inventory without filter
+    //=================================
+    case types.SHOW_ALL_INVENTORY:
+      return { ...state, inventoryList: { loading: true } };
+    case types.SHOW_ALL_INVENTORY_SUCCESS:
+      return {
+        ...state,
+        inventoryList: { loading: false, tableData: action.payload },
+      };
+    case types.SHOW_ALL_INVENTORY_FAILURE:
+      NotificationManager.error("Error in showing inventory");
+      return { ...state, inventoryList: { loading: false } };
 
     default:
       return { ...state };
