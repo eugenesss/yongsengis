@@ -1,6 +1,6 @@
 from flask import request, json, jsonify
 from flask_jwt_extended import jwt_required, get_jwt_identity
-from sqlalchemy import desc
+from sqlalchemy import desc, text
 
 from . import inventory
 from functools import wraps
@@ -355,7 +355,7 @@ def get_by_warehouse_category():
         look_for = '%{0}%'.format(query)
         items = items.filter(Inventory.name.ilike(look_for) | Inventory.material.ilike(look_for) | Inventory.code.ilike(look_for))
     if column:
-        items = items.order_by("Inventory." + column + " " + order_by)
+        items = items.order_by(text("inventory." + column + " " + order_by))
     count = len(items.all())
     if limit is not None and skip is not None:
         items = items.limit(limit).offset(skip)
