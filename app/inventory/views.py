@@ -370,7 +370,7 @@ def show_auditlog():
     """
     Display all inventory
     """
-    logs = db.session.query(AuditLog).filter(AuditLog.product == "inventory").order_by('date_time desc').all()
+    logs = db.session.query(AuditLog).filter(AuditLog.product == "inventory").order_by(text('date_time desc')).all()
     audit_schema = AuditLogSchema(many=True)
     return audit_schema.jsonify(logs)
 
